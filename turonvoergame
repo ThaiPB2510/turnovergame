@@ -1,0 +1,103 @@
+#include <iostream>
+using namespace std;
+#define MAXN 4
+
+int A[MAXN][MAXN];
+int B[MAXN][MAXN];
+//int N;
+
+bool check() {
+	for(int i = 0; i < MAXN; i++)
+		for(int j = 0; j < MAXN; j++)
+			if(A[i][j] != A[0][0])
+				return false;
+
+	return true;
+}
+
+void bam(int p) {
+	int x = p/MAXN;
+	int y = p%MAXN;
+	A[x][y] = 1 - A[x][y];
+	if(x+1 < MAXN) A[x+1][y] = 1 - A[x+1][y];
+	if(x-1 >= 0) A[x-1][y] = 1 - A[x-1][y];
+	if(y+1 < MAXN) A[x][y+1] = 1 - A[x][y+1];
+	if(y-1 >= 0) A[x][y-1] = 1 - A[x][y-1];
+}
+
+int cntB;
+void bamB(int p) {
+	cntB++;
+	int x = p/MAXN;
+	int y = p%MAXN;
+	B[x][y] = 1 - B[x][y];
+	if(x+1 < MAXN) B[x+1][y] = 1 - B[x+1][y];
+	if(x-1 >= 0) B[x-1][y] = 1 - B[x-1][y];
+	if(y+1 < MAXN) B[x][y+1] = 1 - B[x][y+1];
+	if(y-1 >= 0) B[x][y-1] = 1 - B[x][y-1];
+}
+
+bool bamAll(int value) {
+	for(int i = 0; i < MAXN; i++)
+		for(int j = 0; j < MAXN; j++)
+			B[i][j] = A[i][j];
+
+	cntB = 0;
+	for(int i = 0; i < MAXN-1; i++) {
+		for(int j = 0; j < MAXN; j++) {
+			if(B[i][j] != value) bamB((i+1)*MAXN + j);
+		}
+	}
+
+	for(int j = 0; j < MAXN; j++) 
+		if(B[MAXN-1][j] != value) return false;
+
+	return true;
+}
+int cnt = 0;
+int KQ = 0;
+void turnOverGame(int i) {
+	if(i == MAXN) {
+		if(bamAll(0)) {
+			if(KQ > cnt+cntB) KQ = cnt+cntB;
+		}
+		if(bamAll(1)) {
+			if(KQ > cnt+cntB) KQ = cnt+cntB;
+		}
+		return;
+	}
+
+	//khong bam
+	turnOverGame(i+1);
+
+	//bam
+	cnt++;
+	bam(i);
+	turnOverGame(i+1);
+	bam(i);
+	cnt--;
+}
+int main(){
+	//freopen("input.txt", "r", stdin);
+	int T;
+	cin >> T;
+	char c;
+	for(int tc = 1; tc <= T; tc++) {
+		//cin >> N;
+		for(int i = 0; i < MAXN; i++)
+			for(int j = 0; j < MAXN; j++) {
+				cin >> c;
+				if(c == 'b') A[i][j] = 0;
+				else A[i][j] = 1;
+			}
+		
+		KQ = MAXN*MAXN*MAXN;
+		turnOverGame(0);
+		cout << "Case #"<< tc << endl;
+		if(KQ == MAXN*MAXN*MAXN)
+			cout << "impossible" << endl;
+		else 
+			cout << KQ << endl;
+	}
+	return 0;
+}
