@@ -1,0 +1,103 @@
+package TurnOverGame;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class solution1 {
+
+	static char c[][] = new char[5][5];
+	static int a[][] = new int[5][5];
+	static int aa, bb, result;
+	static int dx[] = { -1, 0, 1, 0 };
+	static int dy[] = { 0, 1, 0, -1 };
+	static boolean visited[][] = new boolean[5][5];
+
+	public static void changebw(int x, int y) {
+		if (a[x][y] == 0) {
+			a[x][y] = 1;
+		} else {
+			a[x][y] = 0;
+		}
+		for (int i = 0; i < 4; i++) {
+			aa = x + dx[i];
+			bb = y + dy[i];
+			if (aa >= 0 && aa < 4 && bb >= 0 && bb < 4) {
+				if (a[aa][bb] == 0) {
+					a[aa][bb] = 1;
+				} else {
+					a[aa][bb] = 0;
+				}
+			}
+		}
+	}
+
+	public static boolean checkresult() {
+		int check = 0;
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				if (a[i][j] != a[0][0]) {
+					check++;
+					break;
+				}
+			}
+			if (check != 0) {
+				break;
+			}
+		}
+		if (check == 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public static void backtrack(int k, int dem) {
+
+		if (k == 16) {
+			if (checkresult() == true) {
+				if (dem < result) {
+					result = dem;
+				}
+				return;
+			} else
+				return;
+		}
+		backtrack(k + 1, dem);
+		changebw(k / 4, k % 4);
+		backtrack(k + 1, dem + 1);
+		changebw(k / 4, k % 4);
+
+	}
+
+	public static void main(String[] args) throws FileNotFoundException {
+		System.setIn(new FileInputStream("input.txt"));
+		Scanner sc = new Scanner(System.in);
+		int t;
+		t = sc.nextInt();
+		sc.nextLine();
+		for (int tc = 1; tc <= t; tc++) {
+			for (int i = 0; i < 4; i++) {
+				String s = sc.nextLine();
+				for (int j = 0; j < s.length(); j++) {
+					c[i][j] = s.charAt(j);
+					if (c[i][j] == 'b') {
+						a[i][j] = 0;
+					} else if (c[i][j] == 'w') {
+						a[i][j] = 1;
+					}
+					// cout<<a[i][j]<< " ";
+				}
+				// cout<<"\n";
+			}
+			result = 999999;
+			backtrack(0, 0);
+			System.out.println("Case #" + tc);
+			if (result == 999999) {
+				System.out.println("impossible");
+			} else {
+				System.out.println(result);
+			}
+		}
+	}
+}
