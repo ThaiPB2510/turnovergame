@@ -1,0 +1,3477 @@
+﻿Đề
+STP2016	4
+1.Trade-in Phone S6	4
+2.Pipe Network	8
+3.The Fellowship of The Ring	11
+4.Mario Climb	12
+5.Sky Force	14
+6.BASE STATION	16
+7. Gold Mining	18
+8. Advertisement Schedule	20
+9. Fishing	23
+STP2018	25
+1. Turn Off The Lights	25
+2. Crossroads	27
+3. Price Tag	31
+1.    Capture Knight	33
+2. Nâng cấp máy tính	34
+3. Cutting a Piece of Colored Paper	36
+4. Earning Biggest Prize Money 2	37
+5. Assigning a Meeting Room	39
+6. Stock Exchange	41
+7. Partition 1	42
+8. Point of Balance 2	44
+9. Matrix Product	46
+10. Minimal Big Sum	47
+11. Princess	48
+12. Route Finding	48
+13. Tấn công thành trì	50
+14. Well Project	53
+15 . SKYTOUR	54
+16. The Frog	55
+17 . Grid Acid	55
+18. 8-Queen: Maximum Score	59
+19. Chess rook	61
+20. Painting	63
+21. Turn Over Game	65
+22. Cover rectangle with dominos	65
+23. Cleaning Robot	68
+24. Map Coloring	69
+25 . Hugo	70
+26. Array Game	72
+27. Battle City	73
+28. Find cycle	74
+29. Uniform Distribution in Square	75
+30. Diamond	77
+31. Fast robot	78
+32. Quân mã	80
+33. Little Elephants	82
+34 . Làng mạc	87
+35. Quân tượng	88
+36. Bao ve nong trang	89
+37 . Crazy King	91
+38. Biểu thức Zero	93
+39. Checking cube	94
+40. Laughing Bomb	95
+41. Lucky number	96
+42. Ice Cave	97
+43. Di chuyển bò	98
+44 . Pizza Location	99
+45. Path finding puzzles	101
+46. Validate the maze	103
+47. Prime Ring	105
+48. Mountain Walking	106
+49. Pink and Blue	108
+50. Score	110
+51. Sum it up	111
+52. The Settlers of Catan	113
+53. Sky map	116
+54. Phone List	117
+55. Qua Cầu	118
+56. Cryptogram 3	121
+57. Contact	124
+58.Game domino	126
+80. AbaddonAndNetharax – Docs	130
+Netharax - The Black Horse of Abaddon	130
+
+
+STP2016
+1.Trade-in Phone S6
+ 
+New model Galaxy S6 has been released on market. Our customers want to change their old models (S1 -> S5) to this new model. Currently, there are several service booths locate on map to help customer change their device.
+There are total 5 kinds of booth (1->5) to help change device from S1->S5 to new model. However, these booth were distributed randomly on the map. 
+Ex:
+5514440242500205430113321There are also the booths which serve other service and are marked as 0 on the map.
+ 
+Our manager wants to improve the service for customers. To do that, we can exchange the booth 0 to other booth (1-5) around it so that the same kind of booths will be connected. And in order to maximum the performance, we will exchange booth 0 to the booth with highest frequency of appearance around it.
+Ex: Consider the area consist of three booths 0, we need to exchange these booths to the booth around them with highest appearance frequency.
+5514440242500205430113321Normally, we can clearly see that there are two booths of 5, two booths of 4, one booth of 3 and two booth of 2 around these three booth-0. However, since the booth-5 also connect to other booth with same kind (booth-5, at location [1,1] and [4,1] with blue color), the service may become better, so we consider the frequency of booth-5 to be total 4
+In case there are more than one kind of booths with same highest frequency, we will select the booth with higher value 
+Ex : booth-5 appear 4 times, booth-1 appear also 4 times around an area of zeros, we will select booth-5 to exchange since 5 > 4 
+ 
+Therefore, we will exchange booth-0 to booth-5 (with highest frequency)
+5514445242555205430113321 
+Continue with other booth-0, we will get below map 
+5514445242555225433113321 
+All the booths that are same kind and next to each other (top/down/left/right) connect into an area. After exchangings are done, our manager want to know how many area that service trade-in S6 in this map.
+5514445242555225433113321In above example, there are total 11 areas (in each area, only one service was served)
+ 
+Given the map NxN of booths location, write a program to exchange booth-0 and return the number of service area in that map.
+ 
+[Input]
+- The number of test case T (T <= 50)
+- The size of the map N (5 <= N <= 100)
+- Detail of the map will be given at next N rows, the value C of each cell represent the service booth (0 <= C <= 5)
+5  <= The number of test case T
+5  <= Start of test case #1, N = 5
+5 5 1 4 4  <= The first line of map
+4 0 2 4 2  <= The second line of map ...
+5 0 0 2 0
+5 4 3 0 1
+1 3 3 2 1
+7  <= Start of test case #2, N = 7 ...
+0 0 0 0 0 0 0
+0 0 0 0 0 0 0
+0 0 0 0 0 0 0
+5 0 5 0 5 0 5
+0 0 0 0 0 0 0
+0 0 0 0 0 0 0
+0 0 0 0 0 0 0
+10
+1 3 5 1 4 0 0 4 2 1
+1 1 2 1 1 0 5 0 2 1
+5 0 2 0 4 4 4 0 1 1
+0 2 2 4 0 5 4 2 1 3
+1 1 2 2 2 3 3 2 1 1
+5 1 1 2 0 3 3 2 2 1
+3 1 1 1 0 0 1 2 2 5
+3 1 4 1 2 0 4 0 0 5
+4 0 3 3 1 3 3 0 0 1
+5 0 3 1 4 3 3 1 2 3
+... 
+[Output]
+- The number of service areas
+Case #1
+11
+Case #2
+1
+Case #3
+31
+... 
+[Constraint]
+- Each booth has maximum 4 booths around it (top/down/left/right)
+- All booth-0 locate next to each others (top/down/left/right) will be consider as an area, we need to calculate all the booths around this area.
+- There are 6 kind of booth : 0 - 5, booth 0 need to be changed to one of other (1-5)
+- We ensure there will be no case in which all booths are zero
+- All the same kind of booths which locate around each other are consider as one area.
+- Time limit : 3s for 50 TC ( C, C++ 3000 msec, Java 6000 msec)
+
+2.Pipe Network
+Our company has set up a pipe network for fuel distribution in factory. In that network, a fuel tank will be place at a location in the factory. From there, fuel will be distributed to other place by the pipe network.
+There are total 7 kinds of pipe, marked from 1-7 as below figures:
+Only the connected pipes can allow fuel pass through them. Two pipes are connected if they have a common end-point. For example :
+- In this case, fuel can flow from A to B
+- But in this case, fuel can not flow from A to B (Pipe in A does not have any common end-point with pipe in B)
+However, the pump used to distribute fuel has limit in its performance. Depend on its kind, the pump can only pump fuel as far as its limit. For example, let say the limit of pump is 3, that mean from start location, fuel can only flow to the farest place that 3 steps away (include start point).
+Given the map of pipe network, the location of the fuel tank (start position), the limit of pump, write a program to calculate the total number of pipes that fuel can flow to.
+ 
+Example 1: In this case, the height of the map (N) is 5, the length of of the map (M) is 6, location of the fuel tank is (2,1), the limit of the pump is 3
+- First fuel is pumped to location (2,1)
+- Second, fuel flows to location (2,0) and (2,2)
+- Third, fuel flows to location (1,2) and (2,3)
+As the limit of pump is reached, the fuel can not flow any further. Hence, the total number of pipes that fuel can flow to is 5.
+ 
+Example 2: In this case, the height of the map (N) is 5, the length of of the map (M) is 6, location of the fuel tank is (2,2), the limit of the pump is 6. The answer is 15.
+  
+ 
+[Constraints]
+- The fuel tank is alway placed at a location where a pipe exist
+ 
+[Input]
+- The number of test case T (T <= 50)
+- In each TC, the first row will give :
++ The size of the map N x M (5 <= N, M <= 50)
++ The location of fuel tank (start position) (0-based index)
++ The limit of the pump P (1 <= P <= 20)
+- Detail of the map will be given at next N rows, the value C of each cell represent the pipes (total 7 kind of pipes, 0 <= C <= 7), value 0 mean there is no pipe at that location.
+5 => Total 5 test cases
+5 6 2 1 3 => The size of the map is 5 x 6, starting point is (2,1), the limit of pump is 3
+0 0 5 3 6 0 => The first row of the map
+0 0 2 0 2 0 => The second row of the map
+3 3 1 3 7 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+5 6 2 2 6
+3 0 0 0 0 3
+2 0 0 0 0 6
+1 3 1 1 3 1
+2 0 2 0 0 2
+0 0 4 3 1 1
+10 10 4 3 9
+0 0 0 0 0 0 0 0 0 0
+0 0 0 7 5 0 5 0 0 0
+0 0 3 2 2 6 0 0 0 0
+0 4 7 2 2 2 7 0 0 4
+0 3 0 1 1 2 2 0 0 5
+0 5 6 1 1 1 1 6 2 5
+7 4 1 2 0 0 4 6 0 0
+5 3 1 7 0 2 2 6 5 7
+7 3 2 1 1 7 1 0 2 7
+3 4 0 0 4 0 5 1 0 1
+...
+ 
+[Output]
+- The total number of pipes that fuel can flow to
+Case #1
+5
+Case #2
+15
+Case #3
+29
+
+
+3.The Fellowship of The Ring
+Ông A cần đi qua 1 đoạn đường B.
+Trên đoạn đường đi qua có N cổng. Tại mỗi cổng có 1 số lượng binh sĩ và giá để đi qua cổng đó. Muốn đi qua mỗi cổng ông A có 3 cách lựa chọn.
+1. Pass
+Trả số tiền quy định ở cổng đó để được đi qua
+2. Hire
+Trả gấp đôi số tiền ở cổng đó để thuê số binh sĩ gộp vào đoàn quân của mình
+3. battle
+Điều kiện để đánh nhau là số quân của ông A >= số lượng lính tại cổng đó. Có các lưu ý:
++ Ông A k được tính vào số lượng của quân
++ Mỗi người lính chỉ tham gia được vào tối đa 3 trận đánh. Sau 3 trận đánh nếu đi nhóm binh sĩ đó còn sống thì cũng giải tán.
++ Mỗi trận đánh thì tất cả số binh sĩ đều tham gia.
++ Đánh nhau chết theo tỉ lệ 1: 1. Ai tham gia trước sẽ bị chết trước
+ 
+Điều kiện input: số cổng <=20
+-Số lính và chi phí đi qua >=2 và <=1000
+Tìm chi phí nhỏ nhất để ông A có thể đi qua đoạn đường B
+ 
+VD: Có 7 cổng
+ 1234567Số binh sĩ10708020503010Chi phí10051560908010 
+ 
+ 
+ 
+Có thể tính chi phí đi nhỏ nhất
+ 1234567Số binh sĩ10708020503010Chi phí10051560908010Chọn ppPassHireHireBattleBattleBattlePassChi phí100110140   150 
+ 
+
+4.Mario Climb
+ 
+0013111000002111 
+Mario cần phải di chuyển từ vị trí có giá trị bằng 2 và ăn vàng ở ô có giá trị bằng 3
+0 là nhữngô Mario không thể qua
+1 là nhữngô Mario có thể qua
+2 là vị trícủa Mario
+3 là vị trí Mario cần di chuyển đến
+Các vị trí này được thể hiện bằng ma trận NxM( 2<=N,M<=50)
+Mario có thểdi chuyển theo hàng ngang hoặc hàng dọc
+Hàng ngang mario chỉ nhảy được tối đa 1 bước
+Hàng dọc mario có thể nhảy được “h” bước
+Tìm bước nhảy “h” tối thiểu để Mario có thể ăn được vàng
+Sample Input
+3
+5 8
+1 1 1 1 0 0 0 0
+0 0 0 3 0 1 1 1
+1 1 1 0 0 1 0 0 
+0 0 0 0 0 0 1 0
+2 1 1 1 1 1 1 1
+5 6
+0 1 1 1 0 0
+3 1 0 1 1 0
+0 0 0 0 1 1
+0 0 0 0 0 1
+2 1 1 1 1 1
+9 13
+0 1 1 1 1 1 1 1 1 1 1 1 1 
+1 1 0 0 0 0 0 0 0 0 0 1 1 
+0 0 0 0 0 0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0 
+1 1 0 0 0 0 0 0 0 0 0 1 3 
+0 0 0 0 0 0 0 0 0 0 0 0 0 
+1 1 0 0 0 0 0 0 0 0 0 0 0 
+0 0 0 0 0 0 0 0 0 0 0 0 0
+2 1 1 1 1 1 1 1 1 1 1 1 1
+Sample output
+Case #1
+2
+Case #2
+1
+Case #3
+3
+
+
+
+
+
+5.Sky Force
+
+There is an airplane game which to avoid enemies and gather coins.
+The game's map has height is N and width is 5 (5 ≤ N ≤ 12), but due to the limit of the screen, the gaming zone is 5x5. Below the gaming zone, there is control zone, which is one line at the bottom of the screen where airplane move.
+At the start of game, the airplane locates at center point of control zone.
+Game rule :
+- Movement of airplane can be one of 3 options : left - right - stay at current column
+- In each turn, after airplane move, game map will move down one line
+- There is an option to use Bomb : bomb can be used to destroy all enemies in gaming zone, after used, all enemies will disappear and all coins will remain in the map. Bomb can be used only one.
+- When airplane meets a cell with coin, number of coins collected will increase by 1, if it meet an enemy, number of coins will decrease by 1. If number of coins < 0 -> Game Over.
+Given the map Nx5 with C is value of each cell (0: nothing, 1: coin, 2:enemy), find out the maximum amount of coins can be achieved after finishing the game. If the game can not be finished (Game Over), return -1.
+[Input]
+The first line is the total number of test cases T ( T <= 50)
+The first line of each test case contain N, which is the height of the map, then the N lines following descript the map's data.
+[Output]
+The maximum number of coins that can be collected after finishing the game.
+If the game can not be finished, print -1.
+ 
+ Có một trò chơi máy bay để tránh kẻ thù và thu thập tiền xu.
+Bản đồ của trò chơi có chiều cao là n và chiều rộng là 5 (5 ≤ n ≤ 12), nhưng do giới hạn của màn hình, vùng chơi game là 5x5. Bên dưới vùng chơi game, có vùng điều khiển, là một dòng ở dưới cùng của màn hình nơi máy bay di chuyển.
+Khi bắt đầu trò chơi, máy bay định vị ở điểm trung tâm của khu vực điều khiển.
+Quy tắc trò chơi:
+- Chuyển động của máy bay có thể là một trong 3 tùy chọn: trái - phải - ở lại cột hiện tại
+- Trong mỗi lượt, sau khi di chuyển máy bay, bản đồ trò chơi sẽ di chuyển xuống một dòng
+- Có một tùy chọn để sử dụng bom: Bomb có thể được sử dụng để tiêu diệt tất cả kẻ thù trong khu vực chơi game, sau khi được sử dụng, tất cả kẻ thù sẽ biến mất và tất cả các đồng tiền sẽ vẫn còn trong bản đồ. Bomb chỉ có thể được sử dụng một.
+- Khi máy bay gặp một ô có tiền xu, số lượng tiền được thu thập sẽ tăng thêm 1, nếu nó gặp kẻ thù, số lượng tiền sẽ giảm 1. Nếu số lượng tiền <0 -> trò chơi kết thúc.
+Với bản đồ NX5 với C là giá trị của mỗi ô (0: Không có gì, 1: Coin, 2: Kẻ thù), tìm hiểu lượng tiền tối đa có thể đạt được sau khi kết thúc trò chơi. Nếu trò chơi không thể kết thúc (trò chơi kết thúc), return -1.
+[Đầu vào]
+Dòng đầu tiên là tổng số trường hợp kiểm tra t (t <= 50)
+Dòng đầu tiên của mỗi trường hợp thử nghiệm chứa N, là chiều cao của bản đồ, sau đó các dòng N theo mô tả dữ liệu của bản đồ.
+[Đầu ra]
+Số lượng tiền tối đa có thể được thu thập sau khi kết thúc trò chơi.
+Nếu trò chơi không thể kết thúc, in -1.
+Ex:
+Input
+2
+5
+1 1 0 0 0
+1 2 2 2 1
+1 1 2 2 1
+2 2 2 1 2
+2 2 0 2 0
+8
+2 0 2 0 2
+1 0 1 2 0
+0 0 0 2 1
+2 0 2 0 1
+1 2 1 2 0
+0 2 2 0 2
+2 1 1 2 2
+0 2 1 2 0
+ 
+Output
+Case #1
+3
+Case #2
+4
+
+
+6.BASE STATION
+Given the map of BTS consists of N x M cells. Each cell in map have a cost and can connect to other 6 cells around it. Two cells are connected if they share a same edge.
+We call a group of 4 connected cells a cluster. Your program should find the cluster with highest cost sum and print out the square value of its sum
+Ex: M = 5 , N = 3
+
+In above example, we have a cluster with square of sum 
+(300 + 410 + 185 + 95)2 = 980100
+ 
+
+In above example, the selected cells is not a cluster.
+ 
+[Input]
+- The first line is the number of test cases T (T <= 50)
+- In each TC :
++ The first line give the size of the map M, N ( 3 ≤ N, M ≤ 15 )
++ In the next N lines, the cost C (0 ≤ C ≤ 1000) of each cell is given as below rule
+
+5
+5 3
+300 410 150 55 370
+120 185 440 190 450 
+165 70 95 420 50 
+5 5
+356 55 41 453 12 
+401 506 274 506 379 
+360 281 421 311 489 
+425 74 276 371 164 
+138 528 461 477 470 
+[Output]
+Print out the square value of maximum cluster's sum
+Case #1
+2250000
+Case #2
+3748096
+Case #3
+3928324
+Case #4
+7236100
+Case #5
+13104400
+
+
+
+7. Gold Mining
+Given a map of gold mine which can be represented as a NxN matrix
+In this map, there are several gold mines that locates on random places (maximum 4 mines each map). A camp will be setup in the map for mining the gold. Every day, workers will go from the camp to gold mines location. In order to reduce the cost, company want to setup the camp so that the distance from it to mining location is optimized.
+Let consider below 5x5 map :
+
+ - Worker can not go through the rock
+ - It takes 1 hour to travel a cell in map
+There are two mines, from start point (camp location), it would take 4h to go to each gold mine. Let's suppose the final cost will be the highest cost among them, then if we put the camp as above figure, the final cost will be 4.
+Now, we consider other example :
+
+In the 3rd example, the final cost will be minimum (1)
+[Input]
+The first line of input will be the number of test case T (T ≤ 50)
+In each TC :
+ - The first line will give the size of map N (N ≤ 20) and the number of gold mines G (2 ≤ G ≤ 4)
+ - The next G lines will give location R (row) & C (column) of gold mine (1-base indexed)
+- The next N lines will give the map's data : 1 represents the road & gold mines, 0 represents the rock (can not go through)
+ 
+[Output]
+Your program should output the Minimum final cost for traveling from camp to gold mines.
+Case #1
+1
+Case #2
+2
+Case #3
+2
+Case #4
+7
+Case #5
+6 
+[Constraints]
+- You can move on 4 directions (up/left/down/right)
+- You can not setup the camp on gold mine location or rock
+- You can go pass a gold mine then go to other gold mine
+- You must place camp so that workers can go to all gold mines
+
+
+
+8. Advertisement Schedule
+A shop need to display the advertisement 3 times a day.
+However, they only has 1 electric board to display the advertisement, hence they should select the time to display advertisements so that visitors can watch them as much as possible.
+ 
+When visitors watch advertisement, they can get points which calculated as below :
+1. Three Ads  have length L1, L2, L3 and the points a person can get after watched them P1, P2, P3.
+2. A visitor can get the point of a Ads  only when he/she watch the Ads  fully (from beginning to the end of that Ads )
+3. When a visitor watch more than one Ads  and also get the point for them, only the Ads  with highest point will be given to that person.
+4. Only one Ads  can be displayed on electric board at a time (But the next Ads  can be displayed right after the previous one ended)
+ 
+Given the length of each Ads L1, L2, L3 and the point gained for them P1, P2, P3, the arrival time of each visitor into the shop and the time duration that he/she stay in the shop, write a program to select advertisement display time so that as many points as possible can be given to visitors. Print out the total sum of points that the visitors can get.
+ 
+Ex: There are 7 visitors go to the shop with the arrival time and staying duration as below
+ Visitor 1Visitor 2Visitor 3Visitor 4Visitor 5Visitor 6Visitor 7Arrival Time2637121Time Duration24321110 
+ LengthPoint(s)Advertisement 111Advertisement 222Advertisement 333 
+Assuming that Ads1 is displayed at time 2, Ads2 at time 7 and Ad3 at time 3, the visitors will watched the ads as below schedule :
+ Visitor 1Visitor 2Visitor 3Visitor 4Visitor 5Visitor 6Visitor 7Ads 1Watch----WatchWatchAds 2-Watch-Watch--WatchAds 3--Watch---Watch(Note that visitor 1 didn't watch Ads3 fully, so the point of Ads3 is not given to him)
+ 
+The points that each visitor can get from watching Ads is show as below :
+ Visitor 1Visitor 2Visitor 3Visitor 4Visitor 5Visitor 6Visitor 7Ads 11----11Ads 2-2-2--2Ads 3--3---3Total 12 Points1232013(Visitor 7 watched all Ads fully, however he can only get the highest of one Ads - which is 3 points of Ads 3)
+There are many way to arrange the display time, and the method above give us the maximum sum of points which visitors can get, so the answer in this case is 12.
+ 
+[Constraints]
+- The number of visitors N (1 ≤ N ≤ 50)
+- The arrival time Ai, the time duration Di of each visitor and the length of each Ads L1, L2, L3 are given as integers (1 ≤ Ai, Di, L1, L2, L3 ≤ 50)
+- Ai + Di ≤ 50
+- L1 + L2 + L3 ≤ 50
+- The starting time of an Ads : 1 ≤ starting time ≤ 50
+- P1, P2, P4 are integers (1 ≤ P1, P2, P3 ≤ 1000)
+ 
+[Input]
+The 1st line given T - the total number of TC (T ≤ 50)
+In each TC :
+ - The 1st line contains N, L1, L2, L3, P1, P2, P3 in this order
+ - The next N lines : each line gives the arrival time Ai and time duration Di of each visitor
+5                         // Number of test cases T=5
+7 1 2 3 1 2 3         // Test case 1 N=7, L1=1, L2=2, L3=3, P1=1, P2=2, P3=3
+2 2                       // A1 = 2, D1 = 2
+6 4                       // ...
+3 3
+7 2
+1 1
+2 1
+1 10
+4 3 2 1 6 4 3
+1 5
+1 3
+2 4
+2 2
+... 
+[Output]
+Out put the maximum sum of points that visitors can get from watching advertisements.
+Case #1
+12
+Case #2
+18
+Case #3
+17
+Case #4
+16
+Case #5
+17998
+
+9. Fishing
+There are N spots for fishing in the fishing center.
+The center has 3 gates, and a number of customers standing before each gate.
+
+To avoid disorder, the customers must enter the center follow these rules :
+ 1. Only one Gate is open at a time, and it will be closed after all customers of that gate entered.
+ 2. When open a gate, the customers stand before that gate will enter one by one, and go to the closest & empty spot from their position.
+- The distance from a gate to the spot right above it is 1m
+- Whenever a customer goes further one spot (to left or right), it takes additionally 1m further.
+- Ex : The distance from Gate 1 to spot 4 is 1m, and to spot 3, 5 is 2m
+ 3. If there are 2 two spots that closest to a customer, he can choose any one of them (you should consider this case)
+4. After all customers enter the gate, choose the next gate to open and proceed same as above
+ 
+You should find a way so that the sum of the moving distance of all customers is minimum and print out that sum.
+Ex) In above figure :
+- The number of fishing spots : 10
+- Gate 1 : location is 4, number of waiting customer is 5
+- Gate 2 : location is 6, number of waiting customer is 2
+- Gate 3 : location is 10, number of waiting customer is 2
+ 
+Case 1) We open the gate by the order : Gate 1 > Gate 2 > Gate 3
+
+
+
+For this case, the sum of moving distance is : 3+2+1+2+3+2+3+2+1 = 19
+ 
+Case 2) We open the gate by the order : Gate 2 > Gate 1 > Gate 3
+When open Gate 3, the 1st customer will go to spot 6, the second one can go to spot 5 or 7
+OR 
+Case 2-1)
+
+In this case, the sum is : 4+3+2+1+2+1+4+2+1 = 20
+ 
+Case 2-2)
+
+In this case, the sum is : 4+3+2+1+2+1+2+2+1 = 18
+ 
+[Input]
+- The first line given the number of test case T (T <= 50)
+- For each test case:
++ The first line given the number of spots N (10 <= N <= 60)
++ The next three lines give the information of 3 gates :
+> Gate's position P ( 1 <= P <= N)
+> The number of customers standing before that gate C ( 1 <= C <= 20 )
+ 
+[Output]
+The minimum moving distance of all customers
+Case #1
+18
+Case #2
+25
+Case #3
+57
+Case #4
+86
+Case #5
+339
+STP2018
+1. Turn Off The Lights
+Văn phòng APS hiện tại đang có N bóng đèn và có K khóa. Các khóa được nối vào các bóng đèn theo quy luật như sau:
+Khóa thứ K sẽ được nối vào các bóng đèn thứ K+n(K+1) (n>=0; 0<=K+n(K+1) <=N).
+Ví dụ:
+Khóa thứ 1 sẽ nối vào các bóng đèn số 1, 3, 5, 7,9…
+Khóa thứ 2 sẽ nối vào các bóng đèn số 2, 5, 8, 11,…
+Khóa thứ 3 sẽ nối vào các bóng đèn số 3, 7, 11, 15,…
+Nếu khóa thứ k được thay đổi trạng thái, tất cả các bóng đèn đang nối với khóa k sẽ chuyển trạng thái (Bật->Tắt, tắt->bật).
+Có một quy định được ban hành trong APS P: Nhân viên rời văn phòng cuối cùng phải có trách nhiệm tắt đèn trong văn phòng sao cho số lượng bóng đèn được tắt là lớn nhất. Tuy nhiên để thử thách tư duy của các nhân viên, nhân viên rời văn phòng cuối đó chỉ được phép thay đổi trạng thái khóa tối đa 3 lần, mỗi lần được chọn tối đa 1 khóa.
+Hãy tạo một chương trình giúp các nhân viên tìm ra phương án tối ưu để tắt đèn với tối đa 3 lần tác động vào khóa^.^
+Input:
+Dòng 1 chứa số T là số TC.
+Mỗi testcase bao gồm các thông tin sau:
+- Dòng đầu tiên chứa số lượng bóng đèn N và số Khóa K (10<=N<=100, 3<=K<=10);
+- Dòng tiếp theo là N bóng đèn, mỗi bóng đèn nhận 1 trong 2 trạng thái: 1 là bật, 0 là tắt.
+OutPut:
+In ra số lượng bóng đèn tối đa có thể tắt tại mỗi case.
+Đáp số của mỗi TC in ra trên 1 dòng theo định dạng:
+CaseTC# Answer
+Ví dụ:
+Input
+1
+10 3 (10 bóng đèn và 3 khóa)
+1
+10 3
+0 0 1 1 1 1 0 0 1 0 
+Output:
+Case1 6
+Giải thích: Chọn tác động vào công tắc thứ 1, các bóng đèn sau sẽ bị thay đổi trạng thái:1 3 5 7 9
+Stt bóng đèn12345678910Ban đầu0011110010Sau khi tác động vào khóa 11001011000
+
+2. Crossroads
+Ngã Tư Đường- Hồ Quang Hiếu
+ 
+Một khu đô thi được sắp xếp theo hình ô bàn cờ vuông với kích thước NxN có 15<=N<=100. Chủ thầu muốn mở rộng thêm đường để giảm ùn tắc giao thông bằng cách với mỗi ngã ba sẽ được mở thêm đường để thành ngã tư. Mô tả như hình vẽ sau đây (Màu trắng là đường, màu vàng là nhà ở):
+                                                                                                                                                                                                                                 Năm 1
+                                                                                                                                                                                                                                 Năm 2
+ 
+ 
+                                                                                                                                                                                                                                 Năm 3
+ 
+Trong cùng một năm các con đường mới xây sẽ được cắt qua nhau.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+Hãy tính số năm cần thiết để chủ đầu tư có thể mở được tất cả các ngã ba thành ngã tư.
+Input:
+Dòng đầu tiên là tổng số testcase 1<T<50;
+Dòng tiếp theo là kích thước mảng N;
+Tiếp theo là mảng gồm 0( đường đi) và 1( nhà ở).
+ 
+Output:
+In ra số năm theo dạng: #(số tc) (số năm)
+ 
+2
+15
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 1 0 1 1 1 1 1 1 1 1 1 1 1 0
+0 1 0 1 1 1 1 1 1 1 1 1 1 1 0
+0 1 0 1 1 1 1 1 1 1 1 1 1 1 0
+0 0 0 0 1 1 1 1 1 1 1 1 1 1 0
+0 1 1 1 1 1 1 1 1 1 1 1 1 1 0
+0 1 1 1 1 1 1 1 1 1 1 1 1 1 0
+0 1 1 1 1 1 1 1 1 1 1 1 1 1 0
+0 1 1 1 1 1 1 1 1 1 1 1 1 1 0
+0 1 1 1 1 1 1 1 1 1 1 1 1 1 0
+0 1 1 0 0 0 0 1 1 1 1 1 1 1 0
+0 1 1 1 1 1 1 1 1 1 1 1 1 1 0
+0 1 1 1 1 1 1 1 1 1 1 1 1 1 0
+0 1 1 1 1 1 1 1 1 1 1 1 1 1 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 
+ 
+ 
+15
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 1 0 1 1 1 0 1 1 1 0 1 1 1 0
+0 1 0 1 1 1 0 0 0 0 0 0 0 0 0
+0 1 0 1 1 1 0 1 1 1 1 1 1 1 0
+0 0 0 0 1 1 0 1 1 1 1 1 1 1 0
+0 1 1 1 1 1 0 1 1 1 1 1 1 1 0
+0 1 1 1 1 1 0 1 1 1 1 1 1 1 0
+0 1 1 1 1 1 0 1 1 1 1 1 1 1 0
+0 1 1 1 1 1 0 1 1 1 1 1 1 1 0
+0 1 1 1 1 1 0 1 1 1 1 1 1 1 0
+0 1 1 0 0 0 0 1 1 1 1 1 1 1 0
+0 1 1 1 1 1 0 1 1 1 1 1 1 1 0
+0 1 1 1 1 1 0 1 1 1 1 1 1 1 0
+0 1 1 1 1 1 0 1 1 1 1 1 1 1 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+
+3. Price Tag
+Cho một hình vuông NxN ô nhỏ (5 ≤ N ≤ 9), mỗi ô chứa 1 số từ 0 – 9.
+Nhiệm vụ cần làm là cắt hình vuông lớn thành (N+1) hình có kích thước 1x(N-1). Mỗi hình kích thước 1x(N-1) bao gồm (N-1) chữ số và tạo thành 1 số nguyên (N-1) chữ số (đọc từ trái qua phải hoặc từ trên xuống dưới tùy theo phương án cắt). 
+ 
+Sau khi có được các miếng cắt, tính tổng các số thu được (chỉ tính các số có N-1 chữ số, ô còn sót lại sẽ không được tính vào tổng). 
+Hãy tìm ra phương án cắt có tổng thu được lớn nhất.
+ 
+
+
+
+ 
+Input
+Input sẽ chứa một hoặc nhiều test cases 
+Dòng đầu là số lượng test case T (T ≤ 50)
+Dòng đầu tiên của mỗi test cases là kích thước hình vuông N (5 ≤ N ≤ 9)
+N dòng tiếp theo lần lượt là giá trị trong các ô nhỏ của hình vuông lớn. 
+ 
+Output
+Với mỗi test case, in ra tổng số lớn nhất thu được 
+ 
+Sample
+Input
+2
+5
+1 0 3 5 6
+4 5 3 7 9
+7 2 2 6 7
+3 4 7 8 8
+9 5 1 6 3
+6
+3 4 5 6 8 6
+3 5 6 7 7 8
+3 3 3 3 3 5
+1 2 5 6 4 2
+3 3 5 5 5 7
+8 5 3 6 9 9
+ 
+Output
+#1 35000
+#2 72000
+
+
+1.    Capture Knight
+There is a mobile piece (a Knight) and a stationary piece on the N×M chessboard. 
+The available moves of the mobile piece are the same as set out in the image below.
+
+You need to capture the stationary piece by moving the mobile piece with the minimum amount of moves.　　
+Write a program to find out the minimum number moves to catch a piece. 
+[Input]
+Several test cases can be included in the inputs. T, the number of cases is given in the first row of the inputs. After that, the test cases as many as T are given in a row. 
+N, the numbers of the rows and M, the number of columns of the chessboard are given in the first row of each test case. 
+R & C is the location information of the attacking piece and S & K is the location of the defending pieces and are given in the row at the second line. However, the location of the uppermost end of the left end is (1, 1)
+Maximum value of N or M is 1000.
+[Output]
+Output the minimum number of movements to catch a defending piece at the first line of each test case. 
+Print "Case #tn" before each answer where "tn" is test case number.
+[I/O Example]
+Input 
+2
+9 9
+3 5 2 8
+20 20
+2 3 7 9
+Output
+Case #1
+2
+Case #2
+5
+
+
+ 
+2. Nâng cấp máy tính
+Time limit: 1 giây với C/C++, 2 giây với Java.
+Submission limit: 5 lần.
+Memory limit: 256MB cho tổng cộng các vùng nhớ heap, global và static (chỉ 1MB cho vùng nhớ stack).
+ 
+Anh Kim có 1 máy tính đã mua từ thời sinh viên nên hiện giờ cần phải nâng cấp và thay thế L linh kiện để đảm bảo máy tính hoạt động tốt. 
+Để tìm mua được các thiết bị đó với giá tốt nhất anh Kim đã qua chợ Trời và tham khảo được giá của tất cả N thiết bị của máy tính.
+Không chỉ thế, anh đã tìm kiếm thêm trên mạng, và anh rất vui khi có M gói ưu đãi giá rẻ được rao bán trên mạng, mỗi gói có giá bán là P bao gồm K thiết bị của máy tính.
+Anh Kim có thể mua một hoặc nhiều gói ưu đãi và có thể mua thừa linh kiện chưa cần thay thế.
+Hãy giúp anh Kim mua được đủ L thiết bị cần thiết với tổng giá thành là nhỏ nhất.
+ 
+
+
+
+
+
+
+
+Input 
+ 
+Dòng đầu tiên là số lượng test case T (T <= 50).
+Mỗi test case gồm các thông tin sau:
+- Dòng đầu tiên là số nguyên dương N (1 <= N <= 20) là số lượng thiết bị chính của máy tính.
+- Dòng thứ 2 bao gồm N số, số thứ i tương ứng là giá của thiết bị thứ i được bán ở chợ Trời.
+- Dòng thứ 3 là số nguyên dương M ( 0 <= M <= 30) là số lượng gói ưu đãi có trên mạng.
+- M dòng tiếp theo, mỗi dòng thứ i là thông tin về gói ưu đãi thứ i. Số đầu tiên là giá của gói ưu đãi P ( 1 <= P <= 1000), số tiếp theo là số lượng thiết bị K ( 1 <= K< = N) trong gói ưu đãi đó,
+K số tiếp theo là các thiết bị có trong gói ưu đãi đó.
+- Dòng cuối cùng của mỗi test case là thông tin về các thiết bị mà anh Kim cần mua. Số đầu tiên là số lượng thiết bị L, L số tiếp theo là các thiết bị anh Kim cần mua
+- Các thiết bị được đánh số trong đoạn từ 1 đến N và không có số nào trùng nhau
+
+
+
+Output
+Bắt đầu mỗi test case là "#x" với x là số thứ tự của test case (bắt đầu từ 1), tiếp theo là một dấu cách và giá thành nhỏ nhất mà anh Kim cần bỏ ra để mua đủ những thiết bị anh cần.
+
+
+
+Sample
+Input
+1	<-- T = 1,
+5	 <-- Số linh kiện chính của máy tính
+20 15 17 18 25	<-- giá chợ Trời của 5 thiết bị từ 1 đến 5 tương ứng
+4	<-- 4 gói ưu đãi trên mạng
+30 3 1 2 5	<-- gói thứ nhất có giá 30, gồm 3 linh kiện 1, 2, 5
+25 2 2 3	<-- gói thứ 2 có giá 25, gồm 2 linh kiện 2, 3
+35 3 1 3 5	<-- gói thứ 3 có giá 35, gồm 3 linh kiện 1, 3, 5
+20 2 3 4	<-- gói thứ 4 có giá 20, gồm 2 linh kiện 3, 4
+3 2 4 5		<-- Số lượng anh Kim cần là 3, lần lượt là 2, 4, 5
+Output
+#1  48
+Giải thích: Để mua được 3 thiết bị 2, 4, 5 với giá rẻ nhất, ta sẽ mua gói giá rẻ 1 gồm 1, 2, 5 với giá 30 và mua thiết bị 4 ở chợ Trời với giá 18, tổng là 30 + 18 = 48.
+
+
+ 
+3. Cutting a Piece of Colored Paper
+Cutting a Piece of Colored Paper
+You want to cut a piece of paper by a certain fixed rule to make some pieces of white or blue colored square paper with various sizes. 
+
+ 
+If the size of the entire paper is N×N (N = 2^K; 1 ≤ K ≤ 7; K = natural number), the cutting rules are as below.
+ 
+‘If the entire piece of paper is not colored the same, cut the middle part horizontally and vertically to divide it into the same sized four pieces of paper, (N/2)×(N/2), as with I, II, III, IV in < FIG. 2 >. For each I, II, III and IV, cut and divide again in the same way if one entire piece of paper is not colored the same, and make them into the same sized four pieces of paper. Continue until each and every piece of paper has only one color of white or blue.’
+ 
+When you finish, < FIG. 3 > shows the first division of < FIG. 1 > and < FIG. 4 > shows the final version of 9 pieces of white paper and 7 pieces of blue paper of various sizes.
+ 
+
+ 
+If the length of an edge of the first given piece of paper, N, and the color information (white or blue) inside each square are given, create a calculation program that assesses how many white/blue pieces of paper are.
+
+Time limit: 1 second (java: 2 seconds) 
+ 
+[Input]
+Input may include many test cases. The number of test cases, T, is given on the first line of input and then the amount of T of test cases is given in a line. (T ≤ 30)
+ The length of an edge of the first given piece of paper, N, is given for the first line of each test case.
+ From the next line through to the amount of N lines, the color information is given separately as blanks. 0 indicates white and 1 indicates blue.
+ 
+[Output]
+For each test case, you should print "Case #T" in the first line where T means the case number. 
+For each test case, you should output the number of white pieces of paper and blue pieces of paper separately as blanks on the first line of each test case.
+ 
+[I/O Example]
+Input 
+2
+ 8
+ 1 1 0 0 0 0 1 1
+ 1 1 0 0 0 0 1 1
+ 0 0 0 0 1 1 0 0
+ 0 0 0 0 1 1 0 0
+ 1 0 0 0 1 1 1 1
+ 0 1 0 0 1 1 1 1 
+0 0 1 1 1 1 1 1
+ 0 0 1 1 1 1 1 1
+16
+ 1 0 0 1 0 0 0 0 0 0 1 1 0 1 1 1
+ 1 1 0 1 0 1 1 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 1 0 1 1 1 1 0 0 1 0 0 1
+ 1 1 0 0 1 0 0 1 0 0 1 0 1 1 1 0
+ 0 1 1 1 0 0 1 1 0 0 1 0 0 1 1 1
+ 1 0 1 1 0 0 0 1 0 1 0 1 0 0 1 1
+ 1 1 1 1 1 1 0 0 1 1 1 1 1 0 0 0
+ 1 1 0 1 0 1 0 0 1 0 1 1 1 0 0 1
+ 1 1 1 1 1 1 0 0 1 0 1 1 0 1 1 0
+ 1 0 0 1 1 1 0 0 0 0 1 1 1 1 0 0
+ 1 0 0 1 1 1 1 0 0 0 1 1 0 1 0 1
+ 1 1 1 0 1 1 0 0 1 1 1 1 1 1 0 1
+ 1 1 1 1 1 1 0 0 0 0 1 1 1 1 0 0
+ 1 1 1 1 1 1 0 1 1 1 1 1 1 1 0 0
+ 1 1 0 0 0 0 0 0 1 1 0 1 1 0 0 0
+ 1 1 0 0 1 1 0 0 0 1 1 1 1 0 0 0
+Output
+Case #1
+9 7
+Case #2
+ 88 99
+4. Earning Biggest Prize Money 2
+Earning Biggest Prize Money 2
+The winner in a quiz contest will be given an opportunity to earn bonus prize money. Among the given number cards, the winner can choose two number cards and exchange their positions as many times as the set number.  
+ 
+For example, let’s assume five number cards 3, 2, 8, 8, 8 are given as follows and the number of exchange is set to 2.
+ 
+Before exchange>
+ 
+3 2 8 8 8 
+For a first time, positions of 3 in the first card and 8 in the fourth card were switched and the order of the cards became 8, 2, 8, 3, 8. 
+  
+8 2 8 3  8 
+Next, positions of 2 in the second card and 8 in the last card were switched and the order of the cards became 8, 8, 8, 3, 2.
+ 
+8 8 8 3 2 
+After switch is made as many as the set number, prize money is calculated by the weight given to the positions of the cards. The prize money is 1 won at right end and it increases by ten times as it moves by one digit. When the order of the cards becomes 8,8,8,3,2 as shown in the example above, the winner will get the bonus prize money of 88832 won. 
+ 
+Note that switch must be made as many times as the set number, and the switch of the same positions switched can take place. In the following case, the number of exchange is set to 1, so switch must occur once to get 49 as the result. 
+ 
+9 4Switch once->4 9 
+In case of 94, when switch is made twice, the order goes back to the original number which is 94. 
+ 
+Now, compute the biggest amount of prize money the winner can get when number cards are switched as many times as the set number. 
+ 
+Input
+A maximum of 50 test cases are given through standard input. The first line of the input has number of test cases T.(1 ≤ T ≤ 50). For each test case, the information on number cards and the number of exchange are given. The information on the number cards will be given in integer-type numbers, and the maximum number of digits is 6. Number of exchange is less than or equal to 10.
+Output
+Print “Case #C” in the first line for each test case with C being the case number. The next line print the biggest amount of prize money the winner can receive after exchange in the same line. 
+Input ExampleOutput Example3    // number of testcase
+123 1  // number cards, the number of exchange
+2737 1 // number cards, the number of exchange
+32888 2Case #1
+321
+Case #2
+7732
+Case #3
+88832
+ 
+ 
+
+
+ 
+5. Assigning a Meeting Room 
+In our company, there is a popular meeting room. Many meetings are reserved to use this room with starting time and finishing time, and the place can’t hold two meetings at the same time if the time is overlapped. Thus only one of the same time-framed meetings can be held in here and the others should give up. However, it is not overlapped for the same starting time of a meeting and the finishing time of another meeting.
+ When the number of meetings, starting time and finishing time of each meetings are given, you want to hold as many meetings as possible.
+ In a given number of meetings and each given starting/finishing time, you want to hold as many meetings as possible. Create a program that can assign meetings to the meeting room as many as it can.
+ 
+Time limit: 1 second (java: 2 seconds)
+ 
+[Input]
+ Several test cases can be included in the inputs. T, the number of cases is given in the first row of the inputs. After that, the test cases as many as T (T ≤ 20) are given in a row. 
+N, the number of meetings is given in the first row of each test case (1 ≤ N ≤ 500).
+ Numbers of each meeting, starting time, and finishing time are given separately from the second row to the number of N. (Each number is natural numbers below 500) 
+
+[Output]
+ For each test case, you should print "Case #T" in the first line where T means the case number. For each test case, you should output the maximum number of meetings which can assign in the first row of each test case. 
+
+[I/O Example] 
+Input 
+2
+ 6
+ 1 1 10
+ 2 5 6
+ 3 13 15
+ 4 14 17
+ 5 8 14
+ 6 3 12
+ 15
+ 1 4 8
+ 2 2 5
+ 3 2 6
+ 4 4 6
+ 5 2 3
+ 6 1 6
+ 7 4 7
+ 8 3 5
+ 9 3 8
+ 10 1 2
+ 11 1 7
+ 12 2 4
+ 13 5 6
+ 14 4 5
+ 15 7 8
+ 
+Output
+ Case #1
+3
+Case #2
+ 5 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+ 
+6. Stock Exchange
+Stock Exchange
+John need to earn money, so he decide to buy stock of a company. Each day, John can either buy stock of the company, sell some or all stocks that you have bought, or do nothing.
+However each day he can buy at most one stock from this company. Very lucky, he has exactly information about the price of stock in the next N days from his friend.
+But he doesn'n know how to earn maximum money from this information.
+Given information about the price of stock in the next N days, please help him to earn maximum money.
+[Constraint]
+In the test case, there are 40% with 3 <= N <= 10, 40% with 10 < N <= 20, and 20% with 20 < N <= 30. 
+Time limit: 5 sec (Java : 10 sec).
+Submit limit: 10 times.
+[Example]
+If he has the information of price in the next 4 days is 8, 5, 1, 10, then he can buy stock in the first 3 day with total prices is 14, and he sell them in the last day to get 30
+ So total money he can earn is 30-14 = 16.
+[Input]
+There can be more than one test case in the input file. The first line has T, the number of test cases.
+Then the totally T test cases are provided in the following lines (1 <= T <= 50)
+ In each test case, the first line has an integer N (3 <= N <= 30) is the number of days, in the next line is the price of stock for the next N days K (1 <= K <= 10000). 
+[Output]
+ In the each line, begin with "#x", where x is the test case number, following by a space and the maximum money that John can earn.
+[Sample]
+Input
+ 5
+4
+8 5 1 10 
+7
+9 9 3 5 6 6 2 
+10
+2 2 6 3 8 7 2 5 3 4 
+5
+9 7 6 3 1 
+10
+7 2 9 10 3 8 10 6 5 4
+Output
+#1 16
+#2 4
+#3 23
+#4 0
+#5 21
+ 
+
+
+ 
+7. Partition 1
+Partition 1
+This time, Samsung Electronics, in a new building was built on the Umyeon Dong.
+Wireless division also was assigned to the spacious.
+The total space for Wireless division is fixed and the space for each group is fixed.
+Now we should assign partitions for each group.
+ 
+The time for assigning partition is proportional to size of space.
+For example, if the size of space is 1000, it spends time of 1000 to partition it
+(It spends same time if we partition it as 300+700 or 500+500.)
+ 
+The total time depends on the order of partitioning.
+For example, in case the size of total space is 800, and each size for groups is 100, 200, and 500.
+If partitioning 100+700 first, partitioning 200+500 later, then the total time is 800+700=1500
+But, if partitioning 500+300 first, partitioning 100+200 later, then the total time is 800+300=1100
+ 
+Write program to print the minimum time to partition for all groups.
+ 
+[Input]
+There can be more than one test case in the input.
+The first line has T, the number of test cases.
+Then the totally T test cases are provided in the following lines.
+In each test case, the first line has an integer N(1 ≤ N ≤ 1000); the number of group.
+The next line enumerates N integers each separated by a blank; each integer means the size of space(S) for each group. (10≤S≤5000)
+ 
+[Output]
+For each test case, you should print your answer in two line.
+ 
+[Sample]
+Input
+2
+3
+500 100 200
+4
+30 40 10 20
+ 
+Output
+Case #1
+1100
+Case #2
+190
+ 
+
+
+ 
+8. Point of Balance 2
+Point of Balance 2
+There exist n magnetic materials in a gravity-free space. The center of each magnetic material is the location, i.e., the spatial coordinate (x,y,z). Coordinates y and z of n magnetic materials are the same, and only the coordinates of x are different. In other words, it is assumed the magnetic materials exist in a straight line. The location of the magnetic materials is never changed by any external force. Now, when an object is located in a random position in the straight in which n magnetic materials exist, gravitational force acts from each magnetic material. The gravitational force acting from a magnetic material on the object is obtained by the distance (d) between the magnetic material and the object and by the masses of the magnetic material and the object. 
+ 
+Formula for calculating the gravitational force acting from a magnetic material on the object: 
+F = G*m1*m2/(d*d), G is a positive constant. 
+ 
+ 
+Between the magnetic materials on the left and those on the right, the object moves in the direction of magnetic materials with bigger force. It is when that the two gravitational forces become the same, the object stops moving. Find the point where both forces become the same. When there are n magnetic materials, n-1 points of balance exist. 
+ 
+Point of balance: where both forces become the same: Pulling force of left magnetic materials = Pulling force of right magnetic materials 
+Note that errors of the coordinate values must be less than 10-9 (1e-9). 
+ 
+[Input]
+ 
+A total of 10 test cases are given. For each test case, the number of magnetic materials N is written. In the next line, N x coordinate values, and N mass values are input sequentially. The number (N) of magnetic materials comes between 2 and 10 (2 ≤ N ≤ 10).
+ 
+ 
+[Output]
+For each test case, print “#C” in the first line with C being case number. Leave a blank space and print out x coordinate values of the points of balance in the same line. If the coordinate value has 10 or more digits after the decimal point, print only up to10 digits. 
+ 
+[Input/output example]
+ 
+2          <-- test case #1 starts, number of magnetic materials
+1 2 1 1   <-- Each magnetic material’s x coordinate values, and mass values (coordinate coordinate mass mass).
+2<-- test case #2 starts, number of magnetic materials
+1 2 1 1000
+. . . 
+Output
+#1 1.5000000000
+#2 1.0306534300
+. . . 
+
+
+ 
+9. Matrix Product
+Matrix Product
+We need time proportional to N3 to multiply two N*N matrices. We are going to compute AM for a given matrix A.  If we simply conduct matrix multiplication M-1 times, we need time proportional to (M-1)*N3. We may need huge time in this way. You should speed up this job. Given an N*N matrix A, you should provide a program that compute ‘AM mod 100,000,007’ as fast as possible, for an M not smaller than 2.  ‘AM mod q’ means the matrix in which each element has the remainder after divided by q, with the value 0 through q-1.  For instance, ‘  mod 6’ is . (This is just for avoiding overflow by too big integers. You only have to conduct ‘x*y mod q’ for any ‘x*y.’) In this problem, the most important thing is the running time. If time limit passes, you got points for the cases that your program has completed. The input will be provided in the increasing order of problem sizes; so an inefficient program may successfully run only some small cases.  If you try the most naive way, we guess you would have about 30% of the total scores.
+Time limit: 2 seconds.
+[Input]
+ There can be more than one test case in the input file.  The first line has C, the # of test cases. Then the totally C test cases are provided in the following lines. In each test case, the first line has N and M, the dimension of the matrix and the exponent. 1≤N≤100, 1≤M≤10,000,000.  The following N lines enumerate the elements of the matrix. Each line enumerates N elements.  All neighbored numbers in a line are separated by a blank.
+ 
+  [Output]
+   For each test case, you should print "Case #T" in the first line where T means the case number.   The next N lines enumerate the elements of the solution matrix. As the input file, each line has N elements each separated by a blank.
+ 
+[I/O Example]
+ Input
+ 2                                 ← There are 2 test cases
+ 2 4                               ← Starting Case 1
+ 1 2
+ 1 2
+ 3 5                               ← Starting Case 2
+ 1 0 0
+ 1 1 1
+ 1 0 3
+
+Output
+ Case #1
+ 27 54
+ 27 54
+ Case #2
+ 1 0 0
+ 63 1 121
+ 121 0 243
+ 
+10. Minimal Big Sum
+Minimal Big Sum
+Suppose 'A' is a non empty zero indexed array of 'N' integers and 'K' is another Integer.
+ Array 'A' needs to be divided into 'K' blocks of consecutive elements.  
+
+ Size of the block is any integer such that , 0 <= size of block <= N. Every element of the array should belong to some block. 
+The sum of the block from X to Y equals A[X] + A[X + 1] + ... + A[Y]. The sum of empty block equals 0.
+The big sum is defined as the maximal sum of any block.
+ 
+For example, you are given integers 'K' = 3 and array A such that:
+   A[0] = 2
+   A[1] = 1
+   A[2] = 5
+   A[3] = 1
+   A[4] = 2
+   A[5] = 2
+   A[6] = 2 
+The array can be divided, for example, into the following blocks: 
+        [2, 1, 5, 1, 2, 2, 2], [], [] with a big sum of 15;
+         [2], [1, 5, 1, 2], [2, 2] with a big sum of 9;
+         [2, 1, 5], [], [1, 2, 2, 2] with a big sum of 8;
+         [2, 1], [5, 1], [2, 2, 2] with a big sum of 6.
+ 
+The goal is to minimize the big sum. In the above example, 6 is the minimal big sum. 
+ 
+Given integer K and a non-empty zero-indexed array A consisting of N integers, returns the minimal big sum. 
+ 
+For example, given K = 3 and array A such that:
+   A[0] = 2
+   A[1] = 1
+   A[2] = 5
+   A[3] = 1
+   A[4] = 2
+   A[5] = 2
+   A[6] = 2 
+the function should return 6, as explained above.
+ 
+Assume that: 
+        N and K are integers within the range [1..100,000];
+         each element of array A is an integer within the range [0..M]. 
+Input :
+ First Line : T : Number of test cases
+ Second Line : K : Number of Blocks.
+ Third Line : N : Number of elements in the input array
+ Fourth Line : Elements of array separated by space.
+ Fifth Line : next test case follows 
+ 
+Output
+ #Test_Case minimized_big_sum 
+ 
+Sample Input
+ 2
+ 3
+ 7
+ 2 1 5 1 2 2 2
+ 4
+ 10
+ 10 2 1 5 1 2 2 2 9 11 
+ 
+Sample Output  
+#1 6
+ #2 12
+ 
+ 
+11. Princess
+Princess
+
+
+
+
+ 
+ 
+12. Route Finding
+Route Finding
+Time LimitFor 10 test cases, 10 seconds for C/C++ and 20 seconds for Java.Submittal Limit99 times (Submittal limit decremented by 1 after each submittal)ScoringWhen an answer is submitted, it is tested with the given input.txt and the result is notified in real time. The result can be one of following.
+Pass: All test cases resulted in correct answers.
+Fail: The test generated wrong or partially correct answers, runtime error, time out, etc. 
+ 
+The problem is to investigate whether there is a route from point A to point B depicted in a map as the figure shows. There can be up to two crossroads. All roads are one way and cannot be returned.
+ 
+Create a program to determine if there is a route from point A to point B when the roads are given.
+-       Points A and B are fixed with numbers 0 and 99, respectively.
+-       All roads are expressed in a number pair. In the example above, the roads starting from number 2 can be expressed in (2, 5) and (2, 9).
+-       The route exists if there is at least one route.
+-       One cannot go against the arrow direction.
+ 
+ 
+
+ 
+ 
+[Constraints]
+The starting point and destination point are represented by 0 and 99, respectively.
+The number of peaks (crossroad points) cannot exceed 98 (excluding the starting and destination points), and the number of roads to choose from a peak cannot exceed 2.
+The following guideline is just a suggestion and not mandatory.
+ 
+[Data Storage Guide]
+Since the maximum number of peaks (crossroads) is 100, declare a static array of size[100], and use the number of each peak as the address. Save the number of arriving peak from each peak.
+The result from the above example is shown below.
+
+ 
+ 
+[Input]
+The first line of the input file provides the test case number and the total number of roads. The next line contains the sequence pairs.
+ 
+The sequence pairs are not separately displayed. They are paired in the listed sequence.
+ 
+ 
+[Output]
+Output the answer to each test case. Each line begins with ‘#x’ followed by a space and then the next answer. Output “1” if the route exists and “0” if not.
+Here, x is the test case number.
+ 
+ 
+[Input Example]
+1 16
+ 0 1 0 2 1 4 1 3 4 8 4 3 2 9 2 5 5 6 5 7 7 99 7 9 9 8 9 10 6 10 3 7
+ 2 159 
+ 0 4 0 10 1 4 1 10 2 11 2 8 3 13 4 8 4 11 5 10 5 8 6 10 6 11 7 8 7 15 8 14 9 10 9 20 10 14 10 17 11 21 12 21 13 14 13 17 14 20 15 22 16 22 16 20 17 19 18 28 18 29 19 27 20 29 21 31 21 30 22 24 22 30 23 24 23 26 24 27 25 31 26 31 26 37 27 34 27 30 28 38 28 30 29 32 30 38 30 32 31 35 31 36 32 34 32 37 33 40 33 44 34 44 35 39 35 46 36 38 36 41 37 40 38 40 38 49 39 41 39 44 40 45 41 44 41 50 42 44 42 51 43 45 43 52 44 45 44 52 45 48 45 52 46 47 46 55 47 48 47 58 48 53 49 55 50 59 50 60 51 57 51 60 52 60 52 63 53 57 53 62 54 62 54 65 55 62 56 58 57 66 58 64 58 61 59 69 60 62 61 63 62 68 62 64 63 66 64 68 64 71 65 75 65 67 66 75 66 73 67 71 67 72 68 72 68 70 69 72 70 71 70 80 71 80 72 81 72 83 73 77 73 75 74 83 74 78 75 81 75 85 76 79 76 82 77 86 77 87 78 86 78 81 79 89 80 84 80 86 81 83 81 88 82 87 82 86 83 86 83 94 84 94 84 88 85 95 86 91 86 97 87 93 88 92 88 90 89 97 89 92 90 99 91 95 92 96 92 97 94 95 95 97 95 99 96 97 
+........
+........
+ 
+[Output Example]
+#1 1
+#2 1
+....... 
+....... 
+ 
+ 
+ 
+13. Tấn công thành trì
+Tấn Công Thành Trì
+Sau một thời gian dài dưỡng thương ở Hán Trung, Khổng Minh đã bình phục và quyết định tấn công vào vào biên giới nước Ngụy để hoàn thành chí nguyện Bắc phạt của mình. Canh giữ biên giới của Ngụy là Tư Mã Ý, một viên tướng cực kỳ khôn ngoan và mưu trí. Trước đó, Tư Mã Ý đã cho xây dựng một hệ thống phòng thủ gồm các thành trì (tòa thành), giữa các thành trì y lại cho đắp các thành lũy (bức tường) liên kết với các thành trì  nhau để bảo vệ cho các đội quân đồn trú bên trong. Vì thế, trận địa phòng ngự của Ngụy quân rất vững chắc, tầng tầng lớp lớp.
+Khổng Minh là một nhà quân sự tài ba, y đã vạch ra kế hoạch hoàn mỹ như sau:
+Bước 1: Dùng máy bắn đá phá vỡ một số thành lũy liên kết giữa các thành trì của quân Ngụy, sao cho không có đội quân nào của Ngụy được bảo vệ kín bởi hệ thống thành lũy.
+Bước 2: Dùng nhân tâm kế để đánh giáp lá cà với Ngụy quân.
+Theo thông tin thám báo, Khổng Minh biết rằng Tư Mã Ý đã chuẩn bị rất nhiều các máy bắn đá để bảo vệ các thành trì. Theo tính toán của Khổng Minh, để đảm bảo phá được một thành lũy thì cần sử dụng số máy bắn đá bằng với tổng số máy bắn đá ở hai đầu thành lũy đó.
+Ví dụ: nếu thành trì A có 5 máy bắn đá, thành trì B có 3 máy bắn đá, để phá được thành lũy nối thành trì A và thành trì B, đội quân của Khổng Minh cần sử dụng ít nhất 5+3 = 8 máy bắn đá.
+
+Hình vẽ minh họa cho một hệ thống các thành trì và thành lũy của quân Ngụy. Muốn phá các thành lũy liên kết giữa ba cặp thành trì (7, 8), (0, 1) và (1, 4) thì số lượng máy bắn đá ít nhất phải dùng là (1+1)+( (1+1)+(1 + 1) = 6 cái. Khi đó, không còn đội quân nào của Ngụy được bao bọc kín bởi thành lũy nữa, và khi đó đội quân của Khổng Minh sẽ sẵn sàng vào tấn công giáp lá cà.
+Hãy giúp Khổng Minh tính toán xem cần sử dụng ít nhất bao nhiêu máy bắn đá để thực hiện được bước 1 của chiến dịch trong chí nguyện Bắc phạt của mình.
+Input:
+o   Dòng đầu tiên là số lượng bộ test T.
+o   Mỗi test gồm được biễu diễn như sau
+·        Dòng đầu tiên gồm số nguyên M (2 <= M <= 100)  là số thành trì của quân Ngụy, các thành trì được đánh số từ 0 đến M-1.
+·        Tiếp theo là mô tả M thành trì, mỗi thành trì được mô tả trên 2 dòng: dòng thứ nhất gồm 3 số nguyên dương i (0 <= i <= M-1), u_i (1 <= u_i <= 50), c_i (1 <= c_i <= M-1) lần lượt là số hiệu của thành trì, số máy bắn đá của quân Ngụy có trong thành trì và số lượng thành lũy liên kết tới các thành trì khác. Dòng thứ hai gồm c_i số, thể hiện các thành trì có thành lũy liên kết tới thành trì i.
+Output:
+Với mỗi test, in ra tổng số máy bắn đá ít nhất cần sử dụng để thực hiện bước 1 của chiến dịch.
+InputOutput3
+3
+0 1 2
+1 2
+1 2 2
+0 2
+2 3 2
+0 1
+7
+0 1 2
+2 3
+1 2 2
+3 4
+2 3 2
+0 5
+3 1 4
+0 1 5 6
+4 2 2
+1 6
+5 3 2
+2 3
+6 1 2
+3 4
+4
+0 1 2
+1 2
+1 8 2
+0 3
+2 16 2
+0 3
+3 12 2
+1 23
+4
+9 
+ 
+14. Well Project
+Well Project
+
+Our company planned to help dig a well in a place in Africa which suffers from lack of water. 
+ After lots of research, we could dig the well full of water. 
+ After this success, we decided not only to dig the well but also to connect pipelines to towns scattered far from the well.
+
+Now your task is to connect all towns together with the well with the minimum length of pipelines. 
+ Find out the minimum pipeline length.
+
+Time limit : 1 sec (Java : 2 sec)
+
+[Input]
+ There can be more than one test case in the input file. The first line has T, the number of test cases. 
+ Then the totally T test cases are provided in the following lines (T ≤ 10 )
+
+In each test case, The size of the matrix (N) is given at the first row. (3 ≤ N ≤ 100)
+ The distance information of each town is given from the second row to row of N. 
+ The information is the format of N×N matrix. jth number of ith row is the distance from ith town to jth town. 
+ The number on a diagonal line is always 0.
+
+[Output]
+ For each test case, you should print "Case #T" in the first line where T means the case number. For each test case, you should output the minimum pipeline length to connect each town in the first row.
+
+[I/O Example]
+Input
+ 2
+ 3
+ 0 1 4
+ 1 0 2
+ 4 2 0
+ 4
+ 0 4 9 21
+ 4 0 8 17
+ 9 8 0 16
+ 21 17 16 0
+
+Output
+Case #1
+3
+Case #2
+ 28 
+ 
+15 . SKYTOUR
+ 
+Cho một trò chơi như hình:   (C/C++  1s,   Java 2s)
+    
+Một chiếc máy bay sẽ bay vào vùng trên ở ô chính giữa như hình.
+Máy bay sẽ bay ở 1 trong 3 ô.
+Biết rằng máy bay sẽ có một giá trị E là năng lượng của máy bay dùng để thay đổi độ cao, bay lên trên hoặc bay xuống dưới.
+Nếu bay lên trên 1 ô sẽ tốn 2 năng lượng.
+Nếu bay xuống dưới 1 ô sẽ tốn 1 năng lượng.
+Nếu hết năng lượng máy bay chỉ có thể bay thẳng tiếp mà không thay đổi được độ cao nữa.
+Có thể bay lên liền 2 ô (mất 4 E) hoặc xuống liền 2 ô (mất 2 E).
+Yêu cầu: In ra số sao tối đa mà máy bay có thể ăn được khi đi hết đường.
+Input
+T số lượng test case
+T cặp tiếp theo
+E (năng lượng) và N ( chiều dài ma trận, lưu ý chiều rộng luôn là 3).   (N <= 15)
+3 dòng tiếp theo là ma trận trong đó 1 là sao,  0 là đường. 
+Ex.
+1
+3 9
+1 0 0 0 1 1 0 1 0
+0 1 1 0 0 0 0 0 1
+0 0 0 1 0 0 1 0 0
+
+E      3     	   3           3                 3                 3          	1          	1           	       1                 1           0					
+                                
+ Nếu đi như hình trên số sao ăn được sẽ là 6 sao. In ra 6
+Output
+#1 6
+16. The Frog
+The Frog
+
+
+ 
+17 . Grid Acid
+Grid Acid
+A rectangular grid has N x M size.  Each cell is either made of a special metal(type A) or made of stone (type B).
+If acid is poured on a cell of grid, it can either melt it(for type A: special metal cell) and spread further or do not pass through it(for type B: stone cell).
+The cell made with special metal (type A) can melt with acid in 1 second and thus allow acid to spread further.
+The cell made with stone (type B) does not react with acid and hence neither melt nor allow acid to pass through it.
+ 
+There is a third type of a cell that is empty (type C), but has a boundary (all 4 sides) covered with a protective metal.
+
+ 
+Fig.  A grid of 7 x 8 size as example
+ 
+If all 4 sides of it (type C: empty cell) come into contact with acid at any given time, then in that case boundary of it (all 4 sides)melt and allow acid to pass through it. In that case it (type C:  empty cell) get filled with acid.
+There is only one and only one such cell in a given grid.
+ 
+Acid is poured on one of the cell of grid, the cell being made of special metal that can melt with acid.
+It is guaranteed that acid will be poured on only one cell made up of special metal (type A), not on the stone (type B) or the empty cell(type C).
+Acid is poured continuously until all the grid cells (except stone - type B) melt completely.
+ 
+You have to tell when the empty cell with special protective boundary will get filled with acid and when whole grid will get filled with acid (except the cells made up of stones).
+ 
+It takes 1sec for acid to dissolve special metal cell and after that it can spread to its 4 orthogonal neighbors (Left, Right, Up, Down).
+ 
+Input:
+ 
+First entry is number of test cases; rest is each test case input.
+For each test case first row contains N and M as two integers separated by a space.
+Next row contains the location of cell (row and column number separated by space) where acid will be poured continuously until whole grid (except stone cells) melt.
+Next N rows contain M integer values each containing the cell type.
+ 
+Cell type value is of 3 types:
+    -  0 : cell is stone (type B)
+    -  1:  cell is made special metal (type A)
+    -  2:  cell is special empty cell, having a special boundary (type C)
+  Note:  There is always one and only one cell of type C (value 2) in a given grid.
+ 
+Output:
+ 
+Output should contain 2 lines for each test case.
+1st line:   Case#
+2nd line:   Count1  Count2
+    Where:
+            Count1:  time in seconds when special empty cell (type C) will get filled.
+            Count2:  time in seconds when whole grid will get filled with water (note:  stone cell cannot be filled with acid).
+ 
+Note:
+1.  Count2 will be -1if all cells of the grid (except stone cells) cannot be dissolved.  Whole grid dissolving term means that all cells except stone get filled with Acid.
+2.  Count1 will be -1if empty cell cannot be filled. If empty cell cannot be filled the #1 is also applicable, i.e. then Count2 = -1.
+3.  Once acid enters special cell, it accumulates there for 1 second.  After that the acid starts leaking to neighboring (left, right, up, down) cells.
+4.  The terms “dissolve”, “melt”, “leaking” are used to express similar meaning that the cell starts leaking the acid to its neighbor cells (left, right, up, down).
+5. Acid is poured continuously so once a cell starts leaking acid, it may spread further to other cells in further course of time.
+6.  The maximum number of rows or columns of grid is 3000.
+ 
+Sample Input:
+9       ---->Number of test cases.
+4 5    -------> N=4: number of rows,   M= 5: number of columns
+2 4       ----->  Location of cell(row  col) where acid is poured
+1 0 1 0 1   ------>  Grid 1st row with M cell entries
+1 0 1 1 1     ----> Acid is  poured on 4thcell of this (2nd) row.
+1 1 2 1 1      -----> Rows contains empty cell (type C: value: 2)
+1 0 1 0 1         -------> Last row of the grid with cell M values
+3 3    ------> 2ndtest case starts, N=3, M=3
+1 2   --->  Acid is pouring location
+1 1 0   ---> 1strow of grid; Acid poured on 2nd cell of this (1st) row of the grid.
+1 2 1
+0 1 1
+3 3
+1 1
+1 1 1
+1 2 1
+0 1 1
+3 3
+3 3
+1 1 1
+1 2 1
+0 1 1
+4 4
+2 3
+0 0 1 0
+0 1 1 1
+1 1 2 1
+1 0 1 1
+3 3
+1 3
+0 1 1
+1 2 1
+1 1 1
+4 5
+1 3
+1 0 1 0 1
+1 0 1 1 1
+1 1 1 2 1
+1 0 0 1 1
+4 5
+3 5
+1 0 1 0 1
+1 0 1 1 1
+1 1 1 2 1
+1 0 0 1 1
+4 5
+2 4
+1 0 1 0 1
+1 1 1 1 1
+1 1 2 1 1
+1 0 1 1 1
+ 
+Sample Output:
+Case #1
+-1 -1         --->Count1    Count2  (refer to output description)
+Case #2
+-1 -1
+Case #3
+6 6
+Case #4
+6 6
+Case #5
+5 5
+Case #6
+6 6
+Case #7
+7 7
+Case #8
+5 9
+Case #9
+4 6
+18. 8-Queen: Maximum Score
+ 
+8-Queen: Maximum Score
+The King of Narnia has no children, so he has decided that the country will be split into up to k separate parts on his death and each part will be inherited by whoever performs best at some test. It is possible for any individual to inherit more than one or indeed all of the portions. To ensure that only highly intelligent people eventually become his successors, the King has devised an ingenious test. In a large hall filled there are k chess boards placed.  Each chessboard has numbers in the range 1 to 99 written on each square and is supplied with 8 chess queens. The task facing each potential successor is to place the 8 queens on the chess board in such a way that no queen threatens another one, and so that the numbers on the squares thus selected sum to a number at least as high as one already chosen by the King.
+Note:  As per the rules of chess, each row and column of the board contains exactly one queen, and each diagonal contains no more than one.
+Write a program that will read in the number and details of the chessboards and determine the highest scores possible for each board under these conditions.
+Input
+First line contains the number representing total number of test cases.  Then input of each test case follows.
+Test case Input will consist of k (the number of boards), on a line by itself, followed by k sets of 64 numbers, each set consisting of eight lines of eight numbers. Each number will be a positive integer less than 100. There will never be more than 20 boards.
+Output
+Output will consist of k numbers consisting of your k scores, each score on a separate line.  Note that first output line of each test case should be Case #tn, where tn is the test case number.
+Sample input
+2
+ 1
+ 1 2 3 4 5 6 7 8
+ 9 10 11 12 13 14 15 16
+ 17 18 19 20 21 22 23 24
+ 25 26 27 28 29 30 31 32
+ 33 34 35 36 37 38 39 40
+ 41 42 43 44 45 46 47 48
+ 48 50 51 52 53 54 55 56
+ 57 58 59 60 61 62 63 64
+ 2
+ 1 2 3 4 5 6 7 8
+ 9 10 11 12 13 14 15 16
+ 17 18 19 20 21 22 23 24
+ 25 26 27 28 29 30 31 32
+ 33 34 35 36 37 38 39 40
+ 41 42 43 44 45 46 47 48
+ 48 50 51 52 53 54 55 56
+ 57 58 59 60 61 62 63 64
+ 1 2 3 4 5 6 7 8
+ 9 10 11 12 13 14 15 16
+ 17 18 19 20 21 22 23 24
+ 25 26 27 28 29 30 31 32
+ 33 34 35 36 37 38 39 40
+ 41 42 43 44 45 46 47 48
+ 48 50 51 52 53 54 55 56
+ 57 58 59 60 61 62 63 64
+ 
+Sample output
+Case #1
+260
+Case #2
+ 260
+ 260
+19. Chess rook
+Chess rook
+In chess, the rook is a piece that can move any number of squares vertically or horizontally.
+In this problem we will consider small chess boards (at most 4 ×4) that can also contain walls through which rooks cannot move. 
+The goal is to place as many rooks on a board as possible so that no two can capture each other. 
+A configuration of rooks is legal provided that no two rooks are on the same horizontal row or vertical column unless there is at least one wall separating them. 
+The following image shows five pictures of the same board. The first picture is the empty board, the second and third pictures show legal configurations, and the fourth and fifth pictures show illegal configurations. 
+For this board, the maximum number of rooks in a legal configuration is 5; the second picture shows one way to do it, but there are several other ways.
+ 
+Your task is to write a program that, given a description of a board, calculates the maximum number of rooks that can be placed on the board in a legal configuration.
+Input
+First line of input is number of test cases. Each test case contains a board description. 
+Each board description begins with a line containing a positive integer N that is the size of the board; N will be at most 4. 
+The next N lines each describe one row of the board, with a ‘.’ indicating an open space and an uppercase ‘X’ indicating a wall. There are no spaces in the input file. 
+Output
+For each test case, output one line containing the maximum number of rooks that can be placed on the board in a legal configuration. 
+Note that first output line of each test case should be Case #tn, where tn is the test case number.
+Sample input
+5
+4
+.X..
+....
+XX..
+....
+2
+XX
+.X
+3
+.X.
+X.X
+.X.
+3
+...
+.XX
+.XX
+4
+....
+....
+....
+....
+Sample output
+Case #1
+5
+Case #2
+1
+Case #3
+5
+Case #4
+2
+Case #5
+4
+ 
+ 
+20. Painting
+Painting
+
+The design team at SAMSUNG Electronics considers an innovative design for a new product.
+The left figure is the basic diagram and the design team tries to distinguish each area marked by letter of the alphabet with four colors.
+When proceeding with this, the design team pursues perfection by researching the combinations of all colors and chooses one of them.
+However, they have trouble because they do not know the total number of cases of the color combinations.
+Due to this difficulty, you convert the basic diagram on the left to the graph in the center and then you solve the problem by converting it to the adjacency matrix on the right.
+The number of cases is 264.
+ 
+What is the method used to solve this?  (Time Limit : 2 seconds)
+ 
+ 
+[Input]
+ 
+The adjacency matrix about a basic diagram is entered.
+On the first line, the number of the test cases (1<=T <= 10) is given.
+On the first line of each test case, the size of the matrix n (1<=n <= 30, n is the positive number).
+From the second line, the values of matrix are entered by being distinguished as one blank or other.
+ 
+[Output]
+ 
+For each test case, you should print "Case #T" in the first line where T means the case number. 
+ In the second line, print out the total number of cases to paint and distinguish them with four colors for each area.
+ 
+[Sample Input ]
+3
+4
+0 0 0 1
+0 0 0 1
+0 0 0 1
+1 1 1 0
+5
+0 1 1 1 0
+1 0 0 1 1
+1 0 0 1 0
+1 1 1 0 1
+0 1 0 1 0
+7
+0 1 0 0 1 0 1
+1 0 1 0 1 0 0
+0 1 0 1 1 0 0
+0 0 1 0 1 1 0
+1 1 1 1 0 1 1
+0 0 0 1 1 0 1
+1 0 0 0 1 1 0
+ 
+[Sample Output]
+Case #1
+ 108
+Case #2
+ 96
+Case #3
+ 264
+ 
+21. Turn Over Game
+ 
+Turn Over Game
+As in , there is a 4×4 sized table. In a grid of the table, there are white or black stones. When you choose a position of stone randomly, the stone and four stones adjacent to the up, down, left and right sides of the stone will turn to the opposite color like turning a white stone to a black & a black stone to a white. Let’s suppose this process as a calculation.
+ 
+
+Using such a calculation, you want to change all the stones on the table into all whites or all blacks. Find out the minimum operation count at this time. 
+ 
+Time limit: 1 second (java: 2 seconds)
+ 
+[Input]
+ Several test cases can be included in the inputs. T, the number of cases is given in the first row of the inputs. After that, the test cases as many as T (T ≤ 30) are given in a row. 
+ Table info is given without blank over four rows per each test case. Colors are indicated like white for ‘w’ and black for ‘b’.
+ 
+[Output]
+ Output the minimum operation count to change all colors as white or black on the first row per each test case. If not possible, output "impossible" .
+ 
+[I/O Example]
+ Input
+ 2
+ bwwb
+ bbwb
+ bwwb
+ bwww
+ bwbw
+ wwww
+ bbwb
+ bwwb
+ 
+Output
+ Case #1 
+4 
+Case #2
+ impossible
+22. Cover rectangle with dominos
+Cover rectangle with dominos
+You are given 28 different types of domino, each domino has size of 1x2 with 2 numbers on it as follow
+
+ 
+And a board of size 7x8, your task is cover the board with above dominos such that a domino can only be placed on two adjacent squares on board if the numbers of the squares and of domino are equal.
+ 
+How many different way to cover the board?
+ 
+For example if the board are given as below, there are 18 way to cover it, one of them is as below.
+
+ 
+Input
+ 
+The first line is the number of test case T (T < = 50).
+ 
+Each test case will be given on 7 lines, each line have 8 numbers separate by a space is the board for the test case. It have a empty line between 2 test cases.
+ 
+Output
+ 
+Print each test case on one line, the first is "#x", where x is the test case number, separate by a space and the numbers of different way to cover the board.
+ 
+Sample
+ 
+Input
+ 
+5
+ 6 1 6 5 3 2 5 0 
+ 6 6 0 1 6 0 4 4 
+ 2 2 3 6 5 5 1 5 
+ 1 2 0 4 4 3 4 2 
+ 5 2 1 1 4 1 3 0 
+ 3 3 0 2 3 5 2 6 
+ 1 3 4 6 4 5 0 0
+6 6 6 0 1 4 6 3 
+ 2 5 3 3 3 5 5 4 
+ 0 0 4 3 3 1 2 4 
+ 4 4 2 0 5 5 3 0 
+ 0 1 2 2 6 1 2 1 
+ 4 6 2 6 5 6 0 4 
+ 5 0 5 1 1 1 2 3
+2 4 0 2 6 6 4 1 
+ 4 5 6 0 3 5 5 6 
+ 0 1 6 3 4 3 3 2 
+ 0 3 1 1 5 1 3 1 
+ 2 5 0 0 6 2 3 3 
+ 4 0 6 4 5 0 5 5 
+ 2 1 4 4 2 2 6 1
+0 5 4 4 2 5 6 2 
+ 3 5 1 1 1 0 4 1 
+ 3 1 5 1 4 3 1 6 
+ 2 0 6 4 5 5 5 6 
+ 3 3 3 0 2 3 2 1 
+ 0 0 6 0 6 3 4 5 
+ 4 2 6 6 0 4 2 2
+3 0 6 5 6 4 1 0 
+ 3 5 1 3 1 1 0 2 
+ 4 4 5 4 3 3 3 2 
+ 5 5 1 4 5 1 6 0 
+ 5 0 2 2 2 1 6 3 
+ 3 4 0 0 6 6 2 5 
+ 1 6 4 2 0 4 6 2
+ 
+ 
+ 
+Output
+ 
+ 
+#1 32
+#2 24
+#3 40
+#4 16
+#5 20
+ 
+ 
+23. Cleaning Robot
+We have to plan a path for a cleaning robot to clean a rectangular room floor of size NxM. The room floor paved with square tiles whose size fits the cleaning robot (1 × 1). There are clean tiles and dirty tiles, and the robot can change a dirty tile to a clean tile by visiting the tile. Also there may be some obstacles (furniture) whose size fits a tile in the room. If there is an obstacle on a tile, the robot cannot visit it. The robot moves to an adjacent tile with one move. The tile onto which the robot moves must be one of four tiles (i.e., east, west, north or south) adjacent to the tile where the robot is present. The robot may visit a tile twice or more.
+Your task is to write a program which computes the minimum number of moves for the robot to change all dirty tiles to clean tiles, if ever possible.
+Time limit: 1s (C/C++), 2s (Java)
+Submit limit: 10 times
+Example:
+The following is a room of size 5x7, with 3 dirty tiles, and 0 furniture. The answer for this case is 8.
+
+Input
+The input consists of multiple maps, the first line is the number of test case T (T < = 50).
+Each test case begins with N and M representing the size of the room. ( 5 =< N, M <= 100)
+The next N line representing the arrangement of the room with following describe:
+0 : a clean tile
+ 1 : a dirty tile
+ 2 : a piece of furniture (obstacle)
+ 3 : the robot (initial position)
+In the map the number of dirty tiles does not exceed 10 and there is only one robot.
+Output
+Print each test case on two lines, the first line of each test case is "Case #x", where x is the test case number. The next line is the minimum number of moves for the robot to change all dirty tiles to clean tiles. If the map includes dirty tiles which the robot cannot reach, your program should output -1.
+Sample
+Input
+5
+5 7
+0 0 0 0 0 0 0
+0 3 0 0 0 1 0
+0 0 0 0 0 0 0
+0 1 0 0 0 1 0
+0 0 0 0 0 0 0
+5 15
+0 0 0 0 2 0 2 0 0 0 0 1 2 0 1
+0 0 0 1 0 2 0 2 2 0 1 2 0 0 0
+2 1 0 2 0 1 0 2 0 0 0 0 0 0 0
+0 0 0 1 0 2 0 0 1 2 0 0 2 0 0
+0 2 1 0 2 0 0 0 0 0 3 0 0 0 0
+...............
+Output
+Case #1
+8
+Case #2
+38
+Case #3
+37
+Case #4
+-1
+Case #5
+49
+ 
+24. Map Coloring
+Map Coloring
+We consider a geographical map with N countries numbered from 1 to N (1 <= N <=  1000). For every country we know the numbers of other countries which are connected with its border. From every country we can reach to any other one, eventually crossing some borders. Write a program which determines whether it is possible to color the map only in two colors-red and blue in such a way that if two countries are connected their colors are different. The color of the first country is red. Your program must output one possible coloring for the other countries, or show, that such coloring is impossible.
+[Input]
+The first line is the total number of test cases T. 
+A test case has two lines. In each test case, the first line has N (the number of countries) and E (the number of border) separated by a space. The next line enumerates E border. A border consists of the two countries it connects. For example, the border connecting countries 5 and 28 is represented by “5 28” or “28 5”. The indices of countries are 1 through N. All adjacent numbers in a line are each separated by a space. 
+[Output]
+Output the each answer in 1 line. Each line starts with ‘#x’, where x means the index of a test case, and puts a space, and prints the answer. 
+If the coloring is possible, this answer must contain a list of zeros and ones, without any separators between them. The i-th digit in this sequence is the color of the i-th country. 0 corresponds to red color, and one - to blue color. If a coloring is not possible, output the integer −1.
+ 
+[I/O Example]
+Input 
+1                                ← Total test case T
+3 2                              ← Starting test case 1
+1 2 2 3 
+Output
+#1 010 
+ 
+ 
+25 . Hugo
+Có thử thách dành cho Hugo như sau: Hugo được thả vào 1 khu rừng có rất nhiều kim cương, tuy nhiên đồng thời lúc đó có các đám cháy xuất hiện. Các đám cháy này sẽ lây lan ra các khu vực lân cận theo bốn hướng sau 1 giờ. Tuy nhiên trong khu rừng có một số hồ nhỏ, và lửa không thể cháy lan trên hồ.
+Thời gian để Hugo di chuyển giữa các khu đất là 1 giờ, qua khu hồ là 2 giờ. Hãy giúp Hugo thoát khỏi khu rừng cùng vớisố lượng kim cương lớn nhất có thể và đảm bảo Hugo không bị lửa thiêu.
+Lưu ý khu rừng chỉ tồn tại một số lượng nhất định lối thoát, tại danh giới của khu rừng, và Hugo không bao giờ quay lại khu vực mình đã đi qua.
+
+Input
+Dòng đầu là số lượng test case T (T <= 50).
+Dòng đầu của mỗi test case là 4 số N, M, SR, SC tương ứng là số hàng, số cột của khu rừng và tọa độ hàng, cột mà Hugo đang đứng. ( 4 <= N, M <= 15).
+3 dòng tiếp theo, bắt đầu của mỗi dòng tương ứng là số lượng K các đám cháy hiện có, các hồ và các lối thoát, 2K số tiếp theo trên dòng là tọa độ tương ứng. N dòng tiếp theo sẽ là bản đồ mô tả số lượng kim cương D tại mỗi khu vực trong khu rừng. (0 <= D <= 1000)
+Output
+In mỗi test case trên 2 dòng, dòng đầu tiên là "Case #x", với x là số thứ tự của test case.
+Dòng tiếp theo là số lượng kim cương lớn nhất mà Hugo có thể thu được, nếu Hugo không thể thoát ra khỏi khu rừng, in ra -1.
+Sample
+Input
+5 <- Số lượng test case
+4 4 1 2 <- Test case 1, khu rừng có kích thước 4x4, Hugo đang ở ô (1, 2)
+2 1 1 4 1 <- 2 Khu vực bắt đầu cháy ở (1, 1) và (4, 1)
+4 1 3 2 1 3 3 3 4 <- 4 Khu vực là hồ ở (1, 3), (2, 1), (3, 3) và (3, 4)
+2 2 4 3 4 <- 2 lối thoát ở ô (2, 4) và (3, 4)
+0 0 10 20 <- Số lượng kim cương hàng 1
+9 3 2 5 <- Số lượng kim cương hàng 2
+0 0 0 0 <- Số lượng kim cương hàng 3
+0 10 0 100 <- Số lượng kim cương hàng 4
+...
+Output
+Case #1
+10  <- Số lượng kim cương lớn nhất mà Hugo có thể thu được
+Case #2
+45
+Case #3
+250
+Case #4
+643
+Case #5
+328
+ 
+26. Array Game
+Array Game
+Có 1 trò chơi với dãy gồm N số như sau:
+Mỗi bước đi bạn phải chia mảng thành 2 phần không rỗng sao cho tổng các phần tử bên trái bằng tổng phần tử bên phải. Nếu chia được bạn sẽ được 1 điểm, nếu không chia được trò chơi kết thúc.
+Sau mỗi lần chia thành công, bạn phải bỏ 1 trong 2 phần đã chia và tiếp tục trò chơi với phần còn lại.
+Cho 1 dãy, hỏi số điểm nhiều nhất mà bạn có thể thu được là bao nhiêu?
+Input
+Dòng đầu tiên là số lượng test case T (T <= 20).
+Dòng đầu tiên của mỗi test case là N (N <= 20,000) là số lượng phần tử của dãy. Dòng tiếp theo là N phần tử của dãy đó.
+ 
+Output
+Mỗi test case in ra số điểm nhiều nhất mà có thể thu được
+ 
+Sample
+Input
+3
+3
+3 3 3
+4
+2 2 2 2
+7
+4 1 0 1 1 0 1
+Output
+0
+2
+3
+ 
+27. Battle City
+Battle City
+Many of us had played the game "Battle city" in our childhood, and some people (like me) even often play it on computer now. 
+ 
+
+
+ 
+What we are discussing is a simple edition of this game. Given a map that consists of empty spaces, rivers, steel walls and brick walls only. Your task is to get a bonus as soon as possible suppose that no enemies will disturb you (See the following picture). 
+ 
+
+
+ 
+Your tank can't move through rivers or walls, but it can destroy brick walls by shooting. A brick wall will be turned into empty spaces when you hit it, however, if your shot hit a steel wall, there will be no damage to the wall. In each of your turns, you can choose to move to a neighboring (4 directions, not 8) empty space, or shoot in one of the four directions without a move. The shot will go ahead in that direction, until it go out of the map or hit a wall. If the shot hits a brick wall, the wall will disappear (i.e., in this turn). Well, given the description of a map, the positions of your tank and the target, how many turns will you take at least to arrive there?  
+ 
+Input
+ There can be more than one test case in the input. The first line has T, the number of test cases. 
+Then the totally T test cases are provided in the following lines (T<=10). 
+The first line of each test case contains two integers M and N (2 <= M, N< = 300). Each of the following M lines contains N uppercase letters, each of which is one of 'Y' (you), 'T' (target), 'S' (steel wall), 'B' (brick wall), 'R' (river) and 'E' (empty space). Both 'Y' and 'T' appear only once. 
+Output
+For each test case, please output the turns you take at least in a separate line. If you can't arrive at the target, output "-1" instead.
+
+Sample
+Input
+1
+3 4
+YBEB
+EERE
+SSTE
+ 
+Output
+Case #1
+8
+ 
+28. Find cycle
+Find cycle
+Given a directed graph, check whether the graph contains a cycle or not. Your function should return 1 if the given graph contains at least one cycle, else return 0. 
+ 
+Input
+-------------------------
+3   --> total TC count
+ 3 3    --> TC 1 input number of nodes and number of edges
+ 1 2
+ 2 3
+ 3 1
+ 3 2   --> TC 2 input
+ 1 2
+ 1 3
+ 4 3    --> ... 
+ 1 2
+ 2 3
+ 1 4 
+ 
+Output
+--------------------------------
+Case #1
+ 1
+ Case #2
+ 0
+ Case #3
+ 
+29. Uniform Distribution in Square
+Uniform Distribution in Square
+An uniform distribution of an n xn square array of cells is a partition of the n*n cells in the array inexactly n sets, each one with n contiguous cells. Two cells are contiguous when they have a common side.
+A good uniform distribution is composed of contiguous regions. The figures show a good and a wrong uniform distribution for a 5 x 5 square:
+ 
+
+
+ 
+Note that in the second example the cells labeled with 4 describe three non-contiguous regions and cells labeled with 5describe two non-contiguous regions. You must write a program that evaluates if an uniform distribution of the cells in a square array is good or not. 
+ 
+Input
+The first line contains the number of test cases.  Test cases follow in next lines.
+It is understood that a cell in an n x n square array is denoted by a pair (i, j),with 1 <= i  , j<= n. The input file contains several test cases. Each test case begins with a line indicating n, 0<="" style="margin: 0px; padding: 0px;">100,the side of the square array to be partitioned. Next, there are n-1 lines, each one corresponding to one partition of the cells of the square, with some non-negative integer numbers. Consecutive integers in a line are separated with a single blank character. A line of the form 
+a1 a2 a3 a4…
+means that cells denoted with the pairs (a1,a2),(a3, a4), ... belong to one of the areas in the partition.
+The last area in the partition is defined by those cells not mentioned in the n- 1 given lines.
+ 
+Output
+For each test case ‘good’ must be printed if the uniform distribution is good, in other case, ‘wrong’ must be
+printed. The answers for the different cases must preserve the order of the input.  The first output line for each test case should be "Case #tn", where tn is the test case number.
+ 
+Sample
+Input
+3
+2
+1 2 2 1
+5
+1 1 1 2 1 3 3 2 2 2
+2 1 4 2 4 1 5 1 3 1
+4 5 5 2 5 3 5 5 5 4
+2 5 3 4 3 5 4 3 4 4
+5
+1 1 1 2 1 3 3 2 2 2
+2 1 3 1 4 1 5 1 4 2
+4 5 5 2 5 3 5 5 5 4
+2 4 1 4 3 5 4 3 4 4
+  
+Output
+Case #1
+wrong
+Case #2
+good
+Case #3
+wrong
+ 
+ 
+30. Diamond
+Diamond
+You are asked to help diagnose class diagrams to identify instances of diamond inheritance. The following example class diagram illustrates the property of diamond inheritance. There are four classes: A, B, C and D. An arrow pointing from X to Y indicates that class X inherits from class Y.
+
+ 
+In this class diagram, D inherits from both B and C, B inherits from A, and C also inherits from A. An inheritance path from X to Y is defined as a sequence of classes X, C1, C2, C3, ..., Cn, Y where X inherits from C1, Ci inherits from Ci + 1 for 1 ≤ i ≤ n - 1, and Cn inherits from Y. There are two inheritance paths from D to A in the example above. The first path is D, B, A and the second path is D, C, A.
+A class diagram is said to contain a diamond inheritance if there exists a pair of classes X and Y such that there are at least two different inheritance paths from X to Y. The above class diagram is a classic example of diamond inheritance. Your task is to determine whether or not a given class diagram contains a diamond inheritance.
+Input
+The first line of the input gives the number of test cases, T. T test cases follow, each specifies a class diagram. The first line of each test case gives the number of classes in this diagram, N. The classes are numbered from 1 to N. N lines follow. The ith line starts with a non-negative integer Mi indicating the number of classes that class i inherits from. This is followed by Mi distinct positive integers each from 1 to N representing those classes. You may assume that:
+If there is an inheritance path from X to Y then there is no inheritance path from Y to X.
+A class will never inherit from itself.
+Output
+For each diagram, output one line containing "Case #x: y", where x is the case number (starting from 1) and y is "Yes" if the class diagram contains a diamond inheritance, "No" otherwise.
+Limits
+1 ≤ T ≤ 50.
+ 0 ≤ Mi ≤ 10.
+Small dataset
+1 ≤ N ≤ 50.
+Large dataset
+1 ≤ N ≤ 1,000.
+Sample
+Input   
+3
+ 3
+ 1 2
+ 1 3
+ 0
+ 5
+ 2 2 3
+ 1 4
+ 1 5
+ 1 5
+ 0
+ 3
+ 2 2 3
+ 1 3
+ 0 
+Output
+Case #1 
+No
+ Case #2 
+Yes
+ Case #3 
+Yes
+ 
+31. Fast robot
+Fast robot
+Mr. Noh is responsible for enhancing the movement of a robot faster. 
+ Now, Mr. Noh is thinking like this: The speed of the robot decreases when it changes its direction. 
+ Therefore, it requires a study of the acceleration in direction changes. 
+ However, the better method than that is to use the route with the minimum number of direction changes when it moves from point A to point B.
+
+Because of that, he studies a maze. 
+ When the maze information is given, he tries to create a program to move it from the starting point to the arriving point based on the minimized direction changes.
+
+Let’s find out the minimum direction changes possible from the starting point to the arriving point when the maze information is given.
+
+Time limit : 1 sec (Java : 2 sec)
+
+[Input]
+ There can be more than one test case in the input file. The first line has T, the number of test cases. 
+ Then the totally T test cases are provided in the following lines (T ≤ 10 )
+ In each test case, The width and height of the maze are given as N & M separately at the first row. (1 ≤ N, M ≤ 200)
+ The horizontal coordinate and vertical coordinate of the starting point, and the horizontal coordinate and vertical coordinate of the arriving point are given separately in order at the second row. 
+ Information of the maze is given from the third row the number (N). At this time, the path indicates 0; the wall indicates 1. There is no blank each other.
+
+[Output]
+ In case of being reachable from the starting point to the arriving point, generate the minimum direction change frequency between two points. 
+ If not, generate "-1"
+
+[I/O Example]
+Input
+2
+ 7 7
+ 1 2 7 5
+ 1111111
+ 0000011
+ 1011001
+ 1011100
+ 1011110
+ 1000000
+ 1111111
+ 7 7
+ 1 2 7 6
+ 1111111
+ 0000001
+ 1011000
+ 1011100
+ 1011110
+ 1000000
+ 1111111
+
+Output
+3
+2
+ 
+32. Quân mã
+Quân mã
+ 
+Trong một bàn cờ NxM.
+ 
+Tìm số lần đi tối thiểu để quân mã ăn hết quân địch.
+ 
+Quân mã có thể di chuyển xung quanh theo 8 hướng .(H1)
+
+H1
+ 
+Example : test case 1
+ 
+Quân mã mất 3 lần di chuyển để ăn hết quân địch . (2,3) -> (3,5) -> (4,3)
+
+H2
+ 
+Input : dòng đầu tiên là số lương test case
+ 
+            Dòng 2 là kích thước của bàn cờ
+ 
+Tiếp theo là bàn cờ :
+ 
+3 là vị trí xuất phát của quân mã
+ 
+1 là vị trí quân địch
+ 
+0 là vị trí trống.
+ 
+Quân mã có thể di chuyển trên tất cả các vị trí trên bàn cờ (0,1,3).
+ 
+Output:
+ 
+In ra số lần di chuyển nhỏ nhất để quân mã ăn hết quân địch.
+ 
+Sample input:
+ 
+2
+ 
+5 7
+ 
+0 0 0 0 0 0 0
+ 
+0 3 0 0 0 0 0
+ 
+0 0 0 1 0 0 0
+ 
+0 0 0 0 0 1 0
+ 
+0 0 0 1 0 0 0
+ 
+10 10
+ 
+1 0 0 0 0 0 0 0 0 0
+ 
+0 0 0 0 0 0 0 0 0 0
+ 
+0 0 0 0 0 0 0 0 0 0
+ 
+0 0 0 0 0 0 0 1 0 0
+ 
+0 1 0 0 0 0 0 0 0 0
+ 
+0 0 0 0 0 0 0 0 0 0
+ 
+0 0 0 0 0 0 3 0 0 0
+ 
+0 0 0 0 0 0 0 0 0 0
+ 
+0 0 0 0 0 0 0 0 0 0
+ 
+0 0 0 0 0 0 0 0 0 1
+ 
+Sample output:
+ 
+Case #1
+ 
+3
+ 
+Case #2
+ 
+12
+ 
+ 
+ 
+33. Little Elephants
+Little Elephants
+The Little Elephant and his friends from the Zoo were returning from the party. But suddenly they were stopped by the policeman Big Hippo, who wanted to make an alcohol test for elephants.
+There were N elephants ordered from the left to the right in a row and numbered from 0 to N-1.Let R[i] to be the result of breathalyzer test of i-th elephant.
+Considering current laws in the Zoo, elephants would be arrested if there exist K consecutive elephants among them for which at least M of these K elephants have the maximal test result among these K elephants.
+Using poor math notations we can alternatively define this as follows. The elephants would be arrested if there exists i from 0 to N-K, inclusive, such that for at least M different values of j from i to i+K-1,inclusive, we have R[j] = max{R[i], R[i+1], ..., R[i+K-1]}.
+The Big Hippo is very old and the Little Elephant can change some of the results. In a single operation he can add 1 to the result of any elephant. But for each of the elephants he can apply this operation at most once.
+What is the minimum number of operations that the Little Elephant needs to apply, such that the sequence of results, after all operations will be applied, let elephants to avoid the arrest? If it is impossible to avoid the arrest applying any number of operations, output -1.
+ 
+Input
+The first line of the input contains an integer T denoting the number of test cases. The description of T test cases follows. The first line of each test case contains three space-separated integers N,K, M. The second line contains N space-separated integers R[0],R[1], ..., R[N-1] denoting the test results of the elephants.
+Output
+For each test case, output a single line containing the minimum number of operations needed to avoid the arrest.
+Constraints
+1 ≤ T ≤ 10
+1 ≤ M ≤ K ≤ N ≤ 17
+1 ≤ R[i] ≤ 17
+ 
+ 
+Example
+Input:
+4
+5 3 2
+1 3 1 2 1
+5 3 3
+7 7 7 7 7
+5 3 3
+7 7 7 8 8
+4 3 1
+1 3 1 2
+ 
+Output:
+#1 0
+#2 1
+#3 1
+#4 -1
+ 
+Explanation
+Example case 1. Let's follow the poor math definition of arrest. We will consider all values of i from 0 to N-K = 2, inclusive, and should count the number of values of j described in the definition. If it less than M = 2 then this value of i does not cause the arrest, otherwise causes.
+ 
+i{R[i],...,R[i+K-1]}max{R[i],...,R[i+K-1]}For which j = i, ..., i+K-1
+ we have R[j] = maxConclusioni=0{1, 3, 1}max = 3R[j] = 3 for j = 1does not cause the arresti=1{3, 1, 2}max = 3R[j] = 3 for j = 1does not cause the arresti=2{1, 2, 1}max = 2R[j] = 2 for j = 3does not cause the arrestSo we see that initial test results of the elephants do not cause their arrest. Hence the Little Elephant does not need to apply any operations. Therefore, the answer is 0.
+ 
+Example case 2.Wehave N = 5, K = 3, M = 3. Let's construct similar table as in example case 1. Here the value of i will cause the arrest if we have at least 3 values of j described in the definition.
+ 
+i{R[i],...,R[i+K-1]}max{R[i],...,R[i+K-1]}For which j = i, ..., i+K-1
+ we have R[j] = maxConclusioni=0{7, 7, 7}max = 7R[j] = 7 for j = 0, 1, 2causes the arresti=1{7, 7, 7}max = 7R[j] = 7 for j = 1, 2, 3causes the arresti=2{7, 7, 7}max = 7R[j] = 7 for j = 2, 3, 4causes the arrest 
+So we see that for initial test results of the elephants each value of i causes their arrest. Hence the Little Elephant needs to apply some operations in order to avoid the arrest. He could achieve his goal by adding1 to the result R[2]. Then results will be {R[0], R[1], R[2], R[3],R[4]} = {7, 7, 8, 7, 7}. Let's check that now elephants will be not arrested.
+ 
+i{R[i],...,R[i+K-1]}max{R[i],...,R[i+K-1]}For which j = i, ..., i+K-1
+ we have R[j] = maxConclusioni=0{7, 7, 8}max = 8R[j] = 8 for j = 2does not cause the arresti=1{7, 8, 7}max = 8R[j] = 8 for j = 2does not cause the arresti=2{8, 7, 7}max = 8R[j] = 8 for j = 2does not cause the arrest 
+So we see that now test results of the elephants do not cause their arrest. Thus we see that using 0 operations we can't avoid the arrest but using 1 operation can. Hence the answer is 1.
+ 
+ 
+ 
+ 
+Example case 3.Wehave N = 5, K = 3, M = 3. Let's construct similar table as in example case 1. Here the value of i will cause the arrest if we have at least 3 values of j described in the definition.
+i{R[i],...,R[i+K-1]}max{R[i],...,R[i+K-1]}For which j = i, ..., i+K-1
+ we have R[j] = maxConclusioni=0{7, 7, 7}max = 7R[j] = 7 for j = 0, 1, 2causes the arresti=1{7, 7, 8}max = 8R[j] = 8 for j = 3does not cause the arresti=2{7, 8, 8}max = 8R[j] = 8 for j = 3, 4does not cause the arrest 
+So we see that for initial test results of the elephants the value of i =0 causes their arrest. Hence the Little Elephant needs to apply some operations in order to avoid the arrest. He could achieve his goal by adding1 to the result R[1]. Then results will be {R[0], R[1], R[2],R[3], R[4]} = {7, 8, 7, 8, 8}. Let's check that now elephants will be not arrested.
+ 
+i{R[i],...,R[i+K-1]}max{R[i],...,R[i+K-1]}For which j = i, ..., i+K-1
+ we have R[j] = maxConclusioni=0{7, 8, 7}max = 8R[j] = 8 for j = 1does not cause the arresti=1{8, 7, 8}max = 8R[j] = 8 for j = 1, 3does not cause the arresti=2{7, 8, 8}max = 8R[j] = 8 for j = 3, 4does not cause the arrest 
+So we see that now test results of the elephants do not cause their arrest. Thus we see that using 0 operations we can't avoid the arrest but using 1 operation can. Hence the answer is 1. Note that if we increase by 1 the result R[2] instead of R[1] then the value i = 2 will cause the arrest since {R[2], R[3], R[4]}will be {8, 8, 8} after this operation and we will have 3 values of j from 2 to 4,inclusive, for which R[j] = max{R[2], R[3], R[4]}, namely, j= 2, 3, 4.
+ 
+Example case 4. When M= 1 the Little Elephant can't reach the goal since for each value of i from 0 to N-K we have at least one value of j for which R[j] =max{R[i], R[i+1], ..., R[i+K-1]}.
+ 
+34 . Làng mạc
+ 
+Làng mạc
+Cho bản đồ mạng lưới giao thông giữa các làng mạc. Một vùng được định nghĩa là một tập hợp các làng mà từ bất kỳ một làng nào trong vùng đều có thể đi đến một làng khác trong vùng.
+Hãy tính số vùng trong bản đồ, số làng cô lập (làng không có đường đi đến bất kỳ làng khác) và số con đường đóng vai trò là “Cầu” giữa hai vùng (nếu bỏ con đường này đi thì số lượng vùng tăng lên 1).
+Input
+Dòng đầu có một số T là số lượng test của file input. Mỗi test được bố cục như sau: dòng đầu là một số nguyên dương N (N <= 300) N là số làng, tiếp theo là một ma trân A[i, j] trong đó A[i][j] có giá trị bằng 1 là có đường đi từ làng i tới làng j và 0 nếu không có đường từ làng i tới làng j. Dữ liệu đảm bảo nếu có đường từ làng i tới làng j thì cũng sẽ có đường ngược lại.
+Output
+Với mỗi test, in ra sốvùng có trên bản đồ, số làng cô lập và số đường đóng vai trò là cầu.
+ 
+Sample
+ 
+Input
+2
+5
+0 1 0 1 0
+1 0 0 1 0
+0 0 0 0 1
+1 1 0 0 0
+0 0 1 0 0
+7
+0 0 0 1 0 0 1
+0 0 0 1 0 0 0
+0 0 0 0 1 0 0
+1 1 0 0 0 0 1
+0 0 1 0 0 0 0
+0 0 0 0 0 0 0
+1 0 0 1 0 0 0
+ 
+Output
+2 0 1
+3 1 2
+ 
+35. Quân tượng
+Xét bàn cờ vuông kích thước n×n. Các dòng được đánh số từ 1 đến n, từ dưới lên trên. Các cột được đánh số từ 1 đến n từ trái qua phải.
+Ô nằm trên giao của dòng i và cột j được gọi là ô (i,j). Trên bàn cờ có m (0 ≤ m ≤ n) quân cờ. Với m > 0, quân cờ thứ i ở ô (ri, ci), i = 1,2,..., m. Không có hai quân cờ nào ở trên cùng một ô. Trong số các ô còn lại của bàn cờ, tại ô (p, q) có một quân tượng. Mỗi một nước đi, từ vị trí đang đứng quân tượng chỉ có thể di chuyển đến được những ô trên cùng đường chéo với nó mà trên đường đi không phải qua các ô đã có quân
+Cần phải đưa quân tượng từ ô xuất phát (p, q) về ô đích (s,t).
+Cho kích thước bàn cờ n, số quân cờ hiện có trên bàn cờ m và vị trí của chúng, ô xuất phát và ô đích của quân tượng. Hãy xác định số nước đi ít nhất cần thực hiện để đưa quân tượng về ô đích hoặc đưa ra số -1 nếu điều này không thể thực hiện được.
+ 
+ 
+Constraints
+N = 1~200
+ 
+Input
+Dòng đầu tiên chứa số testcase. Mỗi testcase có cấu trúc như sau:
+Dòng thứ nhất chứa 6 số nguyên n, m, p, q, s, t.
+Nếu m > 0 thì mỗi dòng thứ i trong m dòng tiếp theo chứa một cặp số nguyên ri , ci xác định vị trí quân thứ i.
+Hai số liên tiếp trên cùng một dòng được ghi cách nhau ít nhất một dấu cách.
+ 
+Output
+Với mỗi test case in ra 1 dòng duy nhất là số nước đi tìm được.
+ 
+Sample
+ 
+Input
+2
+5 5 5 5 5 3
+ 1 2
+ 1 5
+ 2 2
+ 4 2
+ 4 3
+8 3 7 2 1 4
+5 4
+3 4
+4 7
+ 
+Output
+2
+3
+36. Bao ve nong trang
+Nông trang có rất nhiều ngọn đồi núi, để bảo vệ nông trang nông dân John muốn đặt người canh gác trên các ngọn đồi này.
+Anh ta băn khoăn không biết sẽ cần bao nhiêu người canh gác nếu như anh ta muốn đặt 1 người canh gác trên đỉnh của mỗi đồi. Anh ta có bản đồ của nông trang là một ma trận gồm N (1 < N <= 700) hàng và M (1 < M <= 700) cột. Mỗi phần tử của ma trận là độ cao H_ij so với mặt nước biển (0 <= H_ij <= 10,000) của ô (i, j). Hãy giúp anh ta xác định số lượng đỉnh đồi trên bản đồ.
+Đỉnh đồi là 1 hoặc nhiều ô nằm kề nhau của ma trận có cùng độ cao được bao quanh bởi cạnh của bản đồ hoặc bởi các ô có độ cao nhỏ hơn. Hai ô gọi là kề nhau nếu độ chênh lệch giữa tọa độ X không quá 1 và chênh lệch tọa độ Y không quá 1.
+[Input]
+* Dòng 1: Số lượng mẫu
+* Dòng 2: Hai số nguyên cách nhau bởi dấu cách: N và M
+* Dòng 3: N+1: Dòng i+1 mô tả hàng i của ma trận với M số nguyên cách nhau bởi dấu cách: H_ij
+[Output]
+* Dòng 1: Một số nguyên duy nhất là số lượng đỉnh đồi.
+[Sample]
+[Input]
+3
+8 7
+4 3 2 2 1 0 1
+3 3 3 2 1 0 1
+2 2 2 2 1 0 0
+2 1 1 1 1 0 0
+1 1 0 0 0 1 0
+0 0 0 1 1 1 0
+0 1 2 2 1 1 0
+0 1 1 1 2 1 0
+8 7
+4 3 2 2 1 1 1
+3 3 3 2 1 0 1
+2 2 2 2 1 0 0
+2 1 1 1 1 0 0
+1 1 0 0 0 1 0
+0 0 0 1 1 1 0
+0 1 2 2 1 1 0
+0 1 1 1 2 1 0
+8 7
+4 3 2 2 1 1 1
+3 3 3 2 1 0 1
+2 2 2 2 1 0 0
+2 1 1 2 1 0 0
+1 1 2 2 0 1 0
+0 0 0 2 1 1 0
+0 1 2 2 1 1 0
+0 1 1 1 2 1 0
+ 
+[Output]
+#1 3
+#2 2
+#3 1
+ 
+37 . Crazy King
+ 
+King Peter lives in kingdom A, and his daughter in kingdom B. King received a letter telling that her daughter gave birth to a child. King is incredibly curious to see his grandchild! Unfortunately that’s not gonna be that easy.
+Kingdoms A and B are separated by a forest. There are lots of enemies in the forest, and King is not that curious to see them. If they attack king on his way to kingdom B, then he will never ever see his grandchild and daughter again because of lethal consequences.
+Security Council of the King disposes information about location of the enemies, which makes the things easier for king. For some unknown reason a forest is MxN chessboard. (N is the number of rows, and M is the number of columns). N,M <=100 are positive integers.
+Enemies of the King can ride horses as showed in the picture. Usually horses ride (or jump) that way in Chess. Unfortunately king can’t take an airplane from point A to point B because it is not invented yet. So he moves the same way as chess-king does (refer to picture for details).   
+
+ 
+King can’t move to a square X, if a horse of the enemy is on that square. While the king is moving horses are not, but if at least one horse can reach square X in one move, then king can't move to that square (except for the case when square X is either kingdom A or B).
+You are the chief of Electronic Intelligence department of kingdom A (by the way the computers are already invented). And you’re asked to find the length of the shortest route L from kingdom A to
+B, as king can’t wait any longer.
+Input
+The first line of input contains the number of tests T <=100. The first line of each test contains 2 numbers M and N. Then M lines follow each containing N symbols from the set S = { ‘.’, ‘Z’, ‘A’, ‘B’}. ‘.’ means that square is not occupied. ‘Z’ - horse occupies that square. ‘A’ - kingdom A, ‘B’ - kingdom B. Each test contains exactly one kingdom A and B.
+Output
+Find number L for each test and print line L if King can reach kingdom B. Replace L with corresponding number. If King can’t safely reach the kingdom B print line -1.
+Sample
+ 
+Input
+4
+5 5
+.Z..B
+..Z..
+Z...Z
+.Z...
+A....
+3 2
+ZB
+.Z
+AZ
+6 5
+....B
+.....
+.....
+..Z..
+.....
+A..Z.
+3 3
+ZZ.
+...
+AB.
+ 
+Output
+-1
+2
+-1
+1
+ 
+ 
+ 
+38. Biểu thức Zero
+ 
+Cho một số tự nhiên N ≤ 9. Giữa các số từ 1 đến N hãy thêm vào các dấu + và - sao cho kết quả thu được bằng 0. Hãy viết chương trình tìm tất cả các khả năng có thể.
+[Input]
+Dòng đầu tiên là T số testcase. T dòng tiếp theo là các số tự nhiên N <= 9.
+ 
+[Output]
+Mỗi test case in ra “# ” theo sau là số lượng kết quả tìm được mỗi test case. 
+ 
+[Sample] 
+[Input]
+1
+7
+ 
+[Output]
+#1 6
+ 
+Giải thích
+1-2-3-4-5+6+7=0
+1-2+3+4-5+6-7=0
+1-23-45+67=0
+1-23+4+5+6+7=0
+1+2-3-4+5+6-7=0
+1+2-3+4-5-6+7=0
+ 
+39. Checking cube
+ 
+Given a integer N. Find number of possible ways to represent N as a sum of at most five cubes.
+Input
+First line contains N.
+1<=N<=125000.
+Output
+Output the result
+Sample
+Input
+4
+1
+ 64
+905
+15436
+ 
+Output
+ #1 1
+#2 2
+#3 0
+#4 12
+ 
+Giải thích:
+ + Cách 1: 64 = 27 + 27 + 8 + 1 + 1
+ + Cách 2: 64 = 64 + 0  + 0 + 0 + 0
+ 
+40. Laughing Bomb
+You are busy to promote a newly released film in a movie theater. The title is ‘Biochemical Laughing Bomb’ which is about terror.
+ Guerrillas drop a biochemical laughing bomb in the middle of a city. Once exposed, you have to laugh all your life. The bomb will contaminate four people around it during 1 second, and another four around each of them during another one second. However, you won’t be contaminated if you are not in the adjacent four directions. as the below shows the location of the bomb and affected people, and shows contamination process in seconds and you can figure out that the whole city is contaminated in 8 seconds.
+ In order to protect the city from the epidemic, create a program that figures out when the city will be contaminated by the bomb for the last.
+           
+Time limit: 1 second (java: 2 seconds)
+ 
+[Input]
+ Several test cases can be included in the inputs. T, the number of cases is given in the first row of the inputs. After that, the test cases as many as T (T ≤ 30) are given in a row.
+ The row and column of the city, N and M are given by being separated with a blank on the first row of each test case. (1 ≤ N, M ≤ 100)
+ The status within city is given by being separated with a blank from the second row to N number rows. 1 means people exist and 0 means people do not exist. 
+The coordinate of the row and column on which the bomb fall is given by being separated with a blank on the last row. 
+
+[Output]
+ Output how long does it take to contaminate al people on the first row of each test case. 
+
+[I/O Example] 
+Input 
+2
+ 7 8
+ 0 0 1 1 0 0 0
+ 1 1 1 1 0 1 0
+ 0 0 1 1 1 1 1
+ 0 1 1 1 1 1 1
+ 0 1 0 0 1 1 0
+ 0 1 1 1 1 0 0
+ 0 0 1 0 1 1 1
+ 0 0 0 0 1 0 0
+ 2 5
+ 10 10
+ 1 1 1 1 0 1 1 0 0 0
+ 0 1 1 1 1 1 0 1 1 0
+ 0 0 1 1 0 1 0 1 1 1
+ 0 1 1 1 1 1 0 0 1 1
+ 0 1 0 1 0 1 1 1 1 0
+ 0 0 0 0 0 1 1 0 0 0
+ 1 0 1 0 1 0 1 1 0 0
+ 0 0 1 1 1 1 1 1 1 1
+ 1 0 1 0 0 1 0 1 1 0
+ 1 1 1 0 0 0 0 1 1 1
+ 2 2
+ 
+Output
+ 8
+ 21
+ 
+
+41. Lucky number
+Trong một số nước châu Á, 8 và 6 được coi là những chữ số may mắn. Bất cứ số nguyên nào chỉ chứa chữ số 8 và 6 được coi là số may mắn, ví dụ 6, 8, 66, 668, 88, 886 …. Nguyên là một học sinh rất thích toán. Nguyên thích các số may mắn nhưng chỉ thích các số có dạng
+S = 8…86…6
+trong đó S có ít nhất một chữ số và chữ số 6 và 8 không nhất thiết phải đồng thời xuất hiện. Ví dụ, 8, 88, 6, 66, 86, 886, 8866 … là các số có dạng S.
+Cho trước một số nguyên dương X (1 < X < 10 000), Nguyên muốn tìm số may mắn nhỏ nhất dạng S, có không quá 200 chữ số và chia hết cho X.
+Nhiệm vụ của bạn là viết một chương trình tìm số đó cho Nguyên.
+Input
+Dữ liệu vào gồm nhiều bộ dữ liệu tương ứng với nhiều test. Dòng đầu tiên chứa một số nguyên dương không lớn hơn 20 là số lượng các bộ dữ liệu. Các dòng tiếp theo chứa các bộ dữ liệu.
+Trên mỗi dòng tiếp theo chứa một số nguyên X tương ứng với mỗi bộ dữ liệu.
+Ouput
+Với mỗi bộ dữ liệu, ghi ra số may mắn dạng S nhỏ nhất chia hết cho X. Trường hợp không tồn tại số S có không quá 200 chữ số như vậy, ghi -1.
+Sample
+Input	
+4
+6
+8
+43
+5	
+ 
+Output
+Case #1
+6
+Case #2
+8
+Case #3
+86
+Case #4
+-1
+
+42. Ice Cave
+You play a computer game. Your character stands on some level of a multilevel ice cave. In order to move on forward, you need to descend one level lower and the only way to do this is to fall through the ice.
+The level of the cave where you are is a rectangular square grid of n rows and m columns. Each cell consists either from intact or from cracked ice. From each cell you can move to cells that are side-adjacent with yours (due to some limitations of the game engine you cannot make jumps on the same place, i.e. jump from a cell to itself). If you move to the cell with cracked ice, then your character falls down through it and if you move to the cell with intact ice, then the ice on this cell becomes cracked.
+Let's number the rows with integers from 0 to n-1 from top to bottom and the columns with integers from 0 to m-1 from left to right. Let's denote a cell on the intersection of the (r-1)-th row and the    (c-1)-th column.
+You are staying in the cell (r1, c1) and this cell is cracked because you've just fallen here from a higher level. You need to fall down through the cell (r2, c2) since the exit to the next level is there. Can you do this?
+[Input]
+The first line contains two integers, n and m (1 ≤ n, m ≤ 500) — the number of rows and columns in the cave description. Then, r1 and c1 (0≤ r1 < n, 0 ≤ c1 < m) — your initial coordinates. It is guaranteed that the description of the cave contains character '0' in cell (r1, c1), that is, the ice on the starting cell is initially cracked. The next two integers r2 and c2 (0 ≤ r2 < n, 0 ≤ c2 < m) — the coordinates of the cell through which you need to fall. The final cell may coincide with the starting one.
+ 
+Each of the next n lines describes the initial state of the level of the cave, each line consists of m characters "1" (that is, intact ice) and "X" (cracked ice).
+The next line contains two integers, r1 and c1 (0≤ r1 < n, 0 ≤ c1 < m) — your initial coordinates. It is guaranteed that the description of the cave contains character '0' in cell (r1, c1), that is, the ice on the starting cell is initially cracked.
+The next line contains two integers r2 and c2 (0 ≤ r2 ≤<n, 0 ≤ c2 < m) — the coordinates of the cell through which you need to fall. The final cell may coincide with the starting one.
+[Output]
+If you can reach the destination, print 'YES', otherwise print 'NO'.
+[Sample]
+[Input] 
+2
+4 6 0 5 1 1
+0 1 1 1 0 0
+1 1 1 0 0 1
+1 0 1 1 0 1
+1 1 1 1 1 1
+5 4 4 2 0 0
+1 0 1 1
+1 1 1 0
+0 1 0 1
+1 1 1 1
+1 0 0 1
+[Output]
+YES
+NO
+Note
+In the first sample test one possible path is:
+After the first visit of cell (2, 2) the ice on it cracks and when you step there for the second time, your character falls through the ice as intended.
+43. Di chuyển bò
+Toản có một đàn bò, Toản muốn di chuyển đàn bò đi nơi khác bằng một chiếc xe tải có tải trọng (300kg < C < 3000kg).  Anh ta muốn di chuyển được khối lượng lớn nhất mà không quá trọng tải của xe. Cho số lượng bò là N (5 < N < 16) và khối lượng của mỗi con. Xác định khối lượng tối đa mà có thể di chuyển được.
+Input
+Dòng đầu tiên số T là số trường hợp test.
+Với mỗi trường hợp dòng đầu gồm 2 số M, N là trọng tải của xe và số bò.
+Dòng thứ 2 là khối lượng của các con bò.
+Output
+Với mỗi trường hợp gồm “#” và số trường hợp test và kết quả trường hợp đó.
+Sample
+Input
+2
+366 5 
+139 105 126 139 114 
+315 5 
+112 133 123 115 126
+Output
+#1 358
+#2 259
+Level 4 
+44 . Pizza Location
+Our friend Picko is very reach and he wants to open lots of restaurants with delivery. The main food will be, of course, pizza. He has certain number of potential locations for the restaurants, and he knows the locations of the solitaires with lots of people which will often be his customers. Delivery of each restaurant will cover all the solitaires in given radius.
+Picko can open only limited number of restaurants, and he wants that restaurants on the locations which will cover maximal number of people in solitaires.
+Write a program that will calculate maximal number of people which we can cover with delivery.
+Input
+In the first line of the input file there are two integers K and R, separated with space, number of restaurants and radius of delivery, 1 = K = 10, 1 = R = 500.
+In the second line there is integer M, number of locations, K = M = 20.
+In each of the next M lines there are two integer X and Y, separated with space, coordinates of each location, -1000 = X,Y = 1000.
+In the next line there is integer N, number of solitaires, 1 = N = 100.
+In each of the next N lines there are three integers X, Y and S, separated with space, X and Y are coordinates of each solitaire, and S is number of people in that solitaire, -1000 = X,Y = 1000, 1 = S = 100.
+We consider that solitaire is in radius of some restaurant if distance between them is less or equal to R. There are no two locations of restaurants on the same place
+Output
+In only line of the output file we have to write maximal number from the text above.
+Sample
+Input
+3
+2 2 
+3 
+1 0 
+4 0 
+7 0 
+4 
+0 0 1 
+3 0 7 
+5 0 9 
+8 0 1 
+2 2 
+3 
+-2 0 
+0 1 
+3 0
+8 
+-3 1 1 
+-3 0 1 
+-3 -1 1 
+-2 -1 1 
+0 0 3 
+0 2 1 
+2 1 3 
+4 0 2 
+3 3 
+5 
+0 0 
+1 6 
+2 3 
+6 6 
+7 2 
+8 
+0 1 2 
+0 5 3 
+0 6 1 
+1 0 1 
+3 2 3 
+3 6 2 
+6 2 4 
+8 6 3 
+Output
+#1 18 
+#2 12
+45. Path finding puzzles
+Write a program to read in and solve path-finding puzzles. Each puzzle consists of an NxN array of integers, like this:
+7446632268336543728341662444744534354485514665071426949779143540645556662347123335436545263935115466
+The problem is as follows: Starting in the upper left-hand corner (location [0][0]), find a sequence of moves that takes you to the bottom right-hand corner (for an NxN array, this would be location [N-1][N-1]). From each location in the array you may move left, right, up, or down; the number in the location tells you exactly how far to move.
+For example, location [0][0] contains a 7, so from there you must move exactly 7 squares, either to the right or down. You cannot move up or left, because that would take you outside the array.
+To help you see the solution, the squares along the solution path have been colored orange. From 7 you move right to 2, down to 4, down to 5, up to 5, etc. The complete solution is 
+      [(0, 0), (0, 7), (2, 7), (6, 7), (1, 7), (1, 5), (1, 2),
+       (7, 2), (7, 4), (7, 8), (4, 8), (5, 8), (5, 9), (9, 9)].
+ (Also, in the example, there are several squares from which you cannot move at all! Can you find them?)
+  
+Input
+The first line contains t, the number of test cases followed by a blank space. Each of the t tests start with a number n (n <= 20). Then n + 1 lines follow. In the ith line a number A[i - 1] is given. The (n + 1)th line is a blank space.
+ 
+Output
+ 
+If you can reach the destination, print 'YES', otherwise print 'NO'.
+Sample
+Input 
+2
+8 1 8 6 1 2 5 3 7 9
+6 0 3 1 3 8 7 0 4 6
+7 4 6 2 2 4 3 9 8 3
+7 1 4 0 4 2 3 1 6 6
+1 9 4 6 2 4 2 2 3 4
+9 5 4 2 5 0 4 8 3 3
+3 0 4 3 7 7 5 4 4 4
+5 6 8 9 3 7 1 2 9 0
+4 0 3 1 0 5 0 5 6 6
+9 7 6 5 5 5 3 9 2 2
+10
+6 4 4 4 1 8 1 5 2 9
+0 5 7 2 8 8 0 3 3 5
+9 7 8 0 7 2 3 9 5 6
+6 6 2 4 6 4 1 3 2 1
+4 4 2 0 5 9 7 7 3 3
+9 2 7 2 9 1 7 6 0 9
+6 3 5 0 8 2 4 2 0 7
+5 3 1 5 4 9 3 0 6 7
+0 4 2 6 9 8 1 3 6 3
+3 2 3 0 0 3 8 1 8 5
+ 
+Output
+YES
+YES
+ 
+46. Validate the maze
+There are many algorithms to generate maze. After generating the maze we’ve to validate whether it’s a valid maze or not. A valid maze has exactly one entry point and exactly one exit point (exactly 2 openings in the edges) and there must be atleast one path from the entry point to exit point.
+
+Given a maze, just find whether the maze is "valid" or "invalid".
+ 
+Input
+The first line consists of an integer t, the number of test cases. Then for each test case, the first line consists of two integers m and n, the number of rows and columns in the maze. Then contains the description of the matrix M of order mxn. M[i][j] = # represents a wall and M[i][j] = '.' represents a space.
+Output
+ For each test case find whether the maze is "valid" or "invalid".
+ 
+Constraints
+ 
+1 <= t< = 10000
+1 <= m< = 20
+1 <= n< = 20
+ 
+Sample
+ 
+Input
+6
+4 4
+####
+#...
+#.##
+#.##
+5 5
+#.###
+#..##
+##..#
+#.#.#
+###.#
+1 1
+.
+5 1
+#
+#
+.
+.
+#
+2 2
+#.
+.#
+3 4
+#..#
+#.##
+#.##
+ 
+Output
+valid
+valid
+invalid
+valid
+invalid
+invalid
+ 
+47. Prime Ring
+Một vòng gồm N phần tử hình tròn. Trong mỗi hình tròn sẽ chứa một số nguyên P và tổng hai số nguyên trong hai hình tròn cạnh nhau trên vòng tròn tạo thành một số nguyên tố. Nhiệm vụ của bạn là với một chuỗi gồm N phần tử số nguyên, đưa ta tổng số cách xếp N phần tử đó vào vòng tròn thỏa mãn yêu cầu trên.
+ 
+Ví dụ
+Ta có đầu vào là một dãy gồm 6 phần tử: 1, 2, 3, 4, 5, 6. Thì đầu ra sẽ có 2 cách xếp là cách 1: 1 - 4 - 3 - 2 - 5 - 6 và cách 2: 1 - 6 - 5 - 2 -  3 - 4
+ 
+
+Cách 1: 1 - 4 - 3 - 2 - 5 - 6
+ 
+Input
+Dòng đầu liên là T chính là số testcase (T ≤ 100). Mỗi testcase sẽ bao gồm 2 dòng:
+Dòng đầu tiên là N chính là số lượng phần tử các số nguyên. (3 ≤ N ≤ 16)\
+Dòng thứ hai là một dãy gồm N số nguyên P ( 1 ≤ P ≤ 50)
+ 
+Output
+Kết quả được in ra trên một dòng theo định sạng sau: “Case number_testcase: answer”
+ 
+Sample
+Input
+2
+8
+1 2 3 4 5 6 7 8
+6
+1 2 3 4 5 6
+ 
+ 
+Output
+Case 1: 4
+Case 2: 2
+ 
+48. Mountain Walking
+Cho một bản đồ kích thước NxN (2 <= N <= 100), mỗi ô mang giá trị là độ cao của ô đó (0 <= độ cao <= 110). Bác John và bò Bessie đang ở ô trên trái (dòng 1, cột 1) và muốn đi đến cabin (dòng N, cột N). Họ có thể đi sang phải, trái, lên trên và xuống dưới nhưng không thể đi theo đường chéo. Hãy giúp bác John và bò Bessie tìm đường đi sao cho chênh lệch giữa điểm cao nhất và thấp nhất trên đường đi là nhỏ nhất.
+ 
+Input
+Dòng 1: Số test case
+Dòng 2: N
+N dòng tiếp theo chứa N số nguyên, mỗi số cho biết cao độ của một ô.
+ 
+Output
+In ra #test case và một số nguyên là chênh lệch độ cao nhỏ nhất.
+ 
+Sample
+ 
+Input
+5
+5
+1 1 3 6 8
+1 2 2 5 5
+4 4 0 3 3
+8 0 2 3 4
+4 3 0 2 1
+5
+99 85 38 22 55
+89 28 33 3 65
+99 20 14 67 90
+36 27 28 77 31
+50 45 12 9 14
+2
+92 83
+19 91
+5
+61 49 32 34 28
+100 65 0 10 89
+34 99 40 86 4
+10 97 49 21 30
+95 33 79 51 65
+2
+17 60
+94 27
+ 
+Output
+#1 2
+#2 85
+#3 9
+#4 50
+#5 43
+ 
+ 
+49. Pink and Blue
+Xenny was a teacher and he had N students. The N children were sitting in a room. Each child was wearing a white T-shirt, with a unique number from the range 1 to N written on it. T-Shirts of pink and blue color were to be distributed among the students by Xenny. This made the students very happy.
+Xenny felt that a random distribution of T-Shirts would be very uninteresting. So, he decided to keep an interesting condition:
+Every student would get a T-Shirt that is of a different color than his/her friends. That is, if X and Y are friends and X has a Pink T-Shirt, then Y should compulsorily have a Blue T-Shirt, and vice-versa.
+Also, Xenny had a belief that Boys should wear blue T-Shirts and Girls should wear pink T-Shirts. If a boy was given a pink T-Shirt or a girl was given a Blue T-Shirt, he called it an inversion.
+So, Xenny wanted to distribute T-Shirts in the above-mentioned interesting manner and also wanted to minimize "inversions". Help him solve the task.
+Note: There are no disjoint groups of friends in the room. That is, 2 distinct groups with finite number of students do not exist, but exactly 1 group of students exists in the given situation.
+ 
+Input
+ The first line is the number of test cases T.
+First line of each test case contains 2 space-separated integers - N and M - number of students and number of friendships present respectively.
+Second line consists of N space-separated characters, where ith character denotes the gender of the ith student. B: Boy, G: Girl.
+M lines follow. Each line consists of 2 space-separated integers, u and v, showing that u is a friend of v and vice-versa.
+ 
+Output
+ If Xenny could distribute the T-Shirts in the desired way, print the minimum number of inversions required.
+ Else, print -1.
+ 
+Constraints
+ 1 ≤ N ≤ 105
+ 1 ≤ M ≤ 105
+ 1 ≤ u, v ≤ N
+Colors of T-Shirt are represented by uppercase characters 'B' and 'G'
+ 
+Sample
+ 
+Input
+3
+3 2
+B G B
+1 2
+1 3
+6 9
+B B B G G G
+3 5
+2 6
+4 2
+6 3
+3 1
+3 4
+6 1
+5 1
+1 4
+6 5
+G G G B G G
+6 3
+1 3
+2 3
+4 3
+5 3
+ 
+Output 
+1
+-1
+2
+ 
+Explanation
+#1
+ 
+50. Score
+Có N vị giám khảo trong kỳ thi chọn đội tuyển tin học. Kỳ thi bao gồm K bài. Vị giám khảo thứ i đề nghị số điểm của bài j là Aịj.
+Hội đồng giám khảo muốn xác định số điểm cho mỗi bài sao cho:
+Tổng số điểm bằng S.
+Điểm của mỗi bài không bé hơn điểm của bài trước đó.
+Số điểm của mỗi bài bằng điểm đề nghị cho bài này của một vị giám khảo nào đó.
+ 
+Input
+Dòng đầu tiên chứa số nguyên T là số testcase (T ≤ 100). Trong đó mỗi testcase sẽ chứa:
+Dòng đầu chứa ba số nguyên S, K, N (1 ≤ S ≤ 200), (1 ≤ K ≤ 20), (1 ≤ N ≤ 20).
+Dòng thứ i trong số N dòng tiếp theo chứa K số nguyên, số thứ j cho biết giá trị Aij là số điểm vị giám khảo thứ i đề nghị cho bài thứ j. (1 ≤ Aij ≤ 100),
+ 
+Output
+Kết quả của mỗi testcase sẽ được in theo định dạng sau:
+Dòng đầu tiên là: “Case number_testcase”
+Nếu tồn tại một cách cho điểm thỏa mãn yêu cầu in ra số trường hợp thỏa mãn.
+Nếu không tồn tại cách cho điểm, in ra -1.
+ 
+Sample
+Input
+2
+100 3 2
+30 20 40
+50 30 50
+100 2 3
+1 1
+2 2
+3 3
+ 
+Output
+Case 1
+1
+Case 2
+-1
+ 
+51. Sum it up
+Given a specified total t and a list of n integers, find all distinct sums using numbers from the list that add up to t. For example, if t = 4, n = 6, and the list is [4, 3, 2, 2, 1, 1], then there are four different sums that equal 4: 4, 3+1, 2+2, and 2+1+1. (A number can be used within a sum as many times as it appears in the list, and a single number counts as a sum.) Your job is to solve this problem in general.
+ 
+Input
+The input file will contain one or more test cases, one per line. Each test case contains t, the total, followed by n, the number of integers in the list, followed by n integers x1, . . . ,xn. t will be a positive integer less than 1000, n will be an integer between 1 and 12 (inclusive), and x1, . . . , xn will be positive integers less than 100. All numbers will be separated by exactly one space. The numbers in each list may be repetitions.
+ 
+Output
+For each test case, output the total way, if not output -1.
+ 
+Sample
+Input
+4
+4 6
+4 3 2 2 1 1
+5 3
+2 1 1
+400 12
+50 50 50 50 50 50 25 25 25 25 25 25
+20 10
+1 2 3 4 5 6 7 8 9 10
+ 
+Output
+#1 4
+#2 -1
+#3 2
+#4 31
+ 
+Giải thích
+#1
+4
+3+1
+2+2
+2+1+1
+ 
+#3
+50+50+50+50+50+50+25+25+25+25
+50+50+50+50+50+25+25+25+25+25+25
+ 
+#4
+1+2+3+4+10
+1+2+3+5+9
+1+2+3+6+8
+1+2+4+5+8
+1+2+4+6+7
+1+2+7+10
+1+2+8+9
+1+3+4+5+7
+1+3+6+10
+1+3+7+9
+1+4+5+10
+1+4+6+9
+1+4+7+8
+1+5+6+8
+1+9+10
+2+3+4+5+6
+2+3+5+10
+2+3+6+9
+2+3+7+8
+2+4+5+9
+2+4+6+8
+2+5+6+7
+2+8+10
+3+4+5+8
+3+4+6+7
+3+7+10
+3+8+9
+4+6+10
+4+7+9
+5+6+9
+5+7+8
+52. The Settlers of Catan
+Settlers of Catan, một trò chơi của người Đức ở năm 1995, người chơi tham gia vào cuộc cai trị một hòn đảo bằng việc xây dựng các con đường, các khu định cư, và các thành phố qua các vùng hoang dã chưa được thám hiểm.
+Bạn được một công ty phần mềm thuê để phát triển một phiên bản máy tính cho trò chơi này, và bạn được chọn để xây dựng một trong các luật đặc biệt của trò chơi.
+Khi trò chơi kết thúc, người chơi mà xây dựng được con đường dài nhất sẽ được thêm 2 điểm thắng cuộc.
+Vấn đề gặp phải ở đây là người chơi thường xây dựng các mạng lưới con đường rất phức tạp và không chỉ theo một đường tuyến tính. Vì lý do đó, việc xác định con đường dài nhất không phải đơn giản (mặc dù những người chơi thường có thể thấy ngay lập tức).
+Đối chiếu tới trò chơi gốc, chúng ta sẽ giải quyết một vấn đề đơn giản ở đây: Bạn được cho trước một tập các nodes (thành phố) và một tập các cạnh (các đoạn đường) có chiều dài là 1 kết nối các nodes.
+Con đường dài nhất được định nghĩa như là đường đi dài nhất trong mạng lưới đường mà không có cạnh nào được dử dụng hai lần. Dù vậy, các nodes có thể được thăm hơn một lần.
+Ví dụ: Mạng lưới sau đây chứa một con đường dài nhất là 12.
+
+ 
+ 
+Input
+Input sẽ chứa một hoặc nhiều test cases.
+Dòng đầu là số lượng test case T.
+Dòng đầu tiên của mỗi test cases chứa 2 số nguyên: số nodes N (2<=N<=25) và số cạnh M (1<=M<=25). M dòng tiếp theo miêu tả M cạnh. Mỗi cạnh được cho bởi các số node kết nối với nhau. Các node được đánh số từ 0 -> N-1. Các cạnh không có hướng. Các node có bậc là 3 hoặc nhỏ hơn. Mạng lưới không cần thiết phải được kết nối thông suốt với nhau.
+ 
+Output
+Với mỗi test case, in ra chiều dài của con đường dài nhất trên một dòng.
+ 
+Sample
+Input
+3
+15 16
+0 2
+1 2
+2 3
+3 4
+3 5
+4 6
+5 7
+6 8
+7 8
+7 9
+8 10
+9 11
+10 12
+11 12
+10 13
+12 14
+3 2
+0 1
+1 2
+15 16
+0 2
+1 2
+2 3
+3 4
+3 5
+4 6
+5 7
+6 8
+7 8
+7 9
+8 10
+9 11
+10 12
+11 12
+10 13
+12 14
+ 
+Output
+12
+2
+12
+ 
+ 
+53. Sky map
+You are making “sky map” to represent constellation (group of starts) in the sky.
+In each element, 1 means star, 0 means empty.
+And in a constellation, each start should have at least one connection with others via left/right/up/bottom. 
+If two starts are located via diagonal, then
+the two stars are not connected (belong to different constellation.)
+How many constellations are in your sky map, and what is the number of starts in the greatest constellation?
+[Input]
+There can be more than one test case in the input.
+The first line has T, the number of test cases.
+Then the totally T test cases are provided in the following lines (T<=10)
+In each test case, the first line has an integer N(5 ≤ N ≤ 25), the size of map.
+The map is a square, and is represented as N x N matrix.
+For next N lines, each contains each raw of the matrix
+[Output]
+For each test case, you should print the number of constellation and the number of starts in the greatest constellation separated by blank.
+[I/O Example]
+Input
+2
+7
+0 1 1 0 0 0 0
+0 1 1 0 1 0 0
+1 1 1 0 1 0 1
+0 0 0 0 1 1 1
+1 0 0 0 0 0 0
+0 1 1 1 1 1 0
+0 1 0 1 1 0 0
+5
+0 1 0 0 0
+0 1 0 0 0
+0 1 0 0 0
+0 0 0 0 0
+0 0 0 0 0
+Output
+4 8
+1 3
+ 
+ 
+54. Phone List
+Given a list of phone numbers, determine if it is consistent in the sense that no number is the prefix of another. Let’s say the phone catalogue listed these numbers:
+- Emergency 911
+- Alice 97 625 999
+- Bob 91 12 54 26
+In this case, it’s not possible to call Bob, because the central would direct your call to the emergency line as soon as you had dialled the first three digits of Bob’s phone number. So this list would not be consistent.
+Input
+The first line of input gives a single integer, 1 <= T <= 50, the number of test cases. Each test case starts with n, the number of phone numbers, on a separate line, 1 <= n <= 10000. Then follows n lines with one unique phone number on each line. A phone number is a sequence of at most ten digits.
+Output
+For each test case, output “YES” if the list is consistent, or “NO” otherwise.
+Sample
+Input
+2
+3
+911
+97625999
+91125426
+5
+113
+12340
+123440
+12345
+98346
+Output
+Case #1
+NO
+Case #2
+YES
+ 
+ 
+ 
+55. Qua Cầu
+Có 1 số cây cầu làm bằng gỗ. Trải qua 1 thời gian,những  cây cầu trở nên hư hại và xuất hiện những lỗ thủng trên đó. Được biết những cây cầu đó luôn có độ rộng M = 5(bước đi) và độ dài trong khoảng3<n<=12 font="" <="" đi).="" (bước="" style="margin: 0px; padding: 0px;"></n<=12>
+Công việc:
+Có 1 người luôn luôn đứng giữa ở 1 phía của cây cầu. Nhiệm vụ của bạn là phải đưa người đó qua được cầu với số đồng xu nhặt được là lớn nhất. Được biết trên cầu có 1 số đồng xu bị đánh rơi và người đó chỉ có thể đi thẳng, đi chéo trái hoặc đi chéo phải. Ngoài ra người đó có mang 1 tấm ván. Nó có thể vá được 1 lỗ thủng trên cầu giúp người đó có thể đi qua được.
+Lưu ý : không có nhiều hơn 1 đồng xu tại 1 địa điểm.
+ 
+Input
+Dòng đầu tiên là số lượng trường hợp thử nghiệm.
+Dòng thứ 2 chiều dài của cây cầu (N).
+N dòng tiếp theo mô tả cây cầu theo ma trận 2 chiều. Trong đó: ‘0’ là có thể đi được, ‘1’ là có đồng xu(có thể đi được)và ‘2’ là lỗ thủng.
+ 
+Output
+In theo định dạng  “#test_case” và số đồng xu nhiều nhất có thể khi qua đươc cầu.
+Nếu không thể qua cầu in ra  -1.
+ 
+ 
+
+ 
+ 
+Sample
+ 
+Input
+ 
+3
+ 
+7
+ 
+1 2 0 1 0
+ 
+0 0 2 0 1
+ 
+0 1 0 2 1
+ 
+1 0 0 0 1
+ 
+0 0 0 2 2
+ 
+2 0 1 0 1
+ 
+0 1 2 2 0
+ 
+10
+ 
+2 2 2 2 0
+ 
+1 2 0 0 2
+ 
+0 2 0 0 0
+ 
+2 2 0 2 2
+ 
+0 2 2 2 0
+ 
+0 0 0 0 0
+ 
+1 0 0 0 2
+ 
+0 0 0 0 0
+ 
+2 2 0 2 1
+ 
+0 2 2 2 0
+ 
+9
+ 
+0 2 1 1 2
+ 
+0 2 2 2 2
+ 
+2 2 2 1 0
+ 
+0 0 2 0 2
+ 
+0 2 2 1 0
+ 
+1 0 2 2 2
+ 
+2 2 0 2 0
+ 
+2 2 2 0 2
+ 
+0 0 2 0 0
+ 
+ 
+ 
+Output
+ 
+#1 6
+ 
+#2 -1
+ 
+#3 0
+56. Cryptogram 3
+Time LimitFor 10 test cases, 60 seconds for C/C++ and 120 seconds for Java.Submittal Limit99 times (Submittal limit decremented by 1 after each submittal)ScoringWhen an answer is submitted, it is tested with the given input.txt and the result is notified in real time. The result can be one of following.
+Pass: All test cases resulted in correct answers.
+Fail: The test generated wrong or partially correct answers, runtime error, time out, etc. 
+ 
+[Problem]
+There is a cryptogram consisting of a list of numbers between 0 ~ 999999. There is an urgent need to modify the cryptogram. This cryptogram can only be modified by a specially manufactured system.
+This system provides the three functions as follows:
+ 
+1. I(insert) x, y, s: Y number of numbers are inserted in front of x. s is a list of numbers to be inserted.[ex) I 3 2 123152 487651 ]
+ 
+2. D(delete) x, y: Delete y number of numbers next to x. [ ex) D 4 4 ]
+3. A(add)y, s: Add y number of numbers at the end of the cryptogram.
+s is a list of numbers to be added [ ex) A 2 421257 796813 ].
+ 
+ 
+Create a program to modify the cryptogram when a character sting generated by listing the command created in accordance with above rule and then output the first 10 numbers of the modified result.
+ 
+ 
+[Input]
+First line:Length of the original cryptogram. N (2000 ≤ N (integer) ≤ 4000)
+Second line:Original cryptogram
+Third Line:Number of commands (250 ≤ N (integer) ≤ 500)
+Fourth line:Command
+ 
+A test case consists of four lines as shown above. There are 10 test cases.
+ 
+ 
+[Output]
+Output the test case number following the ‘#’ symbol. It is followed by a space and then the first 10 items of the modified cryptogram.
+length of the longest palindrome.
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+[Input Example]
+3198
+801199 482510 422184 242474 876697 940126 116534 339876 247263 458098 825098 223019 514111 303365 893555 243643 601338 454353 574796 689563 658854 865075 999888 791926 506889 150144 881247 837754 384870 933366 151318 687639 496390 595628 735176 968833 750368...
+425
+I 3186 6 111702 108909 437791 460849 808743 573893 A 6 902149 801457 885061 112389 207283358796 A 1 989955 D 1100 5 D 613 9 D 998 1 D 2199 8 D 587 6 D 143 8 D 1945 6 I 5 1 362947I 7 4 625354 271596 881263 415567 D 2452 10 A 6 351214 252282 334858 374262 106813 994606I 1511 6 620092 829075 862184 856364 360195 511867 D 1320 6 A 8 871822 227120 817588 231183 650912 326064 820579 435543 D 2700 9 D 2175 9...
+2480
+462938 344563 399723 402947 549987 412958 420530 303429 692228 880290 950090 345253 201473 654529 200533 208289 931176 689125 751855 263503 586373 771415 616316 329388 671296 159465 930131 534966 554443 543621 857436 778109 367173 183314 320579 535313 592073...
+486
+A 3 901476 874927 362782 I 2368 7 286743 531172 693997 463259 976783 950242 673417 I 1466 3 145128 911981 664388 A 6 297281 402815 844393 472552 109416 648820 A 7 204996 777689 213612 161950 105193 439798 213002 D 142 8 I 330 3 803653 583330 161345...
+... 
+ [Output Example]
+#1 471034 815406 542284 170257 228297 740370 785047 677617 834173 648732
+#2 364373 466241 450661 237978 437060 679163 812457 727955 262600 218437
+... 
+ 
+ 
+ 
+ 
+ 
+ 
+57. Contact
+Time LimitFor 10 test cases, 10 seconds for C/C++ and 20 seconds for Java.Submittal Limit3 times (Submittal limit decremented by 1 after each submittal)ScoringWhen an answer is submitted, it is tested with the given input.txt and the result is notified in real time. The result can be one of following.
+Pass: All test cases resulted in correct answers.
+Fail: The test generated wrong or partially correct answers, runtime error, time out, etc. 
+ 
+Generate a function to return the person with the largest number among those contacted the last when the emergency contact network and the person to begin contact are given.
+ 
+ 
+[Example]
+The emergency contact network is shown below.
+
+ 
+Each circle represents an individual. The number in the circle means the numberr of the person. The red circle represents the person who begins the emergency contact. The arrow represents the contact direction. In the above example, no. 7 and no. 1 can be contacted by each other. No. 2 can contact no. 7 but not vice versa.
+ 
+When the emergency contact network is activated, The first person no. 2 contacts no. 7 and no. 15 simultaneously. (Assume that multi-party caling is used.)
+ 
+
+ 
+ 
+ 
+Next, no. 7 contacts no. 1 and no. 15 contacts no. 4. Assume these contacts occurs at the same time.
+ 
+
+ 
+ 
+ 
+Next, no. 1 contacts no. 8 and no. 17 simultaneously, and no. 4 contacts no. 10 at the same time.
+ 
+Since no.7 and no. 2 are already contacted, they are not contacted again.
+ 
+
+ 
+ 
+ 
+ 
+ 
+The above diagram shows the condition when all contacts are completed. No. 8, no. 10 and no. 17 are the persons contact the last at the same time. Since no. 17 has the largest number among those three people, the function should return 17.
+ 
+※Nos. 3, 6, 11, and 22 will not be contacted even when all contacts are completed.
+ 
+ 
+[Constraints]
+Up to 100 persons can be contacted. The numbers assigned can be between 1 ~ 100.
+Like no. 5 is not shown in the above example, there can be some numbers not shown in the contact network.
+If a person is to contact multiple people, the multi-party calling is always used so that they will be contacted at the same time. The time it takes to contact is always the same. (The time it takes for a person to call another is the same.)
+The emergency contact network information is shared in advance, and a person already contacted is not contacted again.
+As shown in the example, people like no. 3, no. 6, no. 11 and no. 22 will never be contacted.
+ 
+ 
+[Input]
+The first line of the input file provides the length of the input data and starting point.
+The data given in next lines are interpreted as {from, to, from, to, …}. The example above will be expressed as {2, 7, 11, 6, 6, 2, 2, 15, 15, 4, 4, 2, 4, 10, 7, 1, 1, 7, 1, 8, 1, 17, 3, 22}.
+Since the sequence is not significant, the following input also expresses the same emergency contact network. (There can be various inputs expressing the same emergency contact network.)
+{1, 17, 3, 22, 1, 8, 1, 7, 7, 1, 2, 7, 2, 15, 15, 4, 6, 2, 11, 6, 4, 10, 4, 2}
+The same {from, to} pairs can be repeated multiple times as shown below. There is no difference of one recording or multiple recordings.
+{1, 17, 1, 17, 1, 17, 3, 22, 1, 8, 1, 7, 7, 1, 2, 7, 2, 15, 15, 4, 6, 2, 11, 6, 4, 10, 11, 6, 4, 2}
+ 
+ 
+[Output]
+Each of 10 lines of the output file contains the answer to each of 10 test cases. Each line begins with ‘#x’ followed by the line feed and then the answer.
+ 
+ 
+[Input Example]
+24 2 ← Testcase 1.
+ 1 17 3 22 1 8 1 7 7 1 2 7 2 15 15 4 6 2 11 6 4 10 4 2
+100 34 ← Testcase 2.
+34 16 40 59 5 31 78 7 74 87 22 46 25 73 71 30 78 74 98 13 87 91 62 37 56 68 56 75 32 53 51 51 42 25 67 31 8 92 8 38 58 88 54 84 46 10 10 59 22 89 23 47 7 31 14 69 1 92 63 56 11 60 25 38 49 84 96 42 3 51 92 37 75 21 97 22 49 100 69 85 82 35 54 100 19 39 1 89 28 68 29 94 49 84 8 22 11 18 14 15
+ …  
+[Output Example] 
+#1 17
+#2 16
+… 
+ 
+ 
+58.Game domino
+Nam được tham gia vào trò chơi rất phổ biến là game Domino. Tuy nhiên không giống như bình thường, Nam chỉ cần xếp một vài con domino sao cho khi bắt đầu đổ Domino, số Domino bị đổ là nhiều nhất.
+Ma trận N*N với 1 là vị trí đã đặt sẵn các con domino, 0 là vị trí còn thiếu các con domino và Nam có quyền đặt các con domino này để điều hướng dòng chảy của domino và được phép đặt tối đa M con domino.
+Domino sẽ luôn luôn bắt đầu chạy từ ô 1*1 và chạy sang phải đầu tiên.
+Các con domino mà Nam đặt vào có thể điều hướng theo 4 hướng trên, dưới, trái , phải và không được phép đặt vào hướng ngược lại so với dòng chảy hiện tại. 
+Domino sẽ đổ tiếp theo hướng hiện tại và chỉ thay đổi hướng khi gặp ô domino do Nam đặt vào và sẽ tiếp tục đổ thẳng tiếp theo hướng đặt vào đó cho đến khi gặp vị trí nam đặt domino (đổ hướng tiếp ) hoặc dừng lại  khi ra ngoài map hay gặp điểm domino đã bị đổ hay gặp ô trống (vị trí 0) mà Nam đã hết Domino có thể đặt.
+Hãy giúp Nam đặt domino sao cho số domino đổ là nhiều nhất, và in ra số nhiều nhất đó.
+Input:
+1                -> số TC
+8 5              -> Ma trận N*N, 5 là số Domino tối đa mà Nam có
+1 1 0 1 1 1 0 0  -> map đầu vào với 1 là vị trí đã đặt domino
+0 0 0 0 0 0 1 0  -> 0 là vị trí Nam có quyền đặt các domino để 
+0 0 1 0 0 0 1 0  điều hướng dòng chảy
+0 0 1 0 0 0 1 0
+0 0 0 1 1 1 0 0
+0 0 1 0 0 0 1 0
+0 0 1 0 0 0 0 0
+0 0 0 1 1 1 0 0
+//Giải thích
+Domino sẽ luôn luôn bắt đầu chạy từ ô (1,1) và chạy sang phải đầu tiên, như vậy ta sẽ đổ 2 con domino ở vị trí (1,1) và (1,2)
+Tiếp đó đến ô (1,3) là vị trí Nam có thể đặt domino, ở đây sẽ có 3 lựa chọn
+   + Nam sẽ đặt vào domino đổ theo hướng lên trên -> trò chơi kết thúc -> Tổng số domino có được là 2 (không tính domino mà Nam đặt vào)
+   + Nam sẽ đặt domino đi phải tiếp -> Domino sẽ tiếp tục đổ sang ô (1,4), (1,5), (1,6) -> gặp ô (1,7) = 0 Nam sẽ tiếp tục được phép lựa chọn đặt Domino theo hướng nào tiếp theo …
+   + Nam sẽ đặt Domino theo hướng xuống dưới -> Do mino sẽ đổ xuống ô (2,3) và tại đây Nam sẽ tiếp tục lựa chọn đặt Domino theo hướng nào tiếp theo
+   + ở đây Nam sẽ không được phép đặt Domino theo hướng sang trái vì nó ngược với hướng chảy hiện tại
+-> Với những khi gặp ô 0 tiếp theo, Nam sẽ được quyền lựa chọn như ví dụ trên, hãy giúp nam tìm các đặt Domino để số Domino đổ là nhiều nhất.
+Với ví dụ trên tại ô (1,3) Nam sẽ đặt domino sang phải, (1,7) xuống dưới, (5,7) sang trái, (5,3) xuống dưới, (8,3) sang phải sau đó Nam đã hết domino để đặt nên sẽ dừng ở ô (8,6), ta sẽ được số domino đổ là nhiều nhất và tổng là 16 domino (Sẽ không tính những domino mà Nam đặt thêm vào).
+Giải sử: 2 sang phải, 3 sang trái, 4 lên trên, 5 xuống dưới ta sẽ được cách đặt như sau: màu xanh là vị trí các domino sẽ đổ, màu vàng là vị trí Nam đặt domino.
+ 
+1121115000000010001000100010001000511130001000100010000000211100 
+Input:
+// Input:
+// 3
+// 8 5
+// 1 1 0 1 1 1 0 0
+// 0 0 0 0 0 0 1 0
+// 0 0 1 0 0 0 1 0
+// 0 0 1 0 0 0 1 0
+// 0 0 0 1 1 1 0 0
+// 0 0 1 0 0 0 1 0
+// 0 0 1 0 0 0 0 0
+// 0 0 0 1 1 1 0 0
+// 7 5
+// 1 1 1 1 1 1 0
+// 1 1 1 1 1 1 1
+// 1 1 1 1 1 1 1
+// 0 1 1 0 1 1 0
+// 1 1 1 1 1 1 1
+// 1 1 1 1 1 1 1
+// 0 1 1 0 1 1 0
+// 8 5
+// 1 1 0 1 1 1 0 0
+// 0 0 0 0 0 0 1 0
+// 0 0 1 1 0 0 1 0
+// 0 1 0 0 0 0 1 0
+// 0 0 1 1 1 1 0 0
+// 0 1 0 0 0 0 1 0
+// 0 1 0 0 0 0 0 0
+// 0 0 1 1 1 1 0 0
+// Output:
+// 16
+// 16
+// 18
+80. Tìm đường
+Nhân viên A cần đi từ điểm A đến điểm B bất kỳ nằm trong map cho trước, A = -1, B = -2.
+Biết rằng Nhân viên A có thể đi theo 4 hướng trên, dưới, phải trái và mỗi bước đi sẽ mất 1 năng lượng với mỗi bước đi.
+Trên bản đồ đi sẽ có điểm theo giá trị trong các ô.
+Hãy tìm đường đi sao cho nhân viên đó đi từ A đến B tốn ít năng lượng nhất. Trong các đường đi tốn ít năng lượng nhất đó, hãy tìm đường đi để có nhiều điểm nhất.
+A11113111111121116111711111111111118111510B 
+Có rất nhiều đường đi từ A đến B và có mức năng lượng nhỏ nhất:
+Đường màu đen, cam và xanh đều mất : 11 bước đi tương đương với 11 năng lương (do không vẽ được đường liền nhau nên vẽ tạm thế)
+Tuy nhiên đường màu đen sẽ được: 36 point, Cam được: 19 point và Xanh sẽ được 13 point
+Input:
+T : tổng số testcase
+N M: kích thước ma trận
+Ma trận NxM
+Output:
+#Tc số điểm nhiều nhất
+VD:
+ Input
+1
+6 7
+-1 1 1 1 1 3 1
+1 1 1 1 1 1 2
+1 1 1 6 1 1 1
+7 1 1 1 1 1 1
+1 1 1 1 1 1 1
+8 1 1 1 5 10 -2
+Output:
+#1 36
+
+80. AbaddonAndNetharax – Docs
+Netharax - The Black Horse of Abaddon
+ 
+Đề bài (Advance):
+Netharax - The Black Horse of Abaddon
+Abaddon - the Death Knight - Lord of Avernus - has a black horse named Netherax, which gives him power. This horse can go anywhere, across the world, through any dangerous terrain. Netharax stayed by Abaddon from war to war, from battle field to battle field in "Defense of the Ancients".
+One day, Abaddon lost his way in Under Lord Play Ground, where the rules of unknown forces covered all places and restrained their power. With the abilities and experiences trained through so many battles in the past, Abaddon eventually saw through the rules of this place.
+The terrain was divided into squares like a chess board. All the map included long hallways with exit gates at the end. In each square, there was a pillar hidden with mysterious things, maybe a treasure or maybe a trap.
+When he tried to move, he found out that Netherax could not move as his will... Some pillars showed faint light and seemed like he can only go there.
+From the pillar where he stood at, there were total 4 pillars he can move to:
+- The pillar is 2 steps away from the left in the next row
+- The pillar is 2 steps away from the right in the next row
+- The pillar next to the right side in 2 rows above
+- The pillar next to the left side in 2 rows above
+10006060020000000030000000040000000012345678In order to escape this evil place, Abaddon decided to ask for help from IO – a super computer. Abaddon, thanks to his acquaintance with "Keeper of the Light", clarified the value of the item existing in every pillar in this corridor.
+ 
+His data for IO is as follows:
+15 8 4 (NxM: size of corridor, X: column position of Abadon and Netherax at the start of the corridor)
+The next N lines (Abaddon described the corridor by using numbers) 
+6 6 6 6 6 6 6 6
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+
+
+
+ 
+ 
+0: Iron Branch5 points1: Boot of Speed10 pointsBoot of Speed * 3
+(Phase Boot)50 pointsBoot of Travel * 6
+(Boot Of Travel)150 points2:  Hyper Stone30 points2:  Hyper Stone * 2
+(Moon Shard)100 points3: Dagon203: Dagon * 2
+(Dagon lv2)503: Dagon * 3
+(Dagon lv3)1003: Dagon * 4
+(Dagon lv4)2003: Dagon * (>=5)
+(Dagon lv5)5004: Mask of Madness1000 points (Madness effect)5: Roshan's Aegis0 point (Resurrection effect)6: Teleport Portal1 point 
+0: Stone pillar contains the item 0
+1: Stone pillar contains the item 1
+2: Stone pillar contains the item 2
+3: Stone pillar contains the item 3
+4: Stone pillar contains the item 4
+5: Stone pillar contains the item 5
+6: Stone pillar contains teleport gate
+ 
+Item 0: Boot of speed
+Item 1: Boot of speed
+Item 2: Hyper Stone
+Item 3: Dagon
+Item 4: Mask of Madness
+Item 5: Roshan's Aegis
+ 
+If Netharax moves to any position, that position’s effect will affect him.
+If Netharax reaches pillar with item 4, he will go insane. Consequently, Abaddon will lose his mind and then lose the game.
+But if there is Roshan's Aegis, Abaddon can stay alive by its resurrection effect (The whole map has only 1 Roshan's Aegis in maximum)
+Pick up the Boot of speed, Abaddon and Netharax will get 10 points
+Pick up 3 Boots of speed, Abaddon and Netharax will combine into Phase Boot and get 50 points
+Pick up 6 Boots of speed, Abaddon and Netharax will combine to be BoT (Boot of Travel) and get 150 points
+Pick up Hyper Stone, Abaddon and Netharax will get 30 points
+Pick up 2 Hyper Stones, Abaddon and Netharax will combine to become Moon Shard and get 100 points
+Pick up Dagon, Abaddon and Netharax will get 20 points
+Pick up 2 Dagons, Abaddon and Netharax will get 50 points
+Pick up 3 Dagons, Abaddon and Netharax will get 100 points
+Pick up 4 Dagons, Abaddon and Netharax will get 200 points
+Pick up 5 Dagons, Abaddon and Netharax will get 500 points
+(Picking more Dagon does not increase points)
+Please help Abaddon go through the corridor to reach the destination in the position of portal No. 6 (teleport back to the arena "Defense of the Ancients")
+
+
