@@ -1,0 +1,69 @@
+package Domino;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class Solution {
+	static int board[][] = new int[7][8];
+	static int visited[][] = new int[7][8];
+	static int domino[][] = new int[7][8];
+	static int count;
+	static int dx[] = { 1, 0 };
+	static int dy[] = { 0, 1 };
+
+	public static void main(String[] args) throws FileNotFoundException {
+		System.setIn(new FileInputStream("input.txt"));
+		Scanner sc = new Scanner(System.in);
+		int test = sc.nextInt();
+		for (int tc = 1; tc <= test; tc++) {
+			for (int i = 0; i < 7; i++) {
+				for (int j = 0; j < 8; j++) {
+					domino[i][j] = visited[i][j] = 0;
+					board[i][j] = sc.nextInt();
+				}
+			}
+			count = 0;
+			backtrack(0);
+			System.out.println("#" + tc+" "+count);
+		}
+	}
+
+	public static boolean check(int x, int y) {
+		if (x >= 0 && x < 7 && y >= 0 && y < 8)
+			return true;
+		else
+			return false;
+	}
+
+	public static void backtrack(int x) {
+		// TODO Auto-generated method stub
+		if (x == 56) {
+			count++;
+			return;
+		}
+		int a = x / 8;
+		int b = x % 8;
+		if (visited[a][b] == 0) {
+			for (int z = 0; z < 2; z++) {
+				int aa = a + dx[z];
+				int bb = b + dy[z];
+				if(check(aa,bb) && visited[aa][bb] == 0 && domino[board[a][b]][board[aa][bb]]==0){
+					visited[aa][bb] = 1;
+					visited[a][b] = 1;
+					domino[board[a][b]][board[aa][bb]] = 1;
+					domino[board[aa][bb]][board[a][b]] = 1;
+					backtrack(x+1);
+					visited[aa][bb] = 0;
+					visited[a][b] = 0;
+					domino[board[a][b]][board[aa][bb]] = 0;
+					domino[board[aa][bb]][board[a][b]] = 0;
+				}
+			}
+			return;
+		}
+		else{
+			backtrack(x+1);
+		}
+	}
+}
