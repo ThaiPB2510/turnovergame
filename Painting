@@ -1,0 +1,57 @@
+package Painting;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class Solution {
+	static int a[][] = new int[31][31];
+	static int n, count;
+	static int color[] = new int[31];
+
+	public static void main(String[] args) throws FileNotFoundException {
+		// TODO Auto-generated method stub
+		System.setIn(new FileInputStream("input.txt"));
+		Scanner sc = new Scanner(System.in);
+		int test = sc.nextInt();
+		for (int tc = 1; tc <= test; tc++) {
+			n = sc.nextInt();
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < n; j++) {
+					a[i][j] = sc.nextInt();
+				}
+				color[i] = 0;
+			}
+			count = 0;
+			backtrack(0);
+			System.out.println("Case #" + tc);
+			System.out.println(count);
+		}
+	}
+
+	public static boolean check(int x, int y) {
+		for (int i = 0; i < n; i++) {
+			if (a[x][i] == 1 && color[i] == y) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static void backtrack(int x) {
+		// TODO Auto-generated method stub
+		if (x > n)
+			return;
+		if (x == n) {
+			count++;
+		}
+		for (int i = 1; i <= 4; i++) {
+			int ma = i;
+			if (check(x, ma)) {
+				color[x] = i;
+				backtrack(x + 1);
+				color[x] = 0;
+			}
+		}
+	}
+}
