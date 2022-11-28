@@ -1,0 +1,40 @@
+package LuckyNumber;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class Solution {
+	static int[] pow10 = new int[201];
+
+	public static void main(String[] args) throws FileNotFoundException {
+		System.setIn(new FileInputStream("input.txt"));
+		Scanner sc = new Scanner(System.in);
+		int test = sc.nextInt();
+		for (int tc = 1; tc <= test; tc++) {
+			System.out.println("Case #"+tc);
+			int x = sc.nextInt();
+			solve(x);
+		}
+	}
+
+	private static void solve(int x) {
+		x *= 9;
+		pow10[0] = 1;
+		for (int i = 1; i <= 200; i++) {
+			pow10[i] = pow10[i - 1] * 10 % x;
+		}
+		for (int nd = 1; nd <= 200; nd++)
+			for (int n8 = 0; n8 <= nd; n8++)
+				if ((8 * pow10[nd] - 2 * pow10[nd - n8] - 6) % x == 0) {
+					for (int i = 0; i < n8; ++i)
+						System.out.printf("8");
+					for (int i = 0; i < nd - n8; ++i)
+						System.out.printf("6");
+					System.out.println();
+					return;
+				}
+		System.out.printf("-1");
+		System.out.println();
+	}
+}
