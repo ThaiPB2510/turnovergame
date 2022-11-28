@@ -1,0 +1,68 @@
+package ArrayGame;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class Solution {
+	static int n, res;
+	static int a[];
+	static long sum;
+
+	public static void main(String[] args) throws FileNotFoundException {
+		// TODO Auto-generated method stub
+		System.setIn(new FileInputStream("input.txt"));
+		Scanner sc = new Scanner(System.in);
+		int test = sc.nextInt();
+
+		for (int tc = 1; tc <= test; tc++) {
+			n = sc.nextInt();
+			sum = 0;
+			res = 0;
+			a = new int[20001];
+			for (int i = 0; i < n; i++) {
+				a[i] = sc.nextInt();
+				sum += a[i];
+			}
+			res = check(sum, 0, n);
+			System.out.println(res);
+		}
+	}
+
+	private static int findMid(long sum, int start, int end) {
+		long total = 0;
+		int mid = 0;
+		for (int i = start; i < end; i++) {
+			if (total < sum) {
+				total += a[i];
+				mid = i;
+			} else {
+				break;
+			}
+		}
+		if (total != sum) {
+			return -1;
+		}
+		return mid;
+	}
+
+	private static int check(long sum, int start, int end) {
+		// TODO Auto-generated method stub
+		if (sum == 0)
+			return end - start - 1;
+		if (sum % 2 != 0)
+			return 0;
+		if (end - start <= 1)
+			return 0;
+		int mid = findMid(sum / 2, start, end);
+		if (mid == -1)
+			return 0;
+		int a = 1 + check(sum / 2, start, mid + 1);
+		int b = 1 + check(sum / 2, mid + 1, end);
+		if (a > b)
+			return a;
+		else
+			return b;
+	}
+
+}
