@@ -1,0 +1,137 @@
+package CleaningRobot;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class Solution {
+	static int mang[][] = new int[101][101];
+	static int[] VS = new int[11];
+	static int[] select = new int[101];
+	static int[] Qx = new int[10000000];
+	static int[] Qy = new int[10000000];
+	static int dis[][] = new int[11][11];
+	static int com[][] = new int[11][2];
+	static int f = -1, r = -1;
+	static int m, n, dirty, res;
+	static int dx[] = { -1, 0, 1, 0 };
+	static int dy[] = { 0, 1, 0, -1 };
+	static int visited[][] = new int[101][101];
+
+
+	public static void Push(int x, int y) {
+		f++;
+		Qx[f] = x;
+		Qy[f] = y;
+	}
+
+	public static void Pop(int[] tmp) {
+		r++;
+		tmp[0] = Qx[r];
+		tmp[1] = Qy[r];
+	}
+
+	public static boolean isSafe(int x, int y) {
+		if (x >= 0 && x < n && y >= 0 && y < m) {
+			return true;
+		} else
+			return false;
+	}
+
+	public static void init() {
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				visited[i][j] = 654321;
+			}
+		}
+	}
+
+	public static void BFS(int x, int y) {
+		visited[x][y] = 0;
+		Push(x, y);
+
+		while (f != r) {
+			int tmp[] = new int[2];
+			Pop(tmp);
+			int a = tmp[0], b = tmp[1];
+			for (int z = 0; z < 4; z++) {
+				int aa = a + dx[z];
+				int bb = b + dy[z];
+				if (isSafe(aa, bb) && mang[aa][bb] != 2
+						&& visited[aa][bb] > visited[a][b] + 1) {
+					Push(aa, bb);
+					visited[aa][bb] = visited[a][b] + 1;
+				}
+			}
+		}
+	}
+
+	public static void Backtrack(int x, int sum) {
+		if (x == dirty + 1) {
+			if (res > sum) {
+				res = sum;
+				return;
+			}
+		}
+		if (sum > res)
+			return;
+		for (int i = 1; i <= dirty; i++) {
+			if(VS[i] == 0){
+				VS[i] = 1;
+				select[x] = i;
+				Backtrack(x+1, sum + dis[select[x-1]][i]);
+				VS[i] = 0;
+			}
+		}
+	}
+
+	public static void main(String[] args) throws FileNotFoundException {
+		// TODO Auto-generated method stub
+		System.setIn(new FileInputStream("input.txt"));
+		Scanner sc = new Scanner(System.in);
+		int test = sc.nextInt();
+		for (int tc = 1; tc <= test; tc++) {
+			n = sc.nextInt();
+			m = sc.nextInt();
+			System.out.println("Case #"+tc);
+			dirty = 0;
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < m; j++) {
+					mang[i][j] = sc.nextInt();
+					if (mang[i][j] == 3) {
+						com[0][0] = i;
+						com[0][1] = j;
+					}
+					if (mang[i][j] == 1) {
+						dirty++;
+						com[dirty][0] = i;
+						com[dirty][1] = j;
+					}
+				}
+			}
+			boolean check = true;
+			for (int k = 0; k <= dirty; k++) {
+				init();
+				BFS(com[k][0], com[k][1]);
+				for (int l = 1; l <= dirty; l++) {
+					dis[k][l] = visited[com[l][0]][com[l][1]];
+					if (visited[com[l][0]][com[l][1]] == 654321) {
+						check = false;
+						k = dirty + 1;
+						break;
+					}
+				}
+			}
+			res = 6543210;
+			for (int i = 0; i < 11; i++) {
+				select[i] = VS[i] = 0;
+			}
+			if (check == false)
+				System.out.println(-1);
+			else {
+				Backtrack(1, 0);
+				System.out.println(res);
+			}
+		}
+	}
+}
