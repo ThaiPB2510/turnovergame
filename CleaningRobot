@@ -16,7 +16,7 @@ public class Solution {
 	static int m, n, dirty, res;
 	static int dx[] = { -1, 0, 1, 0 };
 	static int dy[] = { 0, 1, 0, -1 };
-	static int visited[][] = new int[101][101];
+	static int steps[][] = new int[101][101];
 
 
 	public static void Push(int x, int y) {
@@ -41,13 +41,13 @@ public class Solution {
 	public static void init() {
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < m; j++) {
-				visited[i][j] = 654321;
+				steps[i][j] = 654321;
 			}
 		}
 	}
 
 	public static void BFS(int x, int y) {
-		visited[x][y] = 0;
+		steps[x][y] = 0;
 		Push(x, y);
 
 		while (f != r) {
@@ -58,9 +58,9 @@ public class Solution {
 				int aa = a + dx[z];
 				int bb = b + dy[z];
 				if (isSafe(aa, bb) && mang[aa][bb] != 2
-						&& visited[aa][bb] > visited[a][b] + 1) {
+						&& steps[aa][bb] > steps[a][b] + 1) {
 					Push(aa, bb);
-					visited[aa][bb] = visited[a][b] + 1;
+					steps[aa][bb] = steps[a][b] + 1;
 				}
 			}
 		}
@@ -114,8 +114,8 @@ public class Solution {
 				init();
 				BFS(com[k][0], com[k][1]);
 				for (int l = 1; l <= dirty; l++) {
-					dis[k][l] = visited[com[l][0]][com[l][1]];
-					if (visited[com[l][0]][com[l][1]] == 654321) {
+					dis[k][l] = steps[com[l][0]][com[l][1]];
+					if (steps[com[l][0]][com[l][1]] == 654321) {
 						check = false;
 						k = dirty + 1;
 						break;
