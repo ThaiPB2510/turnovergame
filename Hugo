@@ -1,0 +1,147 @@
+package Hugo;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class Solution {
+
+	static int dx[] = { -1, 0, 1, 0 };
+	static int dy[] = { 0, 1, 0, -1 };
+	static int[] Qx = new int[1000001];
+	static int[] Qy = new int[1000001];
+	static int f = -1, r = -1;
+	static int res, n, m, x_hugo, y_hugo, fire, lake, exit, count, sum;
+	static int exitway[][] = new int[16][16];
+	static int hugo[][] = new int[16][16];
+	static int flags_hugo[][] = new int[16][16];
+	static int flags_fire[][] = new int[16][16];
+	static int diamonds[][] = new int[16][16];
+	static int flags_diamonds[][] = new int[16][16];
+
+	public static void main(String[] args) throws FileNotFoundException {
+		// TODO Auto-generated method stub
+		System.setIn(new FileInputStream("hugo.txt"));
+		Scanner sc = new Scanner(System.in);
+		int test = sc.nextInt();
+		for (int tc = 1; tc <= test; tc++) {
+			System.out.println("Case #" + tc);
+			init();
+			n = sc.nextInt();
+			m = sc.nextInt();
+			x_hugo = sc.nextInt();
+			y_hugo = sc.nextInt();
+			fire = sc.nextInt();
+			for (int i = 0; i < fire; i++) {
+				int a = sc.nextInt(), b = sc.nextInt();
+				hugo[a][b] = 1;
+			}
+			lake = sc.nextInt();
+			for (int i = 0; i < lake; i++) {
+				int a = sc.nextInt(), b = sc.nextInt();
+				hugo[a][b] = 2;
+				flags_fire[a][b] = 1000;
+			}
+			exit = sc.nextInt();
+			for (int i = 0; i < exit; i++) {
+				int a = sc.nextInt(), b = sc.nextInt();
+				exitway[a][b] = 3;
+			}
+			for (int i = 1; i <= n; i++) {
+				for (int j = 1; j <= m; j++) {
+					diamonds[i][j] = sc.nextInt();
+				}
+			}
+			BFS_Fire();
+			res = -1;
+			sum = diamonds[x_hugo][y_hugo];
+			flags_hugo[x_hugo][y_hugo] = 1;
+			backtrack_Diamond(x_hugo, y_hugo, 1);
+			if (res == -1)
+				System.out.println(-1);
+			else
+				System.out.println(res);
+		}
+	}
+
+	public static void BFS_Fire() {
+		for (int i = 1; i <= n; i++) {
+			for (int j = 1; j <= m; j++) {
+				if (hugo[i][j] == 1) {
+					flags_fire[i][j] = 1;
+					Push(i, j);
+				}
+			}
+		}
+		while (f != r) {
+			int tmp[] = new int[2];
+			Pop(tmp);
+			int a = tmp[0], b = tmp[1];
+			for (int z = 0; z < 4; z++) {
+				int aa = a + dx[z];
+				int bb = b + dy[z];
+				if (isSafe(aa, bb) && flags_fire[aa][bb] == 0
+						&& hugo[aa][bb] == 0) {
+					Push(aa, bb);
+					flags_fire[aa][bb] = flags_fire[a][b] + 1;
+				}
+			}
+		}
+		for (int i = 1; i <= 15; i++) {
+			for (int j = 1; j <= 15; j++) {
+				if (flags_fire[i][j] == 0) {
+					flags_fire[i][j] = 10000;
+				}
+			}
+		}
+	}
+
+	public static void backtrack_Diamond(int x, int y, int count) {
+		if (exitway[x][y] == 3) {
+			if (res < sum)
+				res = sum;
+		}
+		for (int z = 0; z < 4; z++) {
+			int xx = x + dx[z];
+			int yy = y + dy[z];
+			if (isSafe(xx, yy) && flags_hugo[xx][yy] == 0
+					&& ((count + 1) < flags_fire[xx][yy])) {
+				flags_hugo[xx][yy] = 1;
+				sum += diamonds[xx][yy];
+				int t;
+				if(hugo[xx][yy] == 0) t = 1;
+				else t = 2;
+				backtrack_Diamond(xx, yy, count + t);
+				flags_hugo[xx][yy] = 0;
+				sum -= diamonds[xx][yy];
+			}
+		}
+	}
+
+	public static void Push(int x, int y) {
+		f++;
+		Qx[f] = x;
+		Qy[f] = y;
+	}
+
+	public static void Pop(int[] tmp) {
+		r++;
+		tmp[0] = Qx[r];
+		tmp[1] = Qy[r];
+	}
+
+	public static boolean isSafe(int x, int y) {
+		if (x > 0 && x <= n && y > 0 && y <= m) {
+			return true;
+		} else
+			return false;
+	}
+
+	public static void init() {
+		for (int i = 1; i <= 15; i++) {
+			for (int j = 1; j <= 15; j++) {
+				hugo[i][j] = flags_hugo[i][j] = flags_fire[i][j] = diamonds[i][j] = flags_diamonds[i][j] = exitway[i][j] = 0;
+			}
+		}
+	}
+}
