@@ -1,0 +1,67 @@
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class Solution {
+	static int nation[][] = new int[1001][1001];
+	static int color[] = new int[1001];
+	static boolean visited[] = new boolean[1001];
+	static int n, e, u, v, flags;
+
+	public static void main(String[] args) throws FileNotFoundException {
+		// TODO Auto-generated method stub
+		System.setIn(new FileInputStream("map.txt"));
+		Scanner sc = new Scanner(System.in);
+		int test = sc.nextInt();
+		for (int tc = 1; tc <= test; tc++) {
+			n = sc.nextInt();
+			e = sc.nextInt();
+			reset(n);
+			for (int i = 1; i <= e; i++) {
+				u = sc.nextInt();
+				v = sc.nextInt();
+				nation[u][0] += 1;
+				nation[u][nation[u][0]] = v;
+				nation[v][0] += 1;
+				nation[v][nation[v][0]] = u;
+			}
+			flags = 0;
+			color[1] = 0;
+			Solve(1);
+			System.out.print("#" + tc + " ");
+			if (flags == 1)
+				System.out.print(-1);
+			else {
+				for (int i = 1; i <= n; i++) {
+					System.out.print(color[i]);
+				}
+			}
+			System.out.println();
+		}
+	}
+
+	private static void Solve(int u) {
+		// TODO Auto-generated method stub
+		if (flags == 1)
+			return;
+		visited[u] = true;
+		for (int i = 1; i <= nation[u][0]; i++) {
+			if (!visited[nation[u][i]]) {
+				color[nation[u][i]] = 1 - color[u];
+				Solve(nation[u][i]);
+			} else if (visited[nation[u][i]]) {
+				if (color[u] == color[nation[u][i]]) {
+					flags = 1;
+					return;
+				}
+			}
+		}
+	}
+
+	public static void reset(int x) {
+		for (int i = 0; i <= x; i++) {
+			nation[i][0] = 0;
+			visited[i] = false;
+		}
+	}
+}
