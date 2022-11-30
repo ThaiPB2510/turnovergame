@@ -1,0 +1,108 @@
+package CrazyKing;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class Solution {
+	static int xA, yA, xB, yB, n, m, visited[][] = new int[101][101];
+	static char mang[][] = new char[101][101];
+	static int[] Qx = new int[10000000];
+	static int[] Qy = new int[10000000];
+	static int f = -1, r = -1;
+	static int hx[] = { -2, -1, 1, 2, 2, 1, -1, -2 };
+	static int hy[] = { -1, -2, -2, -1, 1, 2, 2, 1 };
+	static int kx[] = { -1, -1, -1, 0, 0, 1, 1, 1 };
+	static int ky[] = { -1, 0, 1, -1, 1, -1, 0, 1 };
+
+	public static boolean isSafe(int x, int y) {
+		// TODO Auto-generated method stub
+		if (x >= 0 && x < m && y >= 0 && y < n)
+			return true;
+		else
+			return false;
+	}
+
+	public static void Push(int x, int y) {
+		f++;
+		Qx[f] = x;
+		Qy[f] = y;
+	}
+
+	public static void Pop(int[] tmp) {
+		r++;
+		tmp[0] = Qx[r];
+		tmp[1] = Qy[r];
+	}
+
+	public static void bfs(int x, int y) {
+		visited[x][y] = 1;
+		Push(x, y);
+		while (f != r) {
+			int tmp[] = new int[2];
+			Pop(tmp);
+			int a = tmp[0], b = tmp[1];
+			for (int k = 0; k < 8; k++) {
+				int nxx = a + kx[k];
+				int nyy = b + ky[k];
+				if (isSafe(nxx, nyy)
+						&& (mang[nxx][nyy] == '.' || mang[nxx][nyy] == 'B')
+						&& visited[nxx][nyy] > visited[a][b] + 1) {
+					Push(nxx, nyy);
+					visited[nxx][nyy] = visited[a][b] + 1;
+				}
+			}
+		}
+	}
+
+	public static void main(String[] args) throws FileNotFoundException {
+		System.setIn(new FileInputStream("input.txt"));
+		Scanner sc = new Scanner(System.in);
+		int test = sc.nextInt();
+	
+		for (int tc = 1; tc <= test; tc++) {
+			n = sc.nextInt(); m = sc.nextInt();
+			sc.nextLine();
+			int xA = 0, yA = 0, xB = 0, yB = 0;
+			for (int i = 0; i < m; i++) {
+				String s = sc.nextLine();
+				for (int j = 0; j < s.length(); j++) {
+					mang[i][j] = s.charAt(j);
+					visited[i][j] = 99999999;
+
+					if (mang[i][j] == 'A') {
+						xA = i;
+						yA = j;
+					}
+					if (mang[i][j] == 'B') {
+						xB = i;
+						yB = j;
+					}
+				}
+			}
+
+			for (int i = 0; i < m; i++) {
+				for (int j = 0; j < n; j++) {
+					if (mang[i][j] == 'Z') {
+						for (int z = 0; z < 8; z++) {
+							int nx = i + hx[z];
+							int ny = j + hy[z];
+							if (isSafe(nx, ny) && mang[nx][ny] == '.') {
+								mang[nx][ny] = 'N';
+							}
+						}
+					}
+				}
+			}
+			int ans = 0;
+			bfs(xA, yA);
+			ans = visited[xB][yB];
+			if (ans == 99999999)
+				System.out.println(-1);
+			else
+				System.out.println(ans - 1);
+
+			
+		}
+	}
+}
