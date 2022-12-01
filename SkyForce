@@ -1,0 +1,76 @@
+#define _CRT_SECURE_NO_WARNINGS
+
+#include <iostream>
+
+using namespace std;
+
+#define SIZE 12
+
+int map[SIZE][SIZE];
+int N;
+int best;
+
+void resetData() {
+	best = -1;
+	for (int i = 0; i < SIZE; ++i) {
+		for (int j = 0; j < 5; ++j) {
+			map[i][j] = 0;
+		}
+	}
+}
+
+void move(int row, int col, int coin, int ignoreEnemy, bool have_bomb) {
+	if (col < 0 || col > 4) return;
+
+	if (row < 0) {
+		if (best < coin) best = coin;
+		return;
+	}
+
+	//process current cell
+	if (map[row][col] == 1) {
+		++coin;
+	}
+	else if (map[row][col] == 2 && ignoreEnemy <= 0) {
+		if (coin > 0) --coin;
+		else return;
+	}
+
+	//scroll down bombed area
+	--ignoreEnemy;
+
+	//move up
+	move(row - 1, col, coin, ignoreEnemy, have_bomb);
+
+	//use bomb and move up
+	if (have_bomb) move(row - 1, col, coin, 5, false);
+
+	//move top-left
+	move(row - 1, col - 1, coin, ignoreEnemy, have_bomb);
+
+	//use bomb and move top-left
+	if (have_bomb) move(row - 1, col - 1, coin, 5, false);
+
+	//move top-right
+	move(row - 1, col + 1, coin, ignoreEnemy, have_bomb);
+
+	//use bomb and move top-right
+	if (have_bomb) move(row - 1, col + 1, coin, 5, false);
+}
+
+int main() {
+	freopen("input.txt", "r", stdin);
+	int T, testcase; cin >> T;
+	for (testcase = 1; testcase <= T; ++testcase) {
+		cin >> N;
+		resetData();
+		for (int i = 0; i < N; ++i) {
+			for (int j = 0; j < 5; ++j) {
+				cin >> map[i][j];
+			}
+		}
+		move(N, 2, 0, 0, true);
+		cout << "Case #" << testcase << " " << best << endl;
+	}
+	return 0;
+}
