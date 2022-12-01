@@ -1,0 +1,131 @@
+#include<iostream>
+#define MAX 1000
+using namespace std;
+
+int N,M;
+int a[MAX][MAX];
+int xa,ya,xb,yb;
+
+int dx[] = {0,0,-1,1};
+int dy[] = {-1,1,0,0};
+
+int d[MAX][MAX];
+int qx[MAX*MAX];
+int qy[MAX*MAX];
+int huong[MAX][MAX];
+int r,f;
+
+void Push(int x, int y)
+{
+	r++;
+	qx[r] = x; qy[r] = y;
+}
+
+void Pop(int &x, int &y)
+{
+	f++;
+	x = qx[f]; y = qy[f];
+}
+
+
+void Init()
+{
+	r = f = -1;
+}
+
+void Input()
+{
+	cin>>N>>M;
+	cin>>ya>>xa>>yb>>xb;
+	xa--;xb--;ya--;yb--;
+	Init();
+	char ch;
+	for (int i = 0; i < M; i++)
+	{
+		for (int j = 0; j < N; j++)
+		{
+			cin>>ch;
+			d[i][j] = MAX;
+			huong[i][j] = MAX;
+			a[i][j] = int(ch-'0');
+		}
+	}
+
+}
+
+bool ValidPos(int x, int y)
+{
+	if (x<0||y<0||x>=M||y>=N)
+	{
+		return false;
+	}
+	return true;
+}
+void hien()
+{
+	for (int i = 0; i < M; i++)
+		{
+			for (int j = 0; j < N; j++)
+			{
+				cout<<d[i][j]<<"\t";
+			}
+			cout<<endl;
+		}cout<<endl;
+}
+
+
+void BFS()
+{
+	d[xa][ya] = -1;
+	int CountStep = 0;
+	huong[xa][ya] = MAX;
+	Push(xa,ya);
+	while (f<r)
+	{
+		int x,y;
+		Pop(x,y);
+		for (int i = 0; i < 4; i++)
+		{
+			int xx = x + dx[i];
+			int yy = y + dy[i];
+			//cout<<xx<<" "<<yy<<" "<<ValidPos(xx,yy)<<" "<<d[x][y]+1 <<" "<<a[xx][yy]<<endl;
+			if (ValidPos(xx,yy) && d[x][y]<d[xx][yy] && a[xx][yy]==0)
+			{
+				if (huong[x][y] == i)
+				{
+					d[xx][yy] = d[x][y];
+				}
+				else
+				{
+					d[xx][yy] = d[x][y] + 1;
+				}
+				huong[xx][yy] = i;
+				Push(xx,yy);
+				//hien();
+			}
+		}
+	}
+}
+
+
+
+
+int main()
+{
+	freopen("input.txt","r", stdin);
+	int T;cin>>T;
+	for (int t = 1; t <= 2; t++)
+	{
+		Input();
+		BFS();
+		hien();
+		if (d[xb][yb]==MAX)
+		{
+			cout<<-1<<endl;
+		}
+		else cout<<d[xb][yb]<<endl;
+	
+		
+	}
+	return 0;
+}
