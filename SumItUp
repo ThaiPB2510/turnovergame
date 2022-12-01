@@ -1,0 +1,73 @@
+package SumItUp;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class Solution {
+	static int t, n;
+	static int a[], b[];
+	static int count, dem;
+
+	public static void main(String[] args) throws FileNotFoundException {
+		System.setIn(new FileInputStream("input.txt"));
+		Scanner sc = new Scanner(System.in);
+		int test = sc.nextInt();
+		for (int tc = 1; tc <= test; tc++) {
+			t = sc.nextInt();
+			n = sc.nextInt();
+			count = 0;
+			dem = 0;
+			a = new int[n+2];
+			b = new int[n+2];
+			for (int i = 0; i < n; i++) {
+				a[i] = sc.nextInt();
+			}
+			//sort(a);
+			backtrack(0, 0, 0);
+			System.out.print("#" + tc + " ");
+			if (count == 0)
+				System.out.print(-1);
+			else System.out.print(count);
+			System.out.println();
+		}
+	}
+	public static void sort(int[] a){
+		for(int i = 0; i<a.length-1; i++){
+			for(int j = i+1; j<a.length; j++){
+				if(a[j] > a[i]){
+					int temp = a[i];
+					a[i] = a[j];
+					a[j] = temp;
+				}
+			}
+		}
+	}
+
+	private static void backtrack(int i, int j, int sum) {
+		// TODO Auto-generated method stub
+		if (sum > t)
+			return;
+		if (sum == t) {
+			count++;
+			//count = 1;
+			for (int k = 0; k < j; k++) {
+				if (k >0) {
+					System.out.printf("+%d", b[k]);
+				} else {
+					System.out.printf("%d", b[k]);
+				}
+			}
+			System.out.println();
+			return;
+		}
+		for (int k = i; k < n; k++) {
+			b[j] = a[k];
+			backtrack(k + 1, j + 1, sum + a[k]);
+			while (a[k] == a[k + 1]) {
+				k++;
+			}
+		}
+		return;
+	}
+}
