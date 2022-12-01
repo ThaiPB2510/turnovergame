@@ -1,0 +1,113 @@
+package FastRobot;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class Solution {
+	static int mang[][];
+	static int[] Qx = new int[1000000];
+	static int[] Qy = new int[1000000];
+	static int f = -1, r = -1;
+	static int n, m, xs, ys, xe, ye;
+	static int dx[] = { -1, 0, 1, 0 };
+	static int dy[] = { 0, 1, 0, -1 };
+	static int visited[][];
+	static int huong[][];
+
+	public static void main(String[] args) throws FileNotFoundException {
+		// TODO Auto-generated method stub
+		System.setIn(new FileInputStream("input.txt"));
+		Scanner sc = new Scanner(System.in);
+		int test = sc.nextInt();
+		for (int tc = 1; tc <= test; tc++) {
+			n = sc.nextInt();
+			m = sc.nextInt();
+			ys = sc.nextInt();
+			xs = sc.nextInt();
+			ye = sc.nextInt();
+			xe = sc.nextInt();
+			init();
+			ys--;
+			xs--;
+			ye--;
+			xe--;
+			sc.nextLine();
+			for (int i = 0; i < m; i++) {
+				String s = sc.nextLine();
+				for (int j = 0; j < s.length(); j++) {
+					mang[i][j] = Integer.parseInt(String.valueOf(s.charAt(j)));
+					visited[i][j] = 1000;
+					huong[i][j] = 1000;
+				}
+			}
+			/*for(int i = 0; i <m; i++){
+				for(int j = 0; j<n; j++){
+					System.out.print(mang[i][j]);
+				}
+				System.out.println();
+			}
+			System.out.println();*/
+			bfs();
+			if (visited[xe][ye] == 1000)
+				System.out.println(-1);
+			else
+				System.out.println(visited[xe][ye]);
+		}
+	}
+
+	public static void Push(int x, int y) {
+		f++;
+		Qx[f] = x;
+		Qy[f] = y;
+	}
+
+	public static void Pop(int[] tmp) {
+		r++;
+		tmp[0] = Qx[r];
+		tmp[1] = Qy[r];
+	}
+
+	private static void bfs() {
+		// TODO Auto-generated method stub
+		visited[xs][ys] = -1;
+		huong[xs][ys] = 1000;
+		Push(xs,ys);
+		while (f != r) {
+			int tmp[] = new int[2];
+			Pop(tmp);
+			int x = tmp[0], y = tmp[1];
+			for (int z = 0; z < 4; z++) {
+				int aa = x + dx[z];
+				int bb = y + dy[z];
+				if (isSafe(aa, bb) && mang[aa][bb] == 0
+						&& visited[x][y] < visited[aa][bb]) {
+					if (huong[x][y] == z) {
+						visited[aa][bb] = visited[x][y];
+					} else {
+						visited[aa][bb] = visited[x][y] + 1;
+					}
+					huong[aa][bb] = z;
+					Push(aa, bb);
+				}
+			}
+		}
+	}
+
+	public static boolean isSafe(int x, int y) {
+		// TODO Auto-generated method stub
+		if (x >= 0 && x < m && y >= 0 && y < n)
+			return true;
+		else
+			return false;
+	}
+
+	private static void init() {
+		// TODO Auto-generated method stub
+		f = r = -1;
+		mang = new int[1001][1001];
+		visited = new int[1001][1001];
+		huong = new int[1001][1001];
+	}
+
+}
