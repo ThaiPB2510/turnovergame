@@ -1,0 +1,108 @@
+package PizzaLocation;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class Solution {
+	static int numRest, R, numPlace, numHouse, numPeople[];
+	static int xPlace[], yPlace[], xHouse[], yHouse[] ;
+	static int maxPeople, sumPeople;
+	static int saveRest[], checkPlace[][], count[];
+
+	public static void main(String[] args) throws FileNotFoundException {
+		// TODO Auto-generated method stub
+		System.setIn(new FileInputStream("input.txt"));
+		Scanner sc = new Scanner(System.in);
+		int test = sc.nextInt();
+		for(int tc = 1; tc <= test; tc++){
+			numRest = sc.nextInt();
+			R = sc.nextInt();
+			numPlace = sc.nextInt();
+			init();
+			for(int i = 0; i<numPlace; i++){
+				xPlace[i] = sc.nextInt();
+				yPlace[i] = sc.nextInt();
+			}
+			sumPeople = maxPeople = 0;
+			numHouse = sc.nextInt();
+			for(int i = 0; i< numHouse; i++){
+				xHouse[i] =sc.nextInt();
+				yHouse[i] = sc.nextInt();
+				numPeople[i] = sc.nextInt();
+				sumPeople += numPeople[i];
+				count[i] = 0;
+			}
+			for(int j = 0; j < numPlace; j++){
+				for(int i = 0; i < numHouse; i++){
+					int temp = (xHouse[i]-xPlace[j]) * (xHouse[i]-xPlace[j])
+							+ (yHouse[i]-yPlace[j]) * (yHouse[i]-yPlace[j]);
+					if(temp <= R*R) checkPlace[j][count[j]++] = i;
+				}
+			}
+			Check(0,0,0);
+			System.out.println("#"+tc+" "+maxPeople);
+		}
+	}
+	
+	public static void init(){
+		numPeople = new int[101];
+		xPlace = new int[21];
+		yPlace = new int[21];
+		xHouse = new int[101];
+		yHouse = new int[101];
+		saveRest = new int[21];
+		checkPlace= new int[21][101];
+		count =  new int[1001];
+	}
+	public static void Check(int pos, int numIgnore, int numRestor)
+	{
+		if(pos == numPlace)
+		{
+			
+			int SerPeop = 0;
+			int Mark[]  = new int[numHouse+2];
+			for(int i = 0; i<Mark.length; i++){
+				Mark[i] = 0;
+			}
+
+			for(int j = 0; j < numRest; j++)
+			{
+				int idRest = saveRest[j];
+
+				for(int i = 0; i < count[idRest]; i++)
+				{
+					
+					int idHouse = checkPlace[idRest][i];
+					if(Mark[idHouse] == 0)
+					{
+						SerPeop += numPeople[idHouse];
+						Mark[idHouse] = 1;
+					}
+
+			
+					if(SerPeop == sumPeople) break;
+				}
+			}
+
+			if(SerPeop > maxPeople) maxPeople = SerPeop;
+
+			return;
+		}
+
+		if(maxPeople == sumPeople) return;
+
+	
+		if(numRestor < numRest)
+		{
+			saveRest[numRestor] = pos;
+			Check(pos + 1, numIgnore, numRestor + 1);
+			if(maxPeople == sumPeople) return;
+		}
+
+
+		if(numIgnore < numPlace - numRest)
+			Check(pos + 1, numIgnore + 1, numRestor);
+	}
+
+}
