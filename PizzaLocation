@@ -106,3 +106,123 @@ public class Solution {
 	}
 
 }
+
+
+
+#include<iostream>
+using namespace std;
+
+const int MAX_PLACE = 21;
+const int MAX_HOUSE = 101;
+
+int NumRest, R;                             // Số lượng nhà hàng và bán kính
+int NumPlac;                                // Số địa điểm có thể đặt nhà hàng
+int XPlace[MAX_PLACE], YPlace[MAX_PLACE];   // Toạ độ các điểm có thể đặt nhà hàng
+
+int NumHous;                                // Số khu nhà
+int XHouse[MAX_HOUSE], YHouse[MAX_HOUSE];   // Toạ độ các khu nhà
+
+int NumPeop[MAX_HOUSE];                     // Số người ở mỗi khu nhà
+int MaxPeop;                                // Số người tối đa có thể phục vụ
+int SumPeop;                                // Tổng số người
+
+// Lưu lại vị trí đã đặt của các nhà hàng
+int PRest[MAX_PLACE];
+
+// Kiểm tra xem một vị trí có thể phục vụ những ngôi nhà nào
+int Reach[MAX_PLACE][MAX_HOUSE];
+
+// Đếm số nhà mà nhà hàng có thể phục vụ ứng với mỗi vị trí
+int Count[MAX_PLACE];
+
+/*
+* @PARAM: pos : lưu vị trí đang xét
+* @PARAM: numIgnore : số vị trí ko đặt
+* @PARAM: numRestor : số nhà hàng đã đặt
+*/
+void Check(int pos, int numIgnore, int numRestor)
+{
+	if(pos == NumPlac)
+	{
+		// Kiểm tra với những cách đã đặt cách nào phục vụ nhiều người nhất
+		// Duyệt lần lượt các ngôi nhà, xem với mỗi ngôi nhà nó có được phục vụ không
+
+		// Những người được phục vụ
+		int SerPeop = 0;
+		int Mark[MAX_HOUSE] = {0};
+
+		for(int j = 0; j < NumRest; j++)
+		{
+			int idRest = PRest[j];
+
+			for(int i = 0; i < Count[idRest]; i++)
+			{
+				// Chú ý: mỗi ngôi nhà chỉ được tính một lần.
+				int idHouse = Reach[idRest][i];
+				if(Mark[idHouse] == 0)
+				{
+					SerPeop += NumPeop[idHouse];
+					Mark[idHouse] = 1;
+				}
+
+				// Nếu đã phục vụ được tối đa rồi thì thoát luôn
+				if(SerPeop == SumPeop) break;
+			}
+		}
+
+		if(SerPeop > MaxPeop) MaxPeop = SerPeop;
+
+		return;
+	}
+
+	if(MaxPeop == SumPeop) return;
+
+	// Đặt nhà hàng
+	if(numRestor < NumRest)
+	{
+		PRest[numRestor] = pos;
+		Check(pos + 1, numIgnore, numRestor + 1);
+		if(MaxPeop == SumPeop) return;
+	}
+
+	// Ko đặt nhà hàng
+	if(numIgnore < NumPlac - NumRest)
+		Check(pos + 1, numIgnore + 1, numRestor);
+}
+
+int main()
+{
+	ios::sync_with_stdio(false);
+	freopen("input.txt","r",stdin);
+
+	cin >> NumRest >> R >> NumPlac;
+	for(int i = 0; i < NumPlac; i++)
+		cin >> XPlace[i] >> YPlace[i];
+
+	SumPeop = MaxPeop = 0;
+
+	cin >> NumHous;
+	for(int i = 0; i < NumHous; i++)
+	{
+		cin >> XHouse[i] >> YHouse[i] >> NumPeop[i];
+		SumPeop += NumPeop[i];
+		Count[i] = 0;
+	}
+
+	// Lưu lại những ngôi nhà mà tại mỗi vị trí, nhà hàng có thể phục vụ
+	for(int j = 0; j < NumPlac; j++)
+		for(int i = 0; i < NumHous; i++)
+		{
+			int temp = (XHouse[i] - XPlace[j])*(XHouse[i] - XPlace[j]) +
+				(YHouse[i] - YPlace[j])*(YHouse[i] - YPlace[j]);
+
+			if(temp <= R*R) Reach[j][Count[j]++] = i;
+		}
+
+	// Đặt NumRest nhà hàng trong NumPlac vị trí
+	Check(0, 0, 0);
+
+	cout << MaxPeop << endl;
+
+	return 0;
+}
