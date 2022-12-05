@@ -1,0 +1,83 @@
+// In Practice, You should use the statndard input/output
+// in order to receive a score properly.
+// Do not use file input and output. Please be very careful. 
+
+#include <conio.h>
+#include <iostream>
+
+using namespace std;
+
+int N;
+int M[1000][1000];
+int Node[1000][3];
+
+int VS[1000],Distance[1000];
+int SUM = 0;
+
+int dijktra(int start, int end){
+	VS[start] = 1;
+	Distance[start]=0;
+	while(true){
+		for (int i=0;i<N;i++){
+			if (VS[i] == 0 && M[start][i]+Distance[start] < Distance[i]){
+				Distance[i] = M[start][i]+Distance[start];
+			}
+		}
+		int vt=-1;int min = 10000000;
+		for (int i=0;i<N;i++){
+			if (VS[i] == 0 && Distance[i]<min){
+				min = Distance[i];
+				vt = i;
+			}
+		}
+		if (vt==-1)
+			break;
+		if (vt == end){
+			return min;
+		}
+		start = vt;
+		VS[start]=1;
+	}
+	return -1;
+}
+
+int main(int argc, char** argv)
+{
+	int tc, T;
+	freopen("Text.txt", "r", stdin);
+	cin >> T;
+	for(tc = 0; tc < T; tc++)
+	{
+		cin>>N;
+		for (int i=0;i<N;i++){
+			cin>>Node[i][0]>>Node[i][1]>>Node[i][2];
+			for (int j=0;j<i;j++){
+				int d = (Node[j][0]- Node[i][0])*(Node[j][0]- Node[i][0]) + (Node[j][1]- Node[i][1])*(Node[j][1]- Node[i][1]);
+				int d40 = (Node[j][2]+Node[i][2] +40)*(Node[j][2]+Node[i][2] +40);
+				int d90 = (Node[j][2]+Node[i][2] +90)*(Node[j][2]+Node[i][2] +90);
+				if (d<=d40){
+					M[i][j]=1;
+					M[j][i]=1;
+				} else if (d>d40&&d<=d90){
+					M[i][j]= 1000;
+					M[j][i] = 1000;
+				} else {
+					M[i][j]= 1000000;
+					M[j][i] = 1000000;
+				}
+			}
+		}
+	for (int i=0;i<N;i++){
+		Distance[i] = 10000000;
+		VS[i]=0;
+	}
+		int result = dijktra(0,N-1);
+		if (result>=1000000){
+			cout<<"-1"<<endl;
+		} else {
+			cout<<result/1000<<" "<<result%1000<<endl;
+		}
+	}
+	getch();
+	return 0;//Your program should return 0 on normal termination.
+}
