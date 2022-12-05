@@ -1,0 +1,57 @@
+There are N spots for fishing in the fishing center.
+The center has 3 gates, and a number of customers standing before each gate.
+ 
+To avoid disorder, the customers must enter the center follow these rules :
+ 1. Only one Gate is open at a time, and it will be closed after all customers of that gate entered.
+ 2. When open a gate, the customers stand before that gate will enter one by one, and go to the closest & empty spot from their position.
+	- The distance from a gate to the spot right above it is 1m
+	- Whenever a customer goes further one spot (to left or right), it takes additionally 1m further.
+	- Ex : The distance from Gate 1 to spot 4 is 1m, and to spot 3, 5 is 2m
+ 3. If there are 2 two spots that closest to a customer, he can choose any one of them (you should consider this case)
+4. After all customers enter the gate, choose the next gate to open and proceed same as above
+
+You should find a way so that the sum of the moving distance of all customers is minimum and print out that sum.
+Ex) In above figure :
+- The number of fishing spots : 10
+- Gate 1 : location is 4, number of waiting customer is 5
+- Gate 2 : location is 6, number of waiting customer is 2
+- Gate 3 : location is 10, number of waiting customer is 2
+
+Case 1) We open the gate by the order : Gate 1 > Gate 2 > Gate 3
+ 
+ 
+ 
+For this case, the sum of moving distance is : 3+2+1+2+3+2+3+2+1 = 19
+
+Case 2) We open the gate by the order : Gate 2 > Gate 1 > Gate 3
+When open Gate 3, the 1st customer will go to spot 6, the second one can go to spot 5 or 7
+ OR  
+Case 2-1)
+ 
+In this case, the sum is : 4+3+2+1+2+1+4+2+1 = 20
+
+Case 2-2)
+ 
+In this case, the sum is : 4+3+2+1+2+1+2+2+1 = 18
+
+[Input]
+- The first line given the number of test case T (T <= 50)
+- For each test case:
+	+ The first line given the number of spots N (10 <= N <= 60)
+	+ The next three lines give the information of 3 gates :
+		> Gate's position P ( 1 <= P <= N)
+		> The number of customers standing before that gate C ( 1 <= C <= 20 )
+
+[Output]
+The minimum moving distance of all customers
+Case #1
+18
+Case #2
+25
+Case #3
+57
+Case #4
+86
+Case #5
+339
+
