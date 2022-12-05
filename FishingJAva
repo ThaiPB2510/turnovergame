@@ -1,0 +1,110 @@
+package Fishing;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class Solution {
+	static int ans, n, d;
+	static int[][] Gate = new int[2][4];
+	static int visit[] = new int[100];
+	static int select[][] = new int[2][4];
+	static int V[] = new int[4];
+
+	public static void main(String[] args) throws FileNotFoundException {
+		System.setIn(new FileInputStream("input.txt"));
+		Scanner sc = new Scanner(System.in);
+		int test = sc.nextInt();
+		for (int tc = 1; tc <= test; tc++) {
+			ans = 9999;
+			d = 0;
+			n = sc.nextInt();
+			for (int i = 1; i <= 3; i++) {
+				Gate[0][i] = sc.nextInt();
+				Gate[1][i] = sc.nextInt();
+			}
+			backtrack(1);
+			System.out.println("Case #" + tc);
+			System.out.println(ans);
+		}
+	}
+
+	private static void backtrack(int x) {
+		// TODO Auto-generated method stub
+		if (x > 3)
+		{
+			d =0;
+			for(int i =1; i<=n; i++) visit[i] =0;
+			for(int i =1; i<=3; i++)
+			{
+				Day(select[0][i], select[1][i]);
+			}
+			if (d < ans) ans=d;
+		}
+		else
+		{
+			for (int i = 1; i<=3; i++)
+				if (V[i] ==0)
+				{
+					V[i] =1;
+					select[0][x] =i;
+					select[1][x] = 1;
+					backtrack(x+1);
+					select[1][x] = 2;
+					backtrack(x+1);
+					V[i] =0;
+				}
+		}
+	}
+
+	private static void Day(int x, int y) {
+		// TODO Auto-generated method stub
+		int k=0;
+		int u =Gate[0][x], v;
+		if ( visit[u] == 0)
+			{
+				visit[u] =1;
+				k++;
+				d++;
+			}
+		while (k < Gate[1][x] && y == 1)
+		{
+			u--;
+			if (u >=1 && k < Gate[1][x] && visit[u] == 0)
+			{
+				visit[u] =1;
+				k++;
+				d = d+ Gate[0][x] -u +1;
+			}
+			
+			v = 2*Gate[0][x] - u;
+
+			if (v <= n && k < Gate[1][x] && visit[v] == 0)
+			{
+				visit[v] =1;
+				k++;
+				d = d+ v - Gate[0][x] +1;
+			}
+		}
+
+		while (k < Gate[1][x] && y == 2)
+		{
+			u++;
+			if (u <= n && k < Gate[1][x] && visit[u] == 0)
+			{
+				visit[u] =1;
+				k++;
+				d = d+ u - Gate[0][x] +1;
+			}
+			
+			v = 2*Gate[0][x] - u;
+
+			if (v >= 1 && k < Gate[1][x] && visit[v] == 0)
+			{
+				visit[v] =1;
+				k++;
+				d = d+ Gate[0][x] -v +1;
+			}
+		}
+	}
+}
