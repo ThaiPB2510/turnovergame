@@ -1,0 +1,68 @@
+package TietKiemDien;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class Solution {
+	static int n,k, ans;
+	static int x[] = new int[5];
+	static int a[] = new int[101];
+	static int visit[] = new int[101];
+	public static void main(String[] args) throws FileNotFoundException {
+		// TODO Auto-generated method stub
+		System.setIn(new FileInputStream("input.txt"));
+		Scanner sc = new Scanner(System.in);
+		int test = sc.nextInt();
+		for(int tc = 1; tc <= test; tc++){
+			ans = 0;
+			n = sc.nextInt();
+			k = sc.nextInt();
+			for(int i = 1; i<=n; i++){
+				a[i] = sc.nextInt();
+				if(a[i] == 0) ans++;
+			}
+			
+			BT(1,0);
+			System.out.println("#"+tc+" "+ans);
+		}
+	}
+
+	public static void tinh(int h){
+		int maxx = 0;
+		for (int i = h; i <= n; i += (h + 1))
+		{
+			if(a[i] == 0)
+				a[i] = 1;
+			else
+				a[i] = 0;
+		}
+		for(int i = 1; i <= n; i++){
+			if(a[i] == 0)
+				maxx++;
+		}
+		if(maxx > ans)
+			ans = maxx;
+	}
+
+	public static void BT(int h,int dem){
+		if(h > k) return;
+		if(dem == 3){
+			return;
+		}
+		else
+		{
+			int b[] = new int[101];
+			for(int i = 1; i <= n; i++){
+				b[i] = a[i];
+			}
+			tinh(h);
+			BT(h+1,dem + 1);
+			for(int i = 1; i <= n; i++){
+				a[i] = b[i];
+			}
+			BT(h + 1, dem);
+		}
+	}
+
+}
