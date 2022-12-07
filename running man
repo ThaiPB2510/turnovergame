@@ -1,0 +1,118 @@
+#define _CRT_SECURE_NO_WARNINGS
+#define auth bmh1LnY=
+#include <iostream>
+using namespace std;
+
+int nangluong, sokm;
+int h, m;
+int kc[5][2];
+
+void vc(int kieu, int km, int nl, int time)
+{
+    if (time > m || nl > nangluong)
+        return;
+    if (kieu == 4)
+    {
+        time += (sokm - km) * kc[4][0];
+        nl += (sokm - km) * kc[4][1];
+        if (time < m && nl <= nangluong)
+            m = time;
+        return;
+    }
+    for (int i=0; km + i <= sokm; ++i)
+    {
+        vc(kieu + 1, km + i, nl + i*kc[kieu][1], time + i*kc[kieu][0]);
+    }
+}
+
+int main()
+{
+    //freopen("input.txt", " r", stdin);
+    int ntc = 0;
+    cin >> ntc;
+    for (int tc = 1; tc <= ntc; ++tc)
+    {
+        h = 0;
+        m = 16801; // max = 40 * 7 * 60 + 1
+        cin >> nangluong >> sokm;
+        for (int i = 0; i < 5; ++i)
+        {
+            int phut, giay;
+            cin >> phut >> giay;
+            kc[i][0] = phut * 60 + giay;
+            cin >> kc[i][1];
+        }
+
+        vc(0, 0, 0, 0);
+
+        h = m / 60;
+        m %= 60;
+
+        cout << "Case #" << tc << endl;
+        cout << h << " " << m << endl;
+    }
+    return 0;
+}
+
+#include <iostream>
+using namespace std;
+
+
+int M,D;
+int kieuchay[5][3];
+int mintime;
+int time[5];
+int nangluong[5];
+
+
+int main(){
+	//freopen("input.txt", "r", stdin);
+	int t;
+	cin >> t;
+	for (int tc = 1; tc <=t; tc++)
+	{
+		cin >> M >> D;
+		for (int i = 0; i <5; i++)
+		{
+			for (int j = 0; j <3; j++)
+			{
+				cin >> kieuchay[i][j];
+				
+			}
+			nangluong[i]=kieuchay[i][2];
+		}
+
+		for (int i = 0; i <5; i++)
+		{
+			time[i]=kieuchay[i][0]*60+kieuchay[i][1];
+		}
+
+		int mintime=3000;
+		for (int i = 0; i <= D; i++)
+		{
+			for (int j = 0; j <= D; j++)
+			{
+				for (int k = 0; k <=D; k++)
+				{
+					for (int z = 0; z <= D; z++)
+					{
+						for (int n = 0; n <= D; n++)
+						{
+							
+							if(i+j+k+z+n==D){
+								int a = i*nangluong[0]+ j*nangluong[1] + k*nangluong[2] + z*nangluong[3] + n*nangluong[4];
+								if(a<=M){
+									int tg= i*time[0]+ j*time[1] + k*time[2] + z*time[3] + n*time[4];
+									if(tg<mintime)mintime=tg;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		cout << "Case #" << tc << endl << mintime/60 << " " << mintime%60 << endl;;
+
+	}
+	return 0;
+}
