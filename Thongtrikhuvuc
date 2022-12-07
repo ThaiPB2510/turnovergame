@@ -1,0 +1,184 @@
+#include <iostream>
+using namespace std;
+int N,map[101][101],visited[101][101],mark[6],finalmap[100][100];
+int Qx[100000],Qy[100000],Qd[100000];
+int dx[4]={-1,0,1,0};
+int dy[4]={0,1,0,-1};
+int f=-1,r=-1;
+int dem;
+void Push(int x, int y, int d)
+{
+	f++;
+	Qx[f]=x;
+	Qy[f]=y;
+	Qd[f]=d;
+}
+void Pop(int &x, int &y, int &d)
+{
+	r++;
+	x=Qx[r];
+	y=Qy[r];
+	d=Qd[r];
+}
+bool isSafe(int x, int y)
+{
+	if(x>=0 && x<N && y >=0 && y <N && visited[x][y] == 0)
+	{
+		return true;
+	}
+	return false;
+}
+void BFS(int x, int y)
+{
+	f=-1;
+	r=-1;
+	Push(x,y,0);
+	while(f!=r)
+	{
+		int a,b,d;
+		Pop(a,b,d);
+		d++;
+		for(int i=0;i<4;i++)
+		{
+			int aa=a+dx[i];
+			int bb=b+dy[i];
+			if(isSafe(aa,bb))
+			{
+				if(map[a][b] == 0 )
+				{
+					Push(aa,bb,d);
+					visited[aa][bb]=-1;
+					mark[map[aa][bb]]++;
+				}else
+				{
+					if(map[aa][bb] == map[a][b])
+					{
+						Push(aa,bb,d);
+						visited[aa][bb] = -1;
+						mark[map[aa][bb]]++;
+					}
+				}
+			}
+		}
+	}
+}
+void BFSresult(int x, int y)
+{
+	f=-1,r=-1;
+	Push(x,y,0);
+	while(f!=r)
+	{
+		int a,b,d;
+		Pop(a,b,d);
+		d++;
+		for(int i=0;i<4;i++)
+		{
+			int aa=a+dx[i];
+			int bb=b+dy[i];
+			if(aa>=0 && aa<N && bb>=0 && bb <N && finalmap[aa][bb] ==0 && map[aa][bb]==map[a][b])
+			{
+				finalmap[aa][bb]=-1;
+				Push(aa,bb,d);
+			}
+		}
+	}
+}
+void resetmap()
+{
+	for(int i=0;i<N;i++)
+	{
+		for(int j=0;j<N;j++)
+		{
+			if(visited[i][j] == -1 && map[i][j] != 0)
+			{
+				visited[i][j] =0;
+			}
+		}
+	}
+}
+int get_zone()
+{
+	int maxx_zone=0;
+	int maxx_result=0;
+	for(int i=5;i>0;i--)
+	{
+		if(mark[i]>maxx_zone)
+		{
+			maxx_zone=mark[i];
+			maxx_result=i;
+		}
+	}
+	return maxx_result;
+}
+void reset_zone()
+{
+	for(int i=0;i<6;i++)
+	{
+		mark[i]=0;
+	}
+}
+void change_zone()
+{
+	int color=get_zone();
+	for(int i=0;i<N;i++)
+	{
+		for(int j=0;j<N;j++)
+		{
+			if(map[i][j]==0 && visited[i][j] == -1)
+			{
+				map[i][j] = color;
+				visited[i][j]=2;
+			}
+		}
+	}
+}
+int main()
+{
+	//freopen("input.txt","r",stdin);
+	int T;
+	cin>>T;
+	for(int tc=1;tc<=T;tc++)
+	{
+		cin>>N;
+		dem=0;
+		for(int i=0;i<N;i++)
+		{
+			for(int j=0;j<N;j++)
+			{
+				cin>>map[i][j];
+				visited[i][j]=0;
+				finalmap[i][j]=0;
+			}
+		}
+		int checkk=0;
+		for(int i=0;i<N;i++)
+		{
+			for (int j = 0; j < N; j++)
+			{
+				if(map[i][j] == 0 && visited[i][j] ==0 )
+				{
+					visited[i][j]=-1;
+					BFS(i,j);
+					change_zone();
+					resetmap();
+					reset_zone();
+				}
+			}
+		}
+		for(int i=0;i<N;i++)
+		{
+			for(int j=0;j<N;j++)
+			{
+				if(finalmap[i][j] == 0)
+				{
+					dem++;
+					finalmap[i][j]=-1;
+					BFSresult(i,j);
+				}
+			}
+		}
+        cout<<"Case #"<<tc<<endl;
+		cout<<dem<<endl;
+	}
+	return 0;
+}
