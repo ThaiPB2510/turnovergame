@@ -1,0 +1,166 @@
+package Thongtrikhuvuc;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class Solution {
+	static int n, dem, f = -1, r = -1;
+	static int map[][] = new int[101][101];
+	static int visited[][] = new int[101][101];
+	static int mark[] = new int[6];
+	static int finalmap[][] = new int[100][100];
+	static int Qx[] = new int[100000];
+	static int Qy[] = new int[100000];
+	static int Qd[] = new int[100000];
+	static int dx[] = { -1, 0, 1, 0 };
+	static int dy[] = { 0, 1, 0, -1 };
+
+	public static void Push(int x, int y) {
+		f++;
+		Qx[f] = x;
+		Qy[f] = y;		
+	}
+
+	public static void Pop(int[] tmp) {
+		r++;
+		tmp[0] = Qx[r];
+		tmp[1] = Qy[r];
+		
+	}
+
+	public static boolean isSafe(int x, int y) {
+		if (x >= 0 && x < n && y >= 0 && y < n && visited[x][y] == 0) {
+			return true;
+		}
+		return false;
+	}
+
+	public static void BFS(int x, int y) {
+		f = -1;
+		r = -1;
+		Push(x, y);
+		while (f != r) {
+			int tmp[] = new int[2];
+			Pop(tmp);
+			int a = tmp[0], b = tmp[1];
+			for (int i = 0; i < 4; i++) {
+				int aa = a + dx[i];
+				int bb = b + dy[i];
+				if (isSafe(aa, bb)) {
+					if (map[a][b] == 0) {
+						Push(aa, bb);
+						visited[aa][bb] = -1;
+						mark[map[aa][bb]]++;
+					} else {
+						if (map[aa][bb] == map[a][b]) {
+							Push(aa, bb);
+							visited[aa][bb] = -1;
+							mark[map[aa][bb]]++;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	public static void BFSresult(int x, int y) {
+		f = -1;
+		r = -1;
+		Push(x, y);
+		while (f != r) {
+			int tmp[] = new int[2];
+			Pop(tmp);
+			int a = tmp[0], b = tmp[1];
+		//d++;
+			for (int i = 0; i < 4; i++) {
+				int aa = a + dx[i];
+				int bb = b + dy[i];
+				if (aa >= 0 && aa < n && bb >= 0 && bb < n
+						&& finalmap[aa][bb] == 0 && map[aa][bb] == map[a][b]) {
+					finalmap[aa][bb] = -1;
+					Push(aa, bb);
+				}
+			}
+		}
+	}
+
+	public static void resetmap() {
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				if (visited[i][j] == -1 && map[i][j] != 0) {
+					visited[i][j] = 0;
+				}
+			}
+		}
+	}
+
+	public static int get_zone() {
+		int maxx_zone = 0;
+		int maxx_result = 0;
+		for (int i = 5; i > 0; i--) {
+			if (mark[i] > maxx_zone) {
+				maxx_zone = mark[i];
+				maxx_result = i;
+			}
+		}
+		return maxx_result;
+	}
+
+	public static void reset_zone() {
+		for (int i = 0; i < 6; i++) {
+			mark[i] = 0;
+		}
+	}
+
+	public static void change_zone() {
+		int color = get_zone();
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				if (map[i][j] == 0 && visited[i][j] == -1) {
+					map[i][j] = color;
+					visited[i][j] = 2;
+				}
+			}
+		}
+	}
+
+	public static void main(String[] args) throws FileNotFoundException {
+		System.setIn(new FileInputStream("input.txt"));
+		Scanner sc = new Scanner(System.in);
+		int T = sc.nextInt();
+		for (int tc = 1; tc <= T; tc++) {
+			n = sc.nextInt();
+			dem = 0;
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < n; j++) {
+					map[i][j] = sc.nextInt();
+					visited[i][j] = 0;
+					finalmap[i][j] = 0;
+				}
+			}
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < n; j++) {
+					if (map[i][j] == 0 && visited[i][j] == 0) {
+						visited[i][j] = -1;
+						BFS(i, j);
+						change_zone();
+						resetmap();
+						reset_zone();
+					}
+				}
+			}
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < n; j++) {
+					if (finalmap[i][j] == 0) {
+						dem++;
+						finalmap[i][j] = -1;
+						BFSresult(i, j);
+					}
+				}
+			}
+			System.out.println("Case #"+tc);
+			System.out.println(dem);
+		}
+	}
+}
